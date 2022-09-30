@@ -1,0 +1,59 @@
+font:
+  size: 14.0
+  normal:
+    family: FiraMono Nerd Font
+    style: Medium
+  bold:
+    family: FiraMono Nerd Font
+    style: Bold
+  italic:
+    family: FiraMono Nerd Font
+    style: Italic
+startup_mode: Maximized
+dynamic_title: true
+shell: 
+  program: /bin/zsh
+  args:
+    - --login
+key_bindings:
+  # ---------------------------------------------------------------------------------------
+  #   Quality of life for MacOS
+  # ---------------------------------------------------------------------------------------
+  - { key: Left,     mods: Alt,     chars: "\x1bb"                       } # one word left
+  - { key: Right,    mods: Alt,     chars: "\x1bf"                       } # one word right
+  - { key: Left,     mods: Command, chars: "\x1bOH",   mode: AppCursor   } # Home
+  - { key: Right,    mods: Command, chars: "\x1bOF",   mode: AppCursor   } # End
+
+  # ---------------------------------------------------------------------------------------
+  #   TMUX magic
+  # ---------------------------------------------------------------------------------------
+
+  # Create new tmux window 
+  - key: T 
+    mods: Command|Shift
+    chars: "\x01\x63" # C-a, c
+
+  # Switch to next tmux window in the same session
+  - key: N
+    mods: Command|Shift
+    chars: "\x01\x6e" # C-a, n 
+  
+  # Switch to prev tmux window in the same session
+  - key: P
+    mods: Command|Shift
+    chars: "\x01\x70" # C-a, p 
+  
+  # Open tmux session list 
+  - key: S 
+    mods: Command|Shift
+    chars: "\x01\x73" # C-a, s
+ 
+  # Open tmux sessionizer (create session from project root) 
+  - key: F
+    mods: Command|Shift
+    chars: "\x01\x66" # C-a, f
+  
+  # Close tmux window 
+  - key: X
+    mods: Command|Shift
+    chars: "\x04" # C-d

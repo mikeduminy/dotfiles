@@ -1,0 +1,18 @@
+# mac
+**/.DS_Store
+
+# nvim
+nvim/plugin/packer_compiled.lua
+## base16 dynamic themes
+nvim/colors/base16* 
+
+# some tools set state in this config folder :()
+configstore/*
+
+# custom configs
+## include the custom folder
+!custom/
+## exclude everything under that folder
+custom/*
+## except the base config
+!custom/base
