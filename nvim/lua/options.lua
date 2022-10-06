@@ -30,11 +30,16 @@ opt.undolevels = 1000 -- Number of undo levels
 opt.undofile = true
 opt.errorbells = false
 
+-- ensure splits always happen right and below
+opt.splitright = true
+opt.splitbelow = true
+
 -- vim.g.netrw_liststyle = 3 -- tree-style explorer
 g.loaded_netrw       = 1
 g.loaded_netrwPlugin = 1
 
 -- goto file (gf) settings
+
 _G.resolve_module = resolve_module --
 opt.path = '.,src' -- goto file (gf) should search these paths
 opt.suffixesadd = '.js,.jsx,.ts,.tsx'

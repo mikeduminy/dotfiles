@@ -11,6 +11,7 @@ vim.cmd [[packadd packer.nvim]]
 return require 'packer'.startup({ function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+  use 'lewis6991/impatient.nvim' -- Speed-up startup time
 
   ---------------------------------------------------------------------
   -- Base plugins
