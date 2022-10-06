@@ -21,6 +21,11 @@ function M.vmap(shortcut, command, options)
   M.map('v', shortcut, command, options)
 end
 
+function M.allmap(shortcut, command, options)
+  local allModes = { 'n', 'v', 's', 't', 'o', 'i', 'c' }
+  M.map(allModes, shortcut, command, options)
+end
+
 -- Helper to generate command syntax
 function M.strcmd(command, options)
   if options and options.lua then

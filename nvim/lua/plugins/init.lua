@@ -14,7 +14,7 @@ local plugins = glob(pluginPath .. '/**/init.lua', false, true)
 
 for _, pluginInitPath in ipairs(plugins) do
   local requirePath = split('plugins' .. split(pluginInitPath, pluginPath)[1], '.lua')[1]
-  local status, result = pcall(require, requirePath)
+  pcall(require, requirePath)
 end
 
 -- get a list of mappings files

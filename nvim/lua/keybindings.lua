@@ -1,9 +1,11 @@
 local keymaps = require 'utils.keymaps'
-local strcmd = keymaps.strcmd
-local nmap = keymaps.nmap
 local s = require 'utils.table'.to_string
 local file_utils = require 'utils.file'
 local cmd = vim.cmd
+local strcmd = keymaps.strcmd
+local allmap = keymaps.allmap
+local nmap = keymaps.nmap
+local map = keymaps.map
 
 -- Leader set to <space>
 vim.g.mapleader = ' '
@@ -39,15 +41,16 @@ end
 
 -- mappings that don't make sense in which-key
 nmap('<esc>', ':nohlsearch<cr><esc>') -- close highlight search
+map({ 't' }, '<esc>', '<c-\\><c-n>') -- exit terminal mode, back to normal mode
 
-nmap('<c-h>', '<c-w>h') -- Focus window left
-nmap('<c-j>', '<c-w>j') -- Focus window down
-nmap('<c-k>', '<c-w>k') -- Focus window up
-nmap('<c-l>', '<c-w>l') -- Focus window right
+allmap('<c-h>', '<c-w>h') -- Focus window left
+allmap('<c-j>', '<c-w>j') -- Focus window down
+allmap('<c-k>', '<c-w>k') -- Focus window up
+allmap('<c-l>', '<c-w>l') -- Focus window right
 
 -- by default step through word-wrapped lines as if they were normal lines
-nmap('j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
-nmap('k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
+map({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
+map({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 local wkMappings = {
   ['<leader>'] = {
