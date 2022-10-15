@@ -52,6 +52,8 @@ allmap('<c-l>', '<c-w>l') -- Focus window right
 map({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 map({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
+map({ 'v' }, '<leader>y', s { globalBuffer, 'y' }) -- visual mode mapping for wk mapping
+
 local wkMappings = {
   ['<leader>'] = {
     y = { s { globalBuffer, 'y' }, 'Copy to clipboard' },
@@ -59,6 +61,7 @@ local wkMappings = {
     p = { s { nullBuffer, 'dP' }, 'Paste (no registers)', mode = "v" },
     qq = { strcmd 'qall', 'Quit' }, -- Try quit
     ww = { strcmd 'w', 'Write' }, -- Write current buffer
+    wq = { strcmd 'wq', 'Write & Quit' },
     Q = { closeTmps, 'Close tmp buffer' },
     c = { toggle_qf, 'Toggle quickfix' },
   },
