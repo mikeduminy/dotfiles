@@ -29,6 +29,7 @@ opt.relativenumber = true -- Show relative line numbers
 opt.undolevels = 1000 -- Number of undo levels
 opt.undofile = true
 opt.errorbells = false
+opt.jumpoptions = 'stack'
 
 -- ensure splits always happen right and below
 opt.splitright = true
