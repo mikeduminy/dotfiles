@@ -2,30 +2,26 @@
 let mapleader=" "
 
 """ Plugins  --------------------------------
-set surround
-set multiple-cursors
-set commentary
-set argtextobj
-set easymotion
-set textobj-entire
-set ReplaceWithRegister
+set surround         " vim-surround emulation - CRUD for text-object surroundings (eg parentheses)
+set multiple-cursors " vim-multiple-cursors emulation
+set commentary       " vim-commentary emulation - comment stuff out
+set argtextobj       " argtextobj.vim emulation - text-object like motions for arguments
+set highlightedyank  " vim-highlightedyank emulation - make the yanked region apparent
+set textobj-entire   " vim-textobj-entire emulation - text objects for entire buffers
+" set ReplaceWithRegister 
 
 """ Plugin settings -------------------------
 let g:argtextobj_pairs="[:],(:),<:>"
 
 """ Common settings -------------------------
-set showmode
-set so=5
-
-set number
-set relativenumber
-set showmatch
-set cursorline
-set nohlsearch
-set smartcase
-set ignorecase
-set incsearch
-
+set showmode       " Show current mode on status line
+set scrolloff=5    " Minimum number of lines to show above and below the cursor
+set number         " Show absolute line number on current line
+set relativenumber " Show relative-to-cursor line number in gutter
+set nohlsearch     " Don't highlight matches with last search pattern 
+set smartcase      " When pattern is uppercase, don't ignore case
+set ignorecase     " Ignore case in search patterns
+set incsearch      " Show search matches while typing search pattern
 
 """ Idea specific settings ------------------
 set ideajoin
@@ -33,9 +29,6 @@ set ideastatusicon=gray
 set idearefactormode=keep
 
 """ Mappings --------------------------------
-map <leader>f <Plug>(easymotion-s)
-map <leader>e <Plug>(easymotion-fs
-
 map <leader>d <Action>(Debug)
 map <leader>r <Action>(RenameElement)
 map <leader>c <Action>(Stop)
