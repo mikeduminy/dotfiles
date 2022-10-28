@@ -12,11 +12,20 @@ It assumes a ZSH shell and, notably, installs oh-my-zsh if it isn't installed.
 ````
 ln -s ~/.xdg/config/.zshrc ~/.zshrc
 ln -s ~/.xdg/config/.zshenv ~/.zshenv
+ln -s ~/.xdg/config/.zprofile ~/.zprofile
 ``````
 4. Install base16-shell
 ```sh 
   git clone git@github.com:base16-project/base16-shell.git ~/.xdg/data/base16-shell
 ``````
+5. If you are on Mac then for GUI programs launched from outside the terminal to
+   detect your XDG config home you may also need to run this.
+
+```sh
+launchctl setenv XDG_CONFIG_HOME ~/.xdg/config
+```
+
+
 ## Custom installation
 The above is just a recommendation. Feel free to deviate, but remember to update
 the values for the XDG environment variables. The defaults are defined in
