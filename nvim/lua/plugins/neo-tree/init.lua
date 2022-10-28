@@ -2,7 +2,17 @@ local plugin = require 'neo-tree'
 
 vim.g.neo_tree_remove_legacy_commands = 1
 
+local rebalanceWindows = function(args)
+  if (args.position == 'left' or args.position == 'right') then
+    vim.cmd('wincmd =')
+  end
+end
+
 plugin.setup({
+  event_handlers = {
+    { event = 'neo_tree_window_after_open', handler = rebalanceWindows },
+    { event = 'neo_tree_window_after_close', handler = rebalanceWindows },
+  },
   use_popups_for_input = false,
   close_if_last_window = true,
   enable_git_status = false,
