@@ -148,6 +148,9 @@ lspconfig.jsonls.setup {
   capabilities = capabilities,
 }
 
+-- bash (requires installed https://github.com/bash-lsp/bash-language-server)
+lspconfig.bashls.setup {}
+
 -----------------------------------------------------------------------
 -- Keymaps
 -----------------------------------------------------------------------
