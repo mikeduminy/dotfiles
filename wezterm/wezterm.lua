@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 
 return {
-  font = wezterm.font 'Fira Code',
+  font = wezterm.font 'JetBrains Mono',
   keys = {
     {
       key = 'w',

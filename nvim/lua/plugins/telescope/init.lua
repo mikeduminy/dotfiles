@@ -1,12 +1,23 @@
 local telescope = require 'telescope'
-local keymaps = require 'utils.keymaps'
+local previewers = require 'telescope.previewers'
 local trouble = require 'trouble.providers.telescope'
-local nmap = keymaps.nmap
-local luacmd = keymaps.luacmd
 
------------------------------------------------------------------------
--- Setup
------------------------------------------------------------------------
+local MAX_SIZE = 128 * 1024 -- 128kb
+
+local function custom_buffer_preview_maker(filepath, bufnr, opts)
+  opts = opts or {}
+
+  -- disable in large files
+  vim.loop.fs_stat(filepath, function(_, stat)
+    if not stat then return end
+    if stat.size > MAX_SIZE then
+      return
+    else
+      previewers.buffer_previewer_maker(filepath, bufnr, opts)
+    end
+  end)
+end
+
 telescope.setup {
   defaults = {
     mappings = {
@@ -18,6 +29,7 @@ telescope.setup {
       num_pickers = 10,
       limit_entries = 1000,
     },
+    buffer_previewer_maker = custom_buffer_preview_maker,
   },
   pickers = {
     find_files = {
@@ -36,4 +48,5 @@ telescope.setup {
     },
   },
 }
+
 telescope.load_extension 'fzf'
