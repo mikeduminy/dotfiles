@@ -1,3 +1,5 @@
+local debug = false
+
 -- initial setup
 require 'plugins.setup'
 
@@ -10,11 +12,18 @@ local glob = vim.fn.glob
 local pluginPath = string.format("%s/lua/plugins", stdpath('config'))
 
 -- get a list of plugin init files
-local plugins = glob(pluginPath .. '/**/init.lua', false, true)
+local plugins = glob(pluginPath .. '/*/init.lua', false, true)
 
 for _, pluginInitPath in ipairs(plugins) do
-  local requirePath = split('plugins' .. split(pluginInitPath, pluginPath)[1], '.lua')[1]
-  pcall(require, requirePath)
+  local requirePath = split('plugins' .. split(pluginInitPath, pluginPath)[1], [[\.lua]])[1]
+  local status, _ = pcall(require, requirePath)
+  if status then
+    if debug then
+      print('loaded ' .. requirePath)
+    end
+  else
+    print('failed to load', requirePath)
+  end
 end
 
 -- get a list of mappings files
@@ -29,6 +38,7 @@ for _, mappingsFilePath in ipairs(mappingsFiles) do
   end
 end
 
+-- "/Users/michael-james.duminy/.xdg/config/nvim/lua/plugins"
 
 
 -- -- setup theming first
