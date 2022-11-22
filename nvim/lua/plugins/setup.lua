@@ -93,6 +93,8 @@ return require 'packer'.startup({ function(use)
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
   }
+  -- Sticky context
+  use 'nvim-treesitter/nvim-treesitter-context'
 
   -- Language Server Client
   use {
@@ -123,6 +125,8 @@ return require 'packer'.startup({ function(use)
     run = function() vim.fn["mkdp#util#install"]() end,
     ft = 'markdown'
   })
+
+  use 'rmagatti/auto-session' -- automated session manager
 
   -- use 'pangloss/vim-javascript' -- js/ts
   -- use 'leafgarland/typescript-vim' -- js/ts
