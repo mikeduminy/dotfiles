@@ -3,6 +3,7 @@ local s = require 'utils.table'.to_string
 local file_utils = require 'utils.file'
 local cmd = vim.cmd
 local strcmd = keymaps.strcmd
+local luacmd = keymaps.luacmd
 local allmap = keymaps.allmap
 local nmap = keymaps.nmap
 local map = keymaps.map
@@ -43,6 +44,8 @@ end
 nmap('<esc>', ':nohlsearch<cr><esc>') -- close highlight search
 map({ 't' }, '<esc>', '<c-\\><c-n>') -- exit terminal mode, back to normal mode
 
+map({ 'i' }, 'jk', '<esc>') -- quick 'jk' in insert mode fires escape
+
 allmap('<c-h>', '<c-w>h') -- Focus window left
 allmap('<c-j>', '<c-w>j') -- Focus window down
 allmap('<c-k>', '<c-w>k') -- Focus window up
@@ -62,6 +65,7 @@ local wkMappings = {
     qq = { strcmd 'qall', 'Quit' }, -- Try quit
     ww = { strcmd 'w', 'Write' }, -- Write current buffer
     wq = { strcmd 'wq', 'Write & Quit' },
+    wr = { luacmd 'vim.wo.wrap = not vim.wo.wrap', 'Toggle wrapping' },
     Q = { closeTmps, 'Close tmp buffer' },
     c = { toggle_qf, 'Toggle quickfix' },
   },

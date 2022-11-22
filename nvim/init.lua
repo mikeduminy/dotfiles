@@ -5,7 +5,7 @@ require 'options'
 require 'keybindings'
 
 if not vim.g.vscode then
-	require 'plugins'
+  require 'plugins'
 else
-	require 'plugins.vscode'
+  require 'plugins.vscode'
 end
