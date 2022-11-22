@@ -74,7 +74,8 @@ plugin.setup({
     show_unloaded = true,
   },
   source_selector = {
-    statusline = true,
+    statusline = false,
+    winbar = false,
   },
   default_component_configs = {
     container = {

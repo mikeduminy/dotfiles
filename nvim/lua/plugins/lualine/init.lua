@@ -54,18 +54,24 @@ else
   theme = createTheme(customThemeInputs)
 end
 
+vim.opt.laststatus = 3
+
 
 plugin.setup {
   sections = {
-    lualine_c = {
-      {
-        'filename',
-        path = 1
-      }
-    }
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch',
+      -- 'diff',
+      -- 'diagnostics'
+    },
+    lualine_c = { { 'filename', path = 1 } },
+    lualine_x = { 'filetype' },
+    lualine_y = { require('auto-session-library').current_session_name },
+    lualine_z = { 'location' }
   },
   options = {
     theme = theme,
     globalstatus = true
-  }
+  },
+  extensions = { 'neo-tree' }
 }
