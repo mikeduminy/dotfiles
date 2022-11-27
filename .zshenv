@@ -13,6 +13,10 @@ export XDG_CONFIG_HOME="$HOME/.xdg/config"
 export XDG_STATE_HOME="$HOME/.xdg/state"
 export XDG_CACHE_HOME="$HOME/.xdg/cache"
 
+# Sometimes $PATH isn't initialised by the time this file runs, so to be able to
+# use builtin functions like dirname we ensure that `/usr/bin` is in $PATH
+export PATH="$PATH:/usr/bin"
+
 # zsh needs some additional set up in the system files
 # so for now keep loading this here
 for file in $XDG_CONFIG_HOME/custom/*/.zshenv; do source $file; done
