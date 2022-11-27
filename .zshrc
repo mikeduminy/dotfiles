@@ -46,7 +46,7 @@ for file in $XDG_CONFIG_HOME/custom/*/.zshrc; do source $file; done
 
 base16_shell_path="$XDG_DATA_HOME/base16-shell/base16-shell.plugin.zsh"
 if [ -e "$base16_shell_path" ]; then
-  export BASE16_THEME_DEFAULT="tokyo-city-dark"
+  export BASE16_THEME_DEFAULT="tomorrow-night"
   export BASE16_CONFIG_PATH="$XDG_DATA_HOME/base16-project"
   source "$XDG_DATA_HOME/base16-shell/base16-shell.plugin.zsh"
 fi
