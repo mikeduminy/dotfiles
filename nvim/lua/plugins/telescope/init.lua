@@ -51,7 +51,6 @@ telescope.setup {
     mappings = {
       i = {
         ['<c-t>'] = trouble.open_with_trouble,
-        ["<C-u>"] = false, -- clear the prompt instead of scrolling
         ["<M-p>"] = action_layout.toggle_preview,
       },
       n = {
@@ -65,6 +64,7 @@ telescope.setup {
       limit_entries = 1000,
     },
     layout_strategy = 'bottom_pane',
+    sorting_strategy = 'ascending',
     buffer_previewer_maker = custom_buffer_preview_maker,
     preview = {
       filesize_limit = MAX_SIZE,
