@@ -1,7 +1,7 @@
 local debug = false
 
 -- initial setup
-require 'plugins.setup'
+require 'plugins.packer'
 
 local register = require 'utils.keymaps'.register
 

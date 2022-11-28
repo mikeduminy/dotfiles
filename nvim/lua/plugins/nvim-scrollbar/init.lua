@@ -3,12 +3,13 @@ local b16 = require 'plugins.base16'
 
 local config = {
   handle = {
-    hide_if_all_visible = false,
+    hide_if_all_visible = true,
   },
   excluded_filetypes = {
-    "prompt",
-    "TelescopePrompt",
-    "neo-tree",
+    'dashboard',
+    'prompt',
+    'TelescopePrompt',
+    'neo-tree',
   },
 }
 

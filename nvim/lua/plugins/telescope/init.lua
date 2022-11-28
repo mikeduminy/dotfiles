@@ -70,7 +70,7 @@ telescope.setup {
       filesize_limit = MAX_SIZE,
       mime_hook = custom_mime_hook,
       treesitter = false,
-    }
+    },
   },
   pickers = {
     find_files = {
@@ -97,8 +97,14 @@ telescope.setup {
     old_files = {
       theme = 'ivy',
       initial_mode = 'normal',
-    }
+    },
+  },
+  extensions = {
+    file_browser = {
+      theme = 'ivy',
+    },
   },
 }
 
 telescope.load_extension 'fzf'
+telescope.load_extension "file_browser"

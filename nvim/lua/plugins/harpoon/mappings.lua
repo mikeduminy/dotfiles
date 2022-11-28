@@ -6,11 +6,12 @@ local nav_next = harpoonUI.nav_next
 local nav_prev = harpoonUI.nav_prev
 
 local M = {
-  ['<leader>a'] = { name = 'Harpoon' },
-  ['<leader>aa'] = { add_file, 'Harpoon - Add Mark' },
-  ['<leader>af'] = { toggle_quick_menu, 'Harpoon - Show' },
-  ['<leader>an'] = { nav_next, 'Harpoon - Next' },
-  ['<leader>aN'] = { nav_prev, 'Harpoon - Previous' }
+  ['<leader>a'] = { name = 'Harpoon',
+    ['a'] = { add_file, 'Harpoon - Add Mark' },
+    ['f'] = { toggle_quick_menu, 'Harpoon - Show' },
+    ['n'] = { nav_next, 'Harpoon - Next' },
+    ['N'] = { nav_prev, 'Harpoon - Previous' }
+  },
 }
 
 return M

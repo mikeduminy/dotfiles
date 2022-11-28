@@ -66,7 +66,6 @@ plugin.setup {
     },
     lualine_c = { { 'filename', path = 1 } },
     lualine_x = { 'filetype' },
-    lualine_y = { require('auto-session-library').current_session_name },
     lualine_z = { 'location' }
   },
   options = {

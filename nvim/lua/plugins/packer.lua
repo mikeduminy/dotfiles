@@ -36,6 +36,7 @@ return require 'packer'.startup({ function(use)
   use { 'alvan/vim-closetag', ft = 'HTML' } -- Auto close html tags
   use 'christoomey/vim-tmux-navigator' -- vim/tmux navigation integration
   use 'gpanders/editorconfig.nvim' -- Editorconfig defaults
+  use 'glepnir/dashboard-nvim' -- Dashboard plugin
   use {
     'goolord/alpha-nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
@@ -61,7 +62,6 @@ return require 'packer'.startup({ function(use)
   use 'windwp/nvim-autopairs' -- Auto closing brackets
   use 'petertriho/nvim-scrollbar' -- Improved scrollbar
   use { 'folke/which-key.nvim', commit = "9c190ea91939eba8c2d45660127e0403a5300b5a~1" } -- Popup for keymap listings
-  use 'folke/twilight.nvim' -- Dims inactive portions of the code you are editing
   use 'folke/zen-mode.nvim' -- Distraction-free coding
 
   ---------------------------------------------------------------------
@@ -87,6 +87,7 @@ return require 'packer'.startup({ function(use)
       },
     },
   }
+  use 'nvim-telescope/telescope-file-browser.nvim' -- File browser extension for Telescope
 
   -- Syntax highlighting
   use {
@@ -125,15 +126,6 @@ return require 'packer'.startup({ function(use)
     run = function() vim.fn["mkdp#util#install"]() end,
     ft = 'markdown'
   })
-
-  use 'rmagatti/auto-session' -- automated session manager
-
-  -- use 'pangloss/vim-javascript' -- js/ts
-  -- use 'leafgarland/typescript-vim' -- js/ts
-  -- use 'peitalin/vim-jsx-typescript' -- js/ts
-  -- use 'maxmellon/vim-jsx-pretty' -- js/ts
-  -- use 'jparise/vim-graphql' -- GraphQL syntax
-  -- use 'stephenway/postcss.vim' -- postcss syntax support
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

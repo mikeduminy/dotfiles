@@ -5,4 +5,4 @@ local g = vim.g
 -----------------------------------------------------------------------
 g.vim_json_conceal = 0
 g.markdown_syntax_conceal = 0
-g.indentLine_fileTypeExclude = { 'alpha' }
+g.indentLine_fileTypeExclude = { 'dashboard' }
