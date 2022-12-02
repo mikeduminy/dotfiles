@@ -42,11 +42,6 @@ return require 'packer'.startup({ function(use)
     requires = { 'kyazdani42/nvim-web-devicons' },
   } -- Dashboard plugin
   use {
-    'akinsho/bufferline.nvim',
-    tag = 'v2.*',
-    requires = 'kyazdani42/nvim-web-devicons',
-  } -- Visual top "tab" line for buffers
-  use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
   } -- Visual bottom "status" line

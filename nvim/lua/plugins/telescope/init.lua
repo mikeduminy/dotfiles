@@ -90,6 +90,7 @@ telescope.setup {
       preview = {
         hide_on_startup = true,
       },
+      ignore_current_buffer = true,
     },
     help_tags = {
       theme = 'ivy',

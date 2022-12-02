@@ -6,8 +6,8 @@ local findFiles = function()
 end
 
 local liveGrep = function()
-  local cwd = vim.fn.getcwd()
-  require("telescope.builtin").live_grep({ search_dirs = { cwd } })
+  local dir = vim.fn.getcwd()
+  require("telescope.builtin").live_grep({ search_dirs = { cwd = dir } })
 end
 
 local openBuffers = function()

@@ -29,18 +29,21 @@ opt.relativenumber = true -- Show relative line numbers
 opt.undolevels = 1000 -- Number of undo levels
 opt.undofile = true
 opt.errorbells = false
-opt.jumpoptions = 'stack'
+opt.jumpoptions = 'stack' -- use a browser-like jumplist
+opt.cmdheight = 0 -- hide the cmdline
 
--- ensure splits always happen right and below
+-- splits
+--- ensure splits always happen right and below
 opt.splitright = true
 opt.splitbelow = true
+--- splits borders should be regular lines (use defaults)
+opt.fillchars = ''
 
 -- vim.g.netrw_liststyle = 3 -- tree-style explorer
 g.loaded_netrw       = 1
 g.loaded_netrwPlugin = 1
 
 -- goto file (gf) settings
-
 _G.resolve_module = resolve_module --
 opt.path = '.,src' -- goto file (gf) should search these paths
 opt.suffixesadd = '.js,.jsx,.ts,.tsx'

@@ -28,6 +28,7 @@ plugin.setup({
     mappings = {
       -- disable fuzzy finder
       ["/"] = "noop",
+      ['<esc>'] = "esc",
     },
   },
   filesystem = {

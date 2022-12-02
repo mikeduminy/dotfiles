@@ -1,15 +1,14 @@
-local debug = false
-
 -- initial setup
 require 'plugins.packer'
 
 local register = require 'utils.keymaps'.register
+local debug = require 'utils.env'.debug
 
-local stdpath = vim.fn.stdpath
 local split = vim.fn.split
 local glob = vim.fn.glob
 
-local pluginPath = string.format("%s/lua/plugins", stdpath('config'))
+
+local pluginPath = string.format("%s/lua/plugins", vim.fn.stdpath('config'))
 
 -- get a list of plugin init files
 local plugins = glob(pluginPath .. '/*/init.lua', false, true)
