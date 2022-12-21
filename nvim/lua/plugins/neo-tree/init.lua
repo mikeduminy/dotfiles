@@ -14,7 +14,7 @@ plugin.setup({
     { event = 'neo_tree_window_after_close', handler = rebalanceWindows },
   },
   use_popups_for_input = false,
-  close_if_last_window = true,
+  close_if_last_window = false,
   enable_git_status = false,
   enable_diagnostics = true,
   sort_case_insensitive = false,

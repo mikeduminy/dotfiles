@@ -16,7 +16,7 @@ local nullBuffer = '"_' -- like piping to /dev/null
 
 -- Close tmp windows (Like GitFugitive) with <Leader>Q
 local closeTmps = function()
-  local path = file_utils.get_current_file()
+  local path = file_utils.get_current_file { absolute = true }
 
   if string.find(path, '.tmp.') ~= nil then
     cmd 'q'
@@ -38,6 +38,17 @@ local toggle_qf = function()
   if not vim.tbl_isempty(vim.fn.getqflist()) then
     vim.cmd "copen"
   end
+end
+
+local copy_current_line = function()
+  local currentFilePath = file_utils.get_current_file()
+
+  -- get file relative to root (not necessarily git root though)
+  -- :echo expand("%:!:.")
+
+  -- get line number
+  -- :echo line(".")
+
 end
 
 -- mappings that don't make sense in which-key
@@ -67,7 +78,7 @@ local wkMappings = {
     wq = { strcmd 'wq', 'Write & Quit' },
     wr = { luacmd 'vim.wo.wrap = not vim.wo.wrap', 'Toggle wrapping' },
     Q = { closeTmps, 'Close tmp buffer' },
-    c = { toggle_qf, 'Toggle quickfix' },
+    cc = { toggle_qf, 'Toggle quickfix' },
   },
 }
 

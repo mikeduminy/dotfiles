@@ -2,35 +2,40 @@ local cmd = vim.cmd
 local g = vim.g
 
 -- vim.opt.termguicolors = true
-
-local M = {
-  type = 'default',
-}
+-- vim.cmd('highlight VertSplit ctermfg='..M.colors.base01)
+-- :highlight VertSplit ctermfg=8 ctermbg=0 guifg=#282a2e guibg=#1d1f21
 
 local base16_project_theme = os.getenv 'BASE16_THEME'
 if base16_project_theme and g.colors_name ~= 'base16-' .. base16_project_theme then
   cmd 'let base16colorspace=256'
   cmd('colorscheme base16-' .. base16_project_theme)
+end
 
-  local function guiColorsEnabled()
-    return vim.opt.termguicolors:get() == true
-  end
+local M = {}
 
-  local function getColor(index)
-    local hex = string.upper(string.format('%02x', index))
-    if guiColorsEnabled() then
-      return '#' .. vim.api.nvim_get_var('base16_gui' .. hex)
-    end
-    return vim.api.nvim_get_var('base16_cterm' .. hex)
-  end
+local function guiColorsEnabled()
+  return vim.opt.termguicolors:get() == true
+end
 
+local function getColor(index)
+  local hex = string.upper(string.format('%02x', index))
   if guiColorsEnabled() then
-    M.type = 'gui'
-  else
-    M.type = 'cterm'
+    return '#' .. vim.api.nvim_get_var('base16_gui' .. hex)
   end
+  local cterm_color = vim.api.nvim_get_var('base16_cterm' .. hex)
+  return tonumber(cterm_color)
+end
 
-  M.colors = {
+function M.getType()
+  if guiColorsEnabled() then
+    return 'gui'
+  else
+    return 'cterm'
+  end
+end
+
+function M.getColors()
+  return {
     base00 = getColor(0), -- Default Background
     base01 = getColor(1), -- Lighter Background (Used for status bars, line number and folding marks)
     base02 = getColor(2), -- Selection Background

@@ -106,6 +106,19 @@ lspconfig.stylelint_lsp.setup {
   },
 }
 
+--- Neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
+--- the resolved capabilities of the eslint server ourselves!
+---
+---@param  allow_formatting boolean whether to enable formating
+---
+local function toggle_formatting(allow_formatting)
+  return function(client, bufnr)
+    on_attach(client, bufnr)
+    client.resolved_capabilities.document_formatting = allow_formatting
+    client.resolved_capabilities.document_range_formatting = allow_formatting
+  end
+end
+
 -- eslint
 vim.cmd [[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]]
 lspconfig.eslint.setup {

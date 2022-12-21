@@ -16,8 +16,13 @@ function M.read(file_path)
   return vim.fn.readfile(file_path)
 end
 
-function M.get_current_file()
-  return vim.fn.expand '%'
+function M.get_current_file(opts)
+  if opts and opts.absolute then
+    return vim.fn.expand '%'
+  end
+
+  -- get current file relative to cwd
+  return vim.fn.expand '%:~:.'
 end
 
 return M
