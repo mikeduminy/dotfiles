@@ -22,6 +22,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
+---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -169,6 +170,3 @@ lspconfig.bashls.setup {}
 -----------------------------------------------------------------------
 nmap('<Leader>n', luacmd 'vim.diagnostic.goto_next()')
 nmap('<Leader>N', luacmd 'vim.diagnostic.goto_prev()')
-
--- LSP Progress Visualisation
-require 'fidget'.setup {}

@@ -1,3 +1,6 @@
+local wk = require("which-key")
+wk.setup()
+
 local keymaps = require 'utils.keymaps'
 local s = require 'utils.table'.to_string
 local file_utils = require 'utils.file'
@@ -7,9 +10,6 @@ local luacmd = keymaps.luacmd
 local allmap = keymaps.allmap
 local nmap = keymaps.nmap
 local map = keymaps.map
-
--- Leader set to <space>
-vim.g.mapleader = ' '
 
 local globalBuffer = '"+' -- global clipboard
 local nullBuffer = '"_' -- like piping to /dev/null

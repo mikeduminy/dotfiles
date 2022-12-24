@@ -1,5 +1,4 @@
-local plugin = require 'scrollbar'
-local b16 = require 'plugins.base16'
+local b16 = require 'theme.base16'
 local colorType = b16.getType()
 local colors = b16.getColors()
 
@@ -45,4 +44,10 @@ if (colorType == 'cterm') then
   }
 end
 
-plugin.setup(config)
+local M = {
+  'petertriho/nvim-scrollbar',
+  config = function()
+    require 'scrollbar'.setup(config)
+  end
+}
+return M

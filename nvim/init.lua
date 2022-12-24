@@ -1,11 +1,9 @@
--- require 'impatient'
+-- Leader set to <space>
+--- Note: must be set before we load plugins
+vim.g.mapleader = ' '
 
 require 'setup'
 require 'options'
-require 'keybindings'
-
-if not vim.g.vscode then
-  require 'plugins'
-else
-  require 'plugins.vscode'
-end
+require 'theme'
+require 'plugins'
+require 'mappings'

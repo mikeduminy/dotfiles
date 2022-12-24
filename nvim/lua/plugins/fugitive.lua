@@ -1,4 +1,4 @@
-local strcmd = require 'utils.keymaps'.strcmd
+local register = require 'utils.keymaps'.register
 
 local function toggleGitFugitive()
   local fugitiveBuffer = -1
@@ -18,8 +18,16 @@ local function toggleGitFugitive()
   end
 end
 
-local M = {
+local mappings = {
   ['<leader>gg'] = { toggleGitFugitive, 'Open Git Fugitive' },
+}
+
+local M = {
+  'tpope/vim-fugitive',
+  cmd = 'Git',
+  init = function()
+    register(mappings)
+  end
 }
 
 return M
