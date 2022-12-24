@@ -78,7 +78,7 @@ local plugins = {
 
 local opts = {
   defaults = {
-    lazy = true
+    lazy = false,
   },
   checker = {
     enabled = false,
