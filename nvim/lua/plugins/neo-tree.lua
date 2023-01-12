@@ -4,8 +4,8 @@ local register = require 'utils.keymaps'.register
 
 local mappings = {
   ['<leader>t'] = { name = 'Neotree' },
-  ['<leader>tt'] = { strcmd 'Neotree toggle', 'Toggle Neotree', mode = 'n' },
-  ['<leader>tb'] = { strcmd 'Neotree toggle buffers', 'Toggle Neotree Buffers', mode = 'n' },
+  ['<leader>tt'] = { strcmd 'Neotree source=filesystem position=float toggle reveal', 'Toggle Neotree', mode = 'n' },
+  ['<leader>tb'] = { strcmd 'Neotree source=buffers position=float toggle reveal', 'Toggle Neotree Buffers', mode = 'n' },
 }
 
 local rebalanceWindows = function(args)
@@ -46,7 +46,7 @@ local M = {
       enable_diagnostics = true,
       sort_case_insensitive = false,
       window = {
-        position = "left",
+        position = "float",
         width = 40,
         mapping_options = {
           noremap = true,
@@ -82,7 +82,7 @@ local M = {
         -- "open_current",  -- netrw disabled, opening a directory opens within the
         -- window like netrw would, regardless of window.position
         -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-        hijack_netrw_behavior = "open_default",
+        hijack_netrw_behavior = "open_current",
         -- This will use the OS level file watchers to detect changes
         -- instead of relying on nvim autocmd events.
         use_libuv_file_watcher = true,

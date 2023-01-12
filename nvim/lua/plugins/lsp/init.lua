@@ -18,6 +18,9 @@ local M =
 
     -- LSP progress visualisation
     'j-hui/fidget.nvim',
+
+    -- Lua formatting (requires that stylua be installed)
+    { 'ckipp01/stylua-nvim', ft = 'lua' },
   },
   lazy = false,
   config = function()
@@ -29,6 +32,9 @@ local M =
 
     -- LSP Progress Visualisation
     require 'fidget'.setup {}
+
+    -- diagnostics
+    require 'plugins.lsp.diagnostics'
   end
 }
 

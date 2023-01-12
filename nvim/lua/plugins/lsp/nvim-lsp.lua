@@ -17,6 +17,7 @@ require 'nvim-lsp-installer'.setup {
   },
 }
 
+
 -- Code completion setup
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -26,6 +27,22 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- diagnostics (relies on vim.o.updatetime)
+  vim.api.nvim_create_autocmd("CursorHold", {
+    buffer = bufnr,
+    callback = function()
+      local opts = {
+        focusable = false,
+        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+        border = 'rounded',
+        source = 'always',
+        prefix = ' ',
+        scope = 'cursor',
+      }
+      vim.diagnostic.open_float(nil, opts)
+    end
+  })
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -92,6 +109,9 @@ lspconfig.sumneko_lua.setup {
 lspconfig.tsserver.setup {
   on_attach = on_attach,
   capabilities = capabilities,
+  init_options = {
+    ["maxTsServerMemory"] = 8192,
+  }
 }
 
 -- stylelint
@@ -145,7 +165,7 @@ lspconfig.eslint.setup {
       packageManager = 'yarn',
       run = 'onSave',
       trace = {
-        server = 'verbose',
+        -- server = 'verbose',
       },
       validate = {
         'javascript',

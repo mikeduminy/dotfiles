@@ -35,50 +35,37 @@ local plugins = {
   -----------------------------------------------------------------------
   -- Nice-to-have plugins
   -----------------------------------------------------------------------
+  require 'plugins.harpoon', -- File hopper
   require 'plugins.indentline', -- Visually represent initial line space tabs
   require 'plugins.gitsigns', -- Git indications in the line gutter
   require 'plugins.editorconfig', -- Editorconfig defaults
   require 'plugins.dashboard', -- Dashboard plugin
   require 'plugins.lualine', -- Visual bottom 'status' line
   require 'plugins.neo-tree', -- Visual file tree
-  require 'plugins.nvim-scrollbar', -- Improved scrollbar
   require 'plugins.zen-mode', -- Distraction-free coding
   { 'kyazdani42/nvim-web-devicons', lazy = true, config = true },
   { 'alvan/vim-closetag', ft = 'HTML' }, -- Auto close html tags
   { 'windwp/nvim-autopairs', config = true }, -- Auto closing brackets
-
-  -----------------------------------------------------------------------
-  -- LSP integration
-  -----------------------------------------------------------------------
-
-  -- Lua formatting (requires that stylua be installed)
-  { 'ckipp01/stylua-nvim', ft = 'lua' },
-
-  -- List warning/error handling
-  require 'plugins.trouble',
-
-  -- Fuzzy find
-  require 'plugins.telescope',
+  {
+    'iamcco/markdown-preview.nvim', -- Markdown previewing
+    build = function()
+      vim.fn['mkdp#util#install']()
+    end,
+    ft = 'markdown'
+  },
+  require 'plugins.trouble', -- List warning/error handling
+  require 'plugins.telescope', -- Fuzzy find
 
   -- Syntax highlighting
   require 'plugins.treesitter',
 
   -- Language Server Client
   require 'plugins.lsp',
-
-  -- Markdown previewing
-  {
-    'iamcco/markdown-preview.nvim',
-    build = function()
-      vim.fn['mkdp#util#install']()
-    end,
-    ft = 'markdown'
-  },
 }
 
 local opts = {
   defaults = {
-    lazy = false,
+    lazy = false, -- todo: configure lazy true
   },
   checker = {
     enabled = false,

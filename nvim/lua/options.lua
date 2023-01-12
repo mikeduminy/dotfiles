@@ -50,6 +50,9 @@ opt.suffixesadd = '.js,.jsx,.ts,.tsx'
 opt.includeexpr = 'v:lua.resolve_module(v:fname)' -- goto file (gf) on a package reference runs this command
 opt.isfname = '@,48-57,/,.,-,_,+,,,#,$,%,~,=,@-@' -- default file name pattern with added @-@ to match scoped packages
 
+-- how long before CursorHold is triggered
+vim.o.updatetime = 1500
+
 -----------------------------------------------------------------------
 -- Neovide settings
 -----------------------------------------------------------------------
