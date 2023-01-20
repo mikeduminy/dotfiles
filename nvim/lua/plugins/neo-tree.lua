@@ -10,7 +10,7 @@ local mappings = {
 
 local rebalanceWindows = function(args)
   if (args.position == 'left' or args.position == 'right') then
-    vim.cmd('wincmd =')
+    vim.cmd.wincmd('=')
   end
 end
 

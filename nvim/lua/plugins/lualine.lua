@@ -1,6 +1,9 @@
 local M = {
   'nvim-lualine/lualine.nvim',
-  dependencies = { 'kyazdani42/nvim-web-devicons' },
+  dependencies = {
+    'kyazdani42/nvim-web-devicons',
+  },
+  lazy = false,
   config = function()
     local base16 = require 'theme.base16'
 
@@ -104,16 +107,15 @@ local M = {
         lualine_z = {}
       },
       options = {
-        theme = theme,
         globalstatus = true,
+        theme = theme,
         disabled_filetypes = {
-          'neo-tree', 'fugitive', ''
+          'fugitive', ''
         },
         ignore_focus = {
-          'neo-tree', 'fugitive', ''
+          'fugitive', ''
         }
       },
-      extensions = { 'neo-tree' }
     })
   end
 }

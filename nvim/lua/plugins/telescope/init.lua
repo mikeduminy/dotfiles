@@ -1,3 +1,6 @@
+local custom_pickers = require 'plugins.telescope.custom-pickers'
+local actions = require 'telescope.actions'
+
 local luacmd = require 'utils.keymaps'.luacmd
 local register = require 'utils.keymaps'.register
 
@@ -21,10 +24,25 @@ local prevFiles = function()
   require("telescope.builtin").oldfiles({ only_cwd = true })
 end
 
+local liveGrepRelative = function()
+  -- local current_file_path = file_utils.get_current_file({ absolute = true })
+  local current_file_path = vim.fn.expand('%:p:h')
+
+  vim.ui.input({ prompt = 'Live grep in folder: ', default = current_file_path, completion = 'dir' }, function(input)
+    if input == nil then
+      return
+    end
+    print('')
+
+    require 'telescope.builtin'.live_grep({ search_dirs = { input } })
+  end)
+end
+
 local mappings = {
   ['<leader>f'] = { name = 'Telescope - Files' },
   ['<leader>fb'] = { openBuffers, 'Search buffers' },
   ['<leader>ff'] = { liveGrep, "Live grep" },
+  ['<leader>FF'] = { liveGrepRelative, 'Live grep with folder picker' },
   ['<leader>fg'] = { luacmd 'require("telescope.builtin").git_files()', 'Search git files' },
   ['<leader>fk'] = { findFiles, 'Find files' },
   ['<leader>fo'] = { prevFiles, 'Previous files' },
@@ -104,10 +122,14 @@ local M = {
       defaults = {
         mappings = {
           i = {
+            ['<c-j>'] = actions.move_selection_next,
+            ['<c-k>'] = actions.move_selection_previous,
             ['<c-t>'] = require 'trouble.providers.telescope'.open_with_trouble,
             ["<M-p>"] = require 'telescope.actions.layout'.toggle_preview,
           },
           n = {
+            ['<c-j>'] = actions.move_selection_next,
+            ['<c-k>'] = actions.move_selection_previous,
             ['<c-t>'] = require 'trouble.providers.telescope'.open_with_trouble,
             ["<M-p>"] = require 'telescope.actions.layout'.toggle_preview,
           },
@@ -137,6 +159,13 @@ local M = {
         },
         live_grep = {
           theme = "ivy",
+          path_display = { 'smart' },
+          mappings = {
+            i = {
+              ['<c-f>'] = custom_pickers.actions.set_extension,
+              -- ['<c-l>'] = custom_pickers.actions.set_folders,
+            }
+          }
         },
         buffers = {
           theme = 'dropdown',

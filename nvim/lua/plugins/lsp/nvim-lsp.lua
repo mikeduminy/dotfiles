@@ -143,6 +143,7 @@ end
 -- eslint
 vim.cmd [[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]]
 lspconfig.eslint.setup {
+  on_attach = toggle_formatting(true),
   capabilities = capabilities,
   settings = {
     filetypes = {

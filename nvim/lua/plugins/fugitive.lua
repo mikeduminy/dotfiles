@@ -11,10 +11,10 @@ local function toggleGitFugitive()
 
   if fugitiveBuffer > -1 then
     -- close fugitive
-    vim.cmd("bd " .. fugitiveBuffer)
+    vim.cmd.bdelete(fugitiveBuffer)
   else
     -- open fugitive
-    vim.cmd("Git")
+    vim.cmd.Git()
   end
 end
 

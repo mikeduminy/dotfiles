@@ -45,8 +45,8 @@ local M = {
       { icon = '  ',
         desc = 'Open Personal dotfiles',
         action = function()
-          vim.cmd('cd ' .. configHome)
-          vim.cmd('e .')
+          vim.cmd.cd(configHome)
+          vim.cmd.edit('.')
         end,
       },
     }
