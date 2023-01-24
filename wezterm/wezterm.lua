@@ -58,13 +58,16 @@ wezterm.on('format-tab-title', function(tab)
     { Text = get_process(tab) },
     { Text = ' ' },
     { Text = get_current_working_dir(tab) },
-    { Text = '  ▕' },
+    { Text = ' ' },
+    { Attribute = { Intensity = 'Half' } },
+    { Text = '|' },
   }
 end)
 
-wezterm.on('update-right-status', function(window)
+wezterm.on('update-status', function(window)
   window:set_right_status(wezterm.format {
-    { Attribute = { Intensity = 'Bold' } },
+    { Attribute = { Intensity = 'Half' } },
+    { Attribute = { Italic = true } },
     { Text = wezterm.strftime ' %A, %d %B %Y %I:%M %p ' },
   })
 end)

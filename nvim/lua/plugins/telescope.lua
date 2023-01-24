@@ -52,7 +52,7 @@ return {
   keys = {
     { "<leader>fb", openBuffers, desc = "Buffers" },
     { "<leader>fr", prevFiles, desc = "Recent" },
-    { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
+    -- { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
   },
   opts = {
     defaults = {
@@ -66,9 +66,11 @@ return {
     },
     pickers = {
       live_grep = {
-        path_display = { "smart" },
+        path_display = { shorten = { len = 2, exclude = { 1, -1 } } },
         mappings = {
-          ["<c-f>"] = require("plugins.telescope.custom-pickers").actions.set_extension,
+          i = {
+            ["<c-f>"] = require("plugins.telescope.custom-pickers").actions.set_extension,
+          },
         },
       },
     },

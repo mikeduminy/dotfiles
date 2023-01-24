@@ -16,7 +16,6 @@ local function run_live_grep(current_input)
     additional_args = live_grep_filters.extension and function()
       return { "-g", "*." .. live_grep_filters.extension }
     end,
-    search_dirs = live_grep_filters.directories,
     default_text = current_input,
   })
 end
@@ -34,7 +33,7 @@ M.actions = transform_mod({
 
       live_grep_filters.extension = input
 
-      actions._close(prompt_bufnr, current_picker.initial_mode == "insert")
+      actions._close(prompt_bufnr)
       run_live_grep(current_input)
     end)
   end,
@@ -42,7 +41,6 @@ M.actions = transform_mod({
 
 M.live_grep = function()
   live_grep_filters.extension = nil
-  live_grep_filters.directories = nil
 
   require("telescope.builtin").live_grep()
 end
