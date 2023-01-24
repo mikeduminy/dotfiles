@@ -1,123 +1,96 @@
-local M = {
-  'nvim-lualine/lualine.nvim',
-  dependencies = {
-    'kyazdani42/nvim-web-devicons',
-  },
-  lazy = false,
-  config = function()
-    local base16 = require 'theme.base16'
-
-    local theme = 'auto' -- default for plugin
-
-    -- if (base16.type == 'cterm' or base16.type == 'default') then
-    --   -- cterm colors, which lualine does not supported
-    --   -- so fall back to a known theme within lualine
-    --   -- (normally occurs if termguicolors is not set)
-    --   theme = 'codedark'
-    -- else
-
-    local colors = base16.getColors()
-
-    local customThemeInputs = {
-      bg = colors.base01,
-      alt_bg = colors.base02,
-      dark_fg = colors.base03,
-      fg = colors.base04,
-      light_fg = colors.base05,
-      normal = colors.base0D,
-      insert = colors.base0B,
-      visual = colors.base0E,
-      replace = colors.base09,
-    }
-
-    -- lualine has it's own theming and the default 'auto' attempts
-    -- to load base16 based on different plugins, which is error prone
-    local function createTheme(input)
-      return {
-        normal = {
-          a = { fg = input.bg, bg = input.normal },
-          b = { fg = input.light_fg, bg = input.alt_bg },
-          c = { fg = input.fg, bg = input.bg },
-        },
-        insert = {
-          a = { fg = input.bg, bg = input.insert },
-          b = { fg = input.light_fg, bg = input.alt_bg },
-        },
-        visual = {
-          a = { fg = input.bg, bg = input.visual },
-          b = { fg = input.light_fg, bg = input.alt_bg },
-        },
-        replace = {
-          a = { fg = input.bg, bg = input.replace },
-          b = { fg = input.light_fg, bg = input.alt_bg },
-        },
-        command = {
-          a = { bg = input.green, fg = input.black, gui = 'bold' },
-          b = { bg = input.lightgray, fg = input.white },
-          c = { bg = input.inactivegray, fg = input.black }
-        },
-        inactive = {
-          a = { fg = input.dark_fg, bg = input.bg },
-          b = { fg = input.dark_fg, bg = input.bg },
-          c = { fg = input.dark_fg, bg = input.bg },
-        },
-      }
+return {
+  "nvim-lualine/lualine.nvim",
+  event = "VeryLazy",
+  opts = function(plugin)
+    if plugin.override then
+      require("lazyvim.util").deprecate("lualine.override", "lualine.opts")
     end
 
-    ---@diagnostic disable-next-line: cast-local-type
-    theme = createTheme(customThemeInputs)
+    local icons = require("lazyvim.config").icons
 
-    vim.opt.laststatus = 3
-
-    local macroRecordingSection = {
-      function()
-        local currentMacro = vim.fn.reg_recording()
-        if currentMacro == '' then return '' end
-        return 'Recording @' .. currentMacro
-      end,
-      color = function()
-        local currentMacro = vim.fn.reg_recording()
-        if currentMacro == '' then
-          return { fg = customThemeInputs.bg, bg = customThemeInputs.insert }
-        end
-        return { fg = customThemeInputs.bg, bg = customThemeInputs.visual }
+    local function fg(name)
+      return function()
+        ---@type {foreground?:number}?
+        local hl = vim.api.nvim_get_hl_by_name(name, true)
+        return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
       end
-    }
+    end
 
-    require 'lualine'.setup({
+    return {
+      options = {
+        theme = "auto",
+        globalstatus = true,
+        disabled_filetypes = { statusline = { "dashboard", "lazy", "alpha" } },
+      },
       sections = {
-        lualine_a = { 'mode' },
-        lualine_b = { 'branch' },
-        lualine_c = { macroRecordingSection },
-        lualine_x = { 'filetype' },
-        lualine_z = { 'location' }
+        lualine_a = { "mode" },
+        lualine_b = { "branch" },
+        lualine_c = {
+          {
+            "diagnostics",
+            symbols = {
+              error = icons.diagnostics.Error,
+              warn = icons.diagnostics.Warn,
+              info = icons.diagnostics.Info,
+              hint = icons.diagnostics.Hint,
+            },
+          },
+          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
+            -- stylua: ignore
+            {
+              function() return require("nvim-navic").get_location() end,
+              cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
+            },
+        },
+        lualine_x = {
+            -- stylua: ignore
+            {
+              function() return require("noice").api.status.command.get() end,
+              cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+              color = fg("Statement")
+            },
+            -- stylua: ignore
+            {
+              function() return require("noice").api.status.mode.get() end,
+              cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+              color = fg("Constant") ,
+            },
+          { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
+          {
+            "diff",
+            symbols = {
+              added = icons.git.added,
+              modified = icons.git.modified,
+              removed = icons.git.removed,
+            },
+          },
+        },
+        lualine_y = {
+          { "progress", separator = "", padding = { left = 1, right = 0 } },
+          { "location", padding = { left = 0, right = 1 } },
+        },
+        lualine_z = {
+          function()
+            return " " .. os.date("%R")
+          end,
+        },
       },
       winbar = {
-        lualine_a = { 'diagnostics' },
+        lualine_a = { "diagnostics" },
         lualine_b = {},
-        lualine_c = { { 'filename', path = 1 } },
+        lualine_c = { { "filename", path = 1 } },
         lualine_x = {},
-        lualine_z = {}
+        lualine_z = {},
       },
       inactive_winbar = {
-        lualine_a = { 'diagnostics' },
+        lualine_a = { "diagnostics" },
         lualine_b = {},
-        lualine_c = { { 'filename', path = 1 } },
+        lualine_c = { { "filename", path = 1 } },
         lualine_x = {},
-        lualine_z = {}
+        lualine_z = {},
       },
-      options = {
-        globalstatus = true,
-        theme = theme,
-        disabled_filetypes = {
-          'fugitive', ''
-        },
-        ignore_focus = {
-          'fugitive', ''
-        }
-      },
-    })
-  end
+      extensions = { "nvim-tree" },
+    }
+  end,
 }
-
-return M

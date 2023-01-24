@@ -11,18 +11,3 @@ Based on an [approach](https://dev.to/bowmanjd/using-multiple-git-repositories-t
 ```zsh
 for file in $XDG_CONFIG_HOME/custom/*/.zshrc; do source $file; done
 ```
-
-#### `~/.bashrc`
-```bash
-for file in "$(find $HOME/.config/custom -name 'bashrc')"; do . $file; done
-```
-
-#### `~/.vimrc`
-```vim
-runtime! ../.xdg/.config/custom/**/*.vim
-```
-
-#### `~/.ssh/config`
-```ssh
-Include ~/.xdg/.config/custom/*/*.ssh
-```

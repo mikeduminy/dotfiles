@@ -12,7 +12,7 @@ export ZSH="$XDG_DATA_HOME/oh-my-zsh"
 if [ ! -d $ZSH ]; then
   # Specifying the ZSH env variable informs oh-my-zsh where to install
   # https://github.com/ohmyzsh/ohmyzsh/issues/9543#issuecomment-1045984890
-  ZSH="$ZSH" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  ZSH="$ZSH" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 fi
 
 # oh-my-zsh cache
@@ -38,7 +38,7 @@ source $ZSH/oh-my-zsh.sh
 #################################################################
 
 # Load additional custom zsh stuff
-for file in $XDG_CONFIG_HOME/custom/*/.zshrc; do source $file; done
+for file in $XDG_CONFIG_HOME/zsh/*/.zshrc; do source $file; done
 
 #################################################################
 # Theme                                                         #

@@ -6,13 +6,13 @@ nvim/plugin/packer_compiled.lua
 ## base16 dynamic themes
 nvim/colors/base16* 
 
-# some tools set state in this config folder :()
+# some tools set state in this config folder :(
 configstore/*
 
-# custom configs
-## include the custom folder
-!custom/
+# zsh configs
+## include the zsh folder
+!zsh/
 ## exclude everything under that folder
-custom/*
+zsh/*
 ## except the base config
-!custom/base
+!zsh/base

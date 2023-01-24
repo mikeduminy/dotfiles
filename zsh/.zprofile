@@ -12,6 +12,8 @@ export XDG_DATA_HOME="$HOME/.xdg/data"
 export XDG_CONFIG_HOME="$HOME/.xdg/config"
 export XDG_STATE_HOME="$HOME/.xdg/state"
 export XDG_CACHE_HOME="$HOME/.xdg/cache"
+export XDG_RUNTIME_DIR="$HOME/.xdg/runtime"
+
 
 # Added by Toolbox App
 export PATH="$PATH:/Users/michael-james.duminy/Library/Application Support/JetBrains/Toolbox/scripts"
