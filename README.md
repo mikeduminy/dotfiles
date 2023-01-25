@@ -35,10 +35,11 @@ ln -s ~/.xdg/config/LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgen
 5. Install tools
 ```sh
 brew install wezterm \
-  neovim \
+  neovim  \
   ripgrep \
-  stylua \
-  lazygit
+  stylua  \
+  lazygit \
+  gnu-sed
 ```
 
 ## Custom installation
