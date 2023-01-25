@@ -10,4 +10,4 @@ vim.keymap.set("n", "<Leader>N", vim.diagnostic.goto_prev, { desc = "Previous Di
 
 vim.keymap.set({ "i" }, "jk", "<esc>") -- quick 'jk' in insert mode fires escape
 
-vim.keymap.set({ "n", "i", "v" }, "<leader>p", '"_dP', { desc = "Paste over" })
+vim.keymap.set({ "n", "v" }, "<leader>p", '"_dP', { desc = "Paste over" })
