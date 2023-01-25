@@ -2,7 +2,6 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   opts = {
     window = {
-      position = "float",
       mappings = {
         -- disable fuzzy finder (allow vi text search)
         ["/"] = "noop",
