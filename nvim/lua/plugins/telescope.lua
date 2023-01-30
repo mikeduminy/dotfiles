@@ -53,6 +53,13 @@ return {
     { "<leader>fb", openBuffers, desc = "Buffers" },
     { "<leader>fr", prevFiles, desc = "Recent" },
     { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
+    {
+      "<leader>fN",
+      function()
+        require("telescope").extensions.notify.notify()
+      end,
+      desc = "Notifications",
+    },
   },
   opts = {
     defaults = {
@@ -75,6 +82,7 @@ return {
         },
       },
     },
+    extensions = { "notify" },
   },
 }
 

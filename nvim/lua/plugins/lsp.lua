@@ -1,8 +1,17 @@
 return {
   "neovim/nvim-lspconfig",
   opts = {
+    autoformat = false,
     servers = {
-      -- vtsls = {},
+      jsonls = {
+        settings = {
+          json = {
+            format = {
+              enable = true,
+            },
+          },
+        },
+      },
       tsserver = {
         init_options = {
           -- support large TS projects
