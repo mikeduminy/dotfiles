@@ -16,6 +16,6 @@ return {
       lualine_x = {},
       lualine_z = {},
     },
-    extensions = { "nvim-tree" },
+    extensions = { "neo-tree" },
   },
 }

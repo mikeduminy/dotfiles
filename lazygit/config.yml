@@ -1,1 +1,7 @@
 # See options here = https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+
+os:
+  editCommand: 'nvim'
+  editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
+notARepository: 'quit'
+

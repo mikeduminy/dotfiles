@@ -10,4 +10,13 @@ vim.api.nvim_create_autocmd("Filetype", {
   callback = function()
     vim.b.miniindentscope_disable = true
   end,
+  desc = "Disable mini.indentscope on certain filetypes",
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.tsx", "*.ts", "*.jsx", "*.js" },
+  callback = function()
+    vim.cmd.EslintFixAll()
+  end,
+  desc = "ESLint run fix all on save",
 })
