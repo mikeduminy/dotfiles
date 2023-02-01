@@ -1,5 +1,6 @@
 # See options here = https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
-
+gui:
+  windowSize: 'half' # requires lazygit 0.37.0
 os:
   editCommand: 'nvim'
   editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
