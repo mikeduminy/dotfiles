@@ -60,6 +60,13 @@ return {
       end,
       desc = "Notifications",
     },
+    {
+      "<leader>fR",
+      function()
+        require("telescope.builtin").resume()
+      end,
+      desc = "Resume Last Picker",
+    },
   },
   opts = {
     defaults = {
