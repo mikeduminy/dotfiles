@@ -21,11 +21,11 @@ local function get_process(tab)
       { Text = wezterm.nerdfonts.dev_terminal },
     },
     ['git'] = {
-      { Foreground = { Color = colors.peach } },
+      { Foreground = { Color = colors.blue } },
       { Text = wezterm.nerdfonts.dev_git },
     },
     ['lazygit'] = {
-      { Foreground = { Color = colors.peach } },
+      { Foreground = { Color = colors.blue } },
       { Text = wezterm.nerdfonts.dev_git },
     },
     ['lua'] = {
