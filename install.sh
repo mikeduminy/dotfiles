@@ -2,6 +2,13 @@
 
 # todo: add logging of steps
 
+# Ensure xdg folders exist
+mkdir -p ~/.xdg/data
+mkdir -p ~/.xdg/config
+mkdir -p ~/.xdg/state
+mkdir -p ~/.xdg/cache
+mkdir -p ~/.xdg/runtime
+
 # Clone repo
 git clone git@github.com:mikeduminy/dotfiles.git ~/.xdg/config
 
