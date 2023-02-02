@@ -8,6 +8,7 @@ nvim/colors/base16*
 
 # some tools set state in this config folder :(
 configstore/*
+lazygit/state.yml
 
 # zsh configs
 ## include the zsh folder
