@@ -10,10 +10,5 @@ nvim/colors/base16*
 configstore/*
 lazygit/state.yml
 
-# zsh configs
-## include the zsh folder
-!zsh/
-## exclude everything under that folder
-zsh/*
-## except the base config
-!zsh/base
+# say no to submodules
+zsh/work/
