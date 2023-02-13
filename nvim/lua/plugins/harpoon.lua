@@ -26,6 +26,7 @@ local mappings = {
 local M = {
   'ThePrimeagen/harpoon',
   requires = { { 'nvim-lua/plenary.nvim' } },
+  event = "VeryLazy",
   keys = mappings,
   init = function()
     local wkmapping = table.insert(mappings, { '<leader>a', name = 'Harpoon' })

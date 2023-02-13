@@ -9,7 +9,7 @@ function M.is_directory(file_path)
 end
 
 function M.get_file_extension(url)
-  return url:match '^.+(%..+)$'
+  return url:match("^.+(%..+)$")
 end
 
 function M.read(file_path)
@@ -18,11 +18,15 @@ end
 
 function M.get_current_file(opts)
   if opts and opts.absolute then
-    return vim.fn.expand '%'
+    return vim.fn.expand("%")
   end
 
   -- get current file relative to cwd
-  return vim.fn.expand '%:~:.'
+  return vim.fn.expand("%:~:.")
+end
+
+function M.is_large_file(bufnr)
+  return vim.api.nvim_buf_line_count(bufnr) > 50000
 end
 
 return M

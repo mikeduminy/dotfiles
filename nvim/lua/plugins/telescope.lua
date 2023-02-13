@@ -79,14 +79,28 @@ return {
       },
     },
     pickers = {
+      buffers = {
+        theme = "dropdown",
+        initial_mode = "normal",
+        preview = {
+          hide_on_startup = true,
+        },
+        ignore_current_buffer = true,
+        show_all_buffers = false, -- ignore unloaded buffers
+        sort_lastused = true,
+        sort_mru = true,
+      },
       live_grep = {
-        path_display = { shorten = { len = 2, exclude = { 1, -1 } } },
+        path_display = { shorten = { len = 4, exclude = { 1, -1 } } },
         mappings = {
           i = {
             -- filter live_grep by file extension
             ["<c-f>"] = require("plugins.telescope.custom-pickers").actions.set_extension,
           },
         },
+      },
+      old_files = {
+        initial_mode = "normal",
       },
     },
     extensions = { "notify" },
