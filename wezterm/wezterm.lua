@@ -1,6 +1,10 @@
 local wezterm = require 'wezterm'
 local colors = require 'colors'
-require 'multiplex' -- load pane navigation
+local navigation = require 'navigation'
+local multiplex = require 'multiplex'
+
+navigation.setup_navigation()
+multiplex.setup_multiplexer()
 
 local function get_process(tab)
   local process_icons = {
@@ -173,10 +177,10 @@ return {
     { key = 'k', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Up', 5 } },
     { key = 'l', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Right', 5 } },
 
-    -- { key = 'h', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-left' },
-    -- { key = 'j', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-down' },
-    -- { key = 'k', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-up' },
-    -- { key = 'l', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-right' },
+    { key = 'h', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-left' },
+    { key = 'j', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-down' },
+    { key = 'k', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-up' },
+    { key = 'l', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-right' },
 
     { key = 'h', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Left' },
     { key = 'j', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Down' },
