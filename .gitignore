@@ -11,4 +11,5 @@ configstore/*
 lazygit/state.yml
 
 # say no to submodules
-zsh/work/
+plugins/*/
+!plugins/config

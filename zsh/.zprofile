@@ -16,4 +16,4 @@ export XDG_RUNTIME_DIR="$HOME/.xdg/runtime"
 
 
 # Added by Toolbox App
-export PATH="$PATH:/Users/michael-james.duminy/Library/Application Support/JetBrains/Toolbox/scripts"
+export PATH="$PATH:~/Library/Application Support/JetBrains/Toolbox/scripts"

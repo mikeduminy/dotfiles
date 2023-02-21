@@ -20,5 +20,5 @@ export PATH="$PATH:/usr/bin"
 
 # zsh needs some additional set up in the system files
 # so for now keep loading this here
-for file in $XDG_CONFIG_HOME/zsh/*/.zshenv; do source $file; done
+for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshenv; do source $file; done
 

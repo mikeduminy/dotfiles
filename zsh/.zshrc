@@ -37,8 +37,11 @@ source $ZSH/oh-my-zsh.sh
 # Custom config                                                 #
 #################################################################
 
+# Load base custom zsh
+source $XDG_CONFIG_HOME/zsh/base/.zshrc
+
 # Load additional custom zsh stuff
-for file in $XDG_CONFIG_HOME/zsh/*/.zshrc; do source $file; done
+for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshrc; do source $file; done
 
 #################################################################
 # Theme                                                         #
