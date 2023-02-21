@@ -149,25 +149,43 @@ return {
       },
     },
 
+    -- CMD+P to search open workspaces
     {
-      key = '9',
-      mods = 'ALT',
+      key = 'p',
+      mods = 'CMD',
       action = wezterm.action.ShowLauncherArgs {
         flags = 'FUZZY|WORKSPACES',
+      },
+    },
+    -- CMD+SHIFT+P to search commands/actions
+    {
+      key = 'p',
+      mods = 'CMD|SHIFT',
+      action = wezterm.action.ShowLauncherArgs {
+        flags = 'FUZZY|COMMANDS',
       },
     },
 
     { key = 'z', mods = 'CMD', action = wezterm.action.TogglePaneZoomState },
 
-    { key = 'h', mods = 'CMD|SHIFT', action = wezterm.action.AdjustPaneSize { 'Left', 5 } },
-    { key = 'j', mods = 'CMD|SHIFT', action = wezterm.action.AdjustPaneSize { 'Down', 5 } },
-    { key = 'k', mods = 'CMD|SHIFT', action = wezterm.action.AdjustPaneSize { 'Up', 5 } },
-    { key = 'l', mods = 'CMD|SHIFT', action = wezterm.action.AdjustPaneSize { 'Right', 5 } },
+    { key = 'h', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Left', 5 } },
+    { key = 'j', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Down', 5 } },
+    { key = 'k', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Up', 5 } },
+    { key = 'l', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Right', 5 } },
 
-    { key = 'h', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-left' },
-    { key = 'j', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-down' },
-    { key = 'k', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-up' },
-    { key = 'l', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-right' },
+    -- { key = 'h', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-left' },
+    -- { key = 'j', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-down' },
+    -- { key = 'k', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-up' },
+    -- { key = 'l', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-right' },
+
+    { key = 'h', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Left' },
+    { key = 'j', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Down' },
+    { key = 'k', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Up' },
+    { key = 'l', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Right' },
+
+    { key = '[', mods = 'ALT', action = wezterm.action { ActivateTabRelative = -1 } },
+    { key = ']', mods = 'ALT', action = wezterm.action { ActivateTabRelative = 1 } },
+    { key = 'v', mods = 'ALT', action = wezterm.action.ActivateCopyMode },
   },
   scrollback_lines = 6000, -- default is 3500
   switch_to_last_active_tab_when_closing_tab = true, -- default is false

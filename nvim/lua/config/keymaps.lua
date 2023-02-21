@@ -22,4 +22,6 @@ vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" 
 vim.keymap.set("n", "<leader><tab>N", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- copy file path (relative)
-vim.keymap.set("n", "<leader>cp", function() vim.fn.setreg("+",vim.fn.expand '%:~:.') end, { desc = "Copy Relative File Path" })
+vim.keymap.set("n", "<leader>cp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:~:."))
+end, { desc = "Copy Relative File Path" })

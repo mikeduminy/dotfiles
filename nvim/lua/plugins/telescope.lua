@@ -51,7 +51,7 @@ return {
   "nvim-telescope/telescope.nvim",
   keys = {
     { "<leader>fb", openBuffers, desc = "Buffers" },
-    { "<leader>fr", prevFiles, desc = "Recent" },
+    { "<leader>fR", prevFiles, desc = "Recent" },
     { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
     {
       "<leader>fN",
@@ -61,7 +61,7 @@ return {
       desc = "Notifications",
     },
     {
-      "<leader>fR",
+      "<leader>fr",
       function()
         require("telescope.builtin").resume()
       end,
@@ -98,6 +98,9 @@ return {
             ["<c-f>"] = require("plugins.telescope.custom-pickers").actions.set_extension,
           },
         },
+        additional_args = function(opts)
+          return { "--hidden" }
+        end,
       },
       old_files = {
         initial_mode = "normal",
