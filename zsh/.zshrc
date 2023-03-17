@@ -23,7 +23,7 @@ export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
 export ZSH_CUSTOM="$XDG_DATA_HOME"
 
 # oh-my-zsh theme
-ZSH_THEME="robbyrussell"
+ZSH_THEME="af-magic"
 
 # oh-my-zsh plugins
 plugins=(git vi-mode history-substring-search zsh-navigation-tools)
@@ -36,9 +36,6 @@ source $ZSH/oh-my-zsh.sh
 #################################################################
 # Custom config                                                 #
 #################################################################
-
-# Load base custom zsh
-source $XDG_CONFIG_HOME/zsh/base/.zshrc
 
 # Load additional custom zsh stuff
 for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshrc; do source $file; done
