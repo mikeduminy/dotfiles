@@ -63,7 +63,7 @@ return {
     {
       "<leader>fr",
       function()
-        require("telescope.builtin").resume()
+        require("telescope.builtin").resume({ initial_mode = "normal" })
       end,
       desc = "Resume Last Picker",
     },
@@ -77,11 +77,12 @@ return {
         treesitter = false,
         mime_hook = custom_mime_hook,
       },
+      file_ignore_patterns = { "neo-tree " },
     },
     pickers = {
       buffers = {
         theme = "dropdown",
-        initial_mode = "normal",
+        initial_mode = "insert",
         preview = {
           hide_on_startup = true,
         },
