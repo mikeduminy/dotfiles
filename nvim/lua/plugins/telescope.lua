@@ -18,6 +18,22 @@ local prevFiles = function()
   require("telescope.builtin").oldfiles({ only_cwd = true })
 end
 
+local filesInRootDir = function()
+  require("lazyvim.util").telescope("files")()
+end
+
+local filesInCwd = function()
+  require("lazyvim.util").telescope("files", { cwd = false })()
+end
+
+local notifications = function()
+  require("telescope").extensions.notify.notify()
+end
+
+local resumePicker = function()
+  require("telescope.builtin").resume({ initial_mode = "normal" })
+end
+
 local MAX_SIZE = 128 * 1024 -- 128kb
 
 local function custom_mime_hook(filepath, bufnr, opts)
@@ -50,23 +66,15 @@ end
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
+    -- default is <leader>ff
+    { "<leader>fF", filesInRootDir, desc = "Find Files (root dir)" },
+    -- default is <leader>fF
+    { "<leader>ff", filesInCwd, desc = "Find Files (cwd)" },
     { "<leader>fb", openBuffers, desc = "Buffers" },
-    { "<leader>fR", prevFiles, desc = "Recent" },
+    { "<leader>fo", prevFiles, desc = "Recent (old files)" },
     { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
-    {
-      "<leader>fN",
-      function()
-        require("telescope").extensions.notify.notify()
-      end,
-      desc = "Notifications",
-    },
-    {
-      "<leader>fr",
-      function()
-        require("telescope.builtin").resume({ initial_mode = "normal" })
-      end,
-      desc = "Resume Last Picker",
-    },
+    { "<leader>fN", notifications, desc = "Notifications" },
+    { "<leader>fr", resumePicker, desc = "Resume Last Picker" },
   },
   opts = {
     defaults = {
