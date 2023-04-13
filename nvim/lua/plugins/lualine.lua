@@ -11,6 +11,9 @@ return {
     end
 
     return vim.tbl_deep_extend("force", opts, {
+      options = {
+        disabled_filetypes = { "neo-tree" },
+      },
       winbar = {
         lualine_a = {},
         lualine_b = { { "diagnostics" } },
@@ -33,6 +36,14 @@ return {
         lualine_y = {},
         lualine_z = {},
       },
+      -- tabline = {
+      --   lualine_a = {},
+      --   lualine_b = {},
+      --   lualine_c = {},
+      --   lualine_x = {},
+      --   lualine_y = {},
+      --   lualine_z = {},
+      -- },
     })
   end,
 }
