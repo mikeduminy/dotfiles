@@ -84,14 +84,16 @@ return {
   font_size = 14.5,
   line_height = 1.1,
   window_decorations = 'TITLE|RESIZE',
+  color_scheme = 'tokyonight_moon',
   -- window_padding = {
   --   left = 5,
   --   right = 5,
   --   top = 5,
   --   bottom = 5,
   -- },
+  window_background_opacity = 0.95,
   use_resize_increments = true,
-  use_fancy_tab_bar = false,
+  use_fancy_tab_bar = true,
   initial_cols = 110,
   initial_rows = 25,
   inactive_pane_hsb = {
