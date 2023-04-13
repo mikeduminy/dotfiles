@@ -16,6 +16,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.lang.typescript" },
     -- { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.ui.mini-starter" },
+    { import = "lazyvim.plugins.extras.coding.copilot" },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -26,7 +27,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "tokyonight" } },
   checker = {
     enabled = true, -- automatically check for plugin updates
     frequency = 3600, -- check for updates every hour
