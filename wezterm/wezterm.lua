@@ -4,6 +4,9 @@ local navigation = require 'navigation'
 local multiplex = require 'multiplex'
 local projects = require 'lib.projects'
 
+-- setup zen mode
+require 'lib.zenmode'
+
 navigation.setup_navigation()
 multiplex.setup_multiplexer()
 
