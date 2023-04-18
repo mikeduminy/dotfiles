@@ -2,10 +2,13 @@
 
 This repo uses the [XDG Base Direction Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) to organise config files. The official documentation is fairly sparse, so to get a better understanding of the system I'd recommend looking at the [archlinux wiki](https://wiki.archlinux.org/title/XDG_Base_Directory).
 
-Intended to be used on a Mac.
+> This is just a recommendation. Feel free to deviate, but remember to update
+the values for the XDG environment variables. The defaults are defined in
+`.zshenv`.
+
+NOTE: Only intended to be used on a Mac.
 
 ## Requirements
-
 - bash
 - zsh
 - git
@@ -16,7 +19,6 @@ Intended to be used on a Mac.
 ```
 
 ## Getting started (manual)
-
 1. Clone this repo into `~/.xdg/config`
 2. Link the zsh config files from this repo to the root ones
 ````
@@ -32,17 +34,38 @@ ln -s ~/.xdg/config/LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgen
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-5. Install tools
+5. Install main tools
 ```sh
-brew install wezterm \
+brew install \
+  wezterm \
   neovim  \
   ripgrep \
   stylua  \
   lazygit \
   gnu-sed
 ```
+6. Install quality-of-life tools
+```sh
+brew install \
+  bluesnooze
+```
 
-## Custom installation
-The above is just a recommendation. Feel free to deviate, but remember to update
-the values for the XDG environment variables. The defaults are defined in
-`.zshenv`.
+## Software (installed by installer)
+- [Neovim](https://neovim.io/) - terminal
+- [ripgrep](https://github.com/BurntSushi/ripgrep) - fast file search
+- [stylua](https://github.com/JohnnyMorganz/StyLua) - lua formatter
+- [gnu-sed](https://formulae.brew.sh/formula/gnu-sed) - stream editor
+- [Bluesnooze](https://github.com/odlp/bluesnooze) - Sleeping Mac = Bluetooth off
+- [LazyGit](https://github.com/jesseduffield/lazygit) - Terminal GUI for git
+
+## Quality-of-life software
+- [1Password](https://1password.com/) - Password manager
+- [Beyond Compare](https://www.scootersoftware.com/download.php) - 3-way merge
+  tool
+- [CleanShot X](https://cleanshot.com/) - Better screenshots
+- [DisplayLink Manager](https://www.synaptics.com/products/displaylink-graphics/downloads/macos) - External display support through Dell dock 
+- [Insomnia](https://insomnia.rest/) - REST GUI
+- [Microsoft Edge](https://www.microsoft.com/en-us/edge) - Personal Browser
+- [Raycast](https://www.raycast.com/) - Replacement for Mac Spotlight
+- [XCodes](https://www.xcodes.app/) - XCode version manager
+

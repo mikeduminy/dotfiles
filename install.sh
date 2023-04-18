@@ -30,6 +30,7 @@ brew install wezterm
 brew install neovim \
   ripgrep \
   stylua \
-  lazygit
+  lazygit \
+  gnu-sed
 
 # close and re-open terminal
