@@ -7,3 +7,6 @@ source $(dirname $0)/git/index.zsh
 
 alias open_file_descriptors="sudo lsof -n | cut -f1 -d' ' | uniq -c | sort | tail"
 alias lg="lazygit"
+
+alias vi="nvim"
+alias vim="nvim"
