@@ -2,6 +2,7 @@ local wezterm = require 'wezterm'
 local colors = require 'colors'
 local navigation = require 'navigation'
 local multiplex = require 'multiplex'
+local projects = require 'lib.projects'
 
 navigation.setup_navigation()
 multiplex.setup_multiplexer()
@@ -152,6 +153,30 @@ return {
         top_level = true,
         direction = 'Down',
         size = { Percent = 50 },
+      },
+    },
+    -- CMD+SHIFT+O to create workspaces
+    {
+      key = 'o',
+      mods = 'CMD|SHIFT',
+      action = wezterm.action.InputSelector {
+        title = 'Open Workspace',
+        choices = projects.getWorkspaceChoices(),
+        action = wezterm.action_callback(function(window, pane, id, label)
+          if not id and not label then
+            wezterm.log_info 'cancelled'
+          else
+            window:perform_action(
+              wezterm.action.SwitchToWorkspace {
+                name = label,
+                spawn = {
+                  cwd = id,
+                },
+              },
+              pane
+            )
+          end
+        end),
       },
     },
 

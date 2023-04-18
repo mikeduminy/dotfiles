@@ -1,4 +1,5 @@
 local file = require 'utils.file'
+local plugins = require 'lib.plugins'
 local wezterm = require 'wezterm'
 local mux = wezterm.mux
 
@@ -9,10 +10,11 @@ package.path = package.path .. ';' .. config_dir .. '/plugins/?/init.lua'
 local M = {}
 
 local function spawnCodingDomain(name, project_dir, opts)
-  local split, start_editor
+  local split = false
+  local start_editor = false
   if opts then
-    split = opts.split or false
-    start_editor = opts.start_editor or false
+    split = opts.split or split
+    start_editor = opts.start_editor or start_editor
   end
 
   local tab, editor_pane, window = mux.spawn_window {
@@ -33,45 +35,21 @@ local function spawnCodingDomain(name, project_dir, opts)
   end
 end
 
-local function getPlugins()
-  local pluginNames = {}
-  for pluginName in io.popen([[ls -p $XDG_CONFIG_HOME/plugins | grep \/ | sed 's:/*$::']]):lines() do
-    table.insert(pluginNames, { name = pluginName })
-  end
-
-  debug = true
-
-  local plugins = {}
-  for _, pluginName in ipairs(pluginNames) do
-    local status, result = pcall(require, pluginName.name .. '/wezterm')
-    if status then
-      table.insert(plugins, { name = pluginName.name, module = result })
-      if debug then
-        print('loaded ' .. pluginName.name)
-      end
-    else
-      print('failed to load', pluginName.name)
-    end
-  end
-
-  -- for _, plugin in ipairs(plugins) do
-  --   print('loading coding domains for ' .. plugin.name)
-  --   for _, domain in ipairs(plugin.module.get_coding_domains()) do
-  --     print(domain.name .. ' ' .. domain.dir)
-  --     -- spawnCodingDomain(domain.name, domain.dir, domain.opts or {})
-  --   end
-  -- end
-
-  return plugins
-end
+-- for _, plugin in ipairs(plugins) do
+--   print('loading coding domains for ' .. plugin.name)
+--   for _, domain in ipairs(plugin.module.get_coding_domains()) do
+--     print(domain.name .. ' ' .. domain.dir)
+--     -- spawnCodingDomain(domain.name, domain.dir, domain.opts or {})
+--   end
+-- end
 
 M.setup_multiplexer = function()
   wezterm.on('gui-startup', function(_cmd)
-    for _, plugin in ipairs(getPlugins()) do
+    for _, plugin in ipairs(plugins.getPlugins()) do
       print('loading coding domains for ' .. plugin.name)
       for _, domain in ipairs(plugin.module.get_coding_domains()) do
         if file.is_dir(domain.dir) then
-          spawnCodingDomain(domain.name, domain.dir, domain.opts or {})
+          -- spawnCodingDomain(domain.name, domain.dir, domain.opts or {})
         end
       end
     end

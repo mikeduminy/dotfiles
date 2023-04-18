@@ -18,4 +18,9 @@ M.is_dir = function(path)
   return M.exists(path .. '/')
 end
 
+-- lua equivalent of POSIX basename
+M.basename = function(str)
+  return string.gsub(str, '(.*/)(.*)', '%2')
+end
+
 return M
