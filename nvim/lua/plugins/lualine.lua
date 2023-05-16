@@ -10,10 +10,9 @@ return {
       end
     end
 
-    return vim.tbl_deep_extend("force", opts, {
-      options = {
-        disabled_filetypes = { "neo-tree" },
-      },
+    table.insert(opts.options.disabled_filetypes, "neo-tree")
+
+    return vim.tbl_deep_extend("error", opts, {
       winbar = {
         lualine_a = {},
         lualine_b = { { "diagnostics" } },
