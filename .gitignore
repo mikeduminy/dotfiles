@@ -10,6 +10,7 @@ nvim/colors/base16*
 configstore/*
 lazygit/state.yml
 github-copilot/*
+gatsby/
 
 # say no to submodules
 plugins/*/
