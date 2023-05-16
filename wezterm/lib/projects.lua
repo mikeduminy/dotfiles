@@ -39,7 +39,9 @@ local function getProjects()
     for _, dir in ipairs(dirs) do
       if file.is_dir(dir) then
         wezterm.log_info(dir)
-        table.insert(projects, { name = file.basename(dir), location = dir })
+        local parent_dir = file.basename(file.dirname(dir))
+        local child_dir = file.basename(dir)
+        table.insert(projects, { name = parent_dir .. '/' .. child_dir, location = dir })
       end
     end
   end

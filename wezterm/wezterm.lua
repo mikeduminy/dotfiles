@@ -3,6 +3,7 @@ local colors = require 'colors'
 local navigation = require 'navigation'
 local multiplex = require 'multiplex'
 local projects = require 'lib.projects'
+local file = require 'utils.file'
 
 -- setup zen mode
 require 'lib.zenmode'
@@ -135,30 +136,13 @@ return {
     },
     {
       mods = 'CMD|SHIFT',
-      key = [[|]],
-      action = wezterm.action.SplitPane {
-        top_level = true,
-        direction = 'Right',
-        size = { Percent = 50 },
-      },
-    },
-    {
-      mods = 'CMD',
       key = [[-]],
       action = wezterm.action {
         SplitVertical = { domain = 'CurrentPaneDomain' },
       },
     },
-    {
-      mods = 'ALT|SHIFT',
-      key = [[_]],
-      action = wezterm.action.SplitPane {
-        top_level = true,
-        direction = 'Down',
-        size = { Percent = 50 },
-      },
-    },
-    -- CMD+SHIFT+O to create workspaces
+
+    -- CMD+SHIFT+O to switch workspaces
     {
       key = 'o',
       mods = 'CMD|SHIFT',
@@ -171,7 +155,7 @@ return {
           else
             window:perform_action(
               wezterm.action.SwitchToWorkspace {
-                name = label,
+                name = file.basename(label),
                 spawn = {
                   cwd = id,
                 },

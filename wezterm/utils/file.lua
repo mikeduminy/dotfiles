@@ -1,3 +1,5 @@
+local string = require 'string'
+
 local M = {}
 
 --- Check if a file or directory exists in this path
@@ -18,9 +20,18 @@ M.is_dir = function(path)
   return M.exists(path .. '/')
 end
 
--- lua equivalent of POSIX basename
-M.basename = function(str)
-  return string.gsub(str, '(.*/)(.*)', '%2')
+-- lua equivalents of POSIX functions
+M.basename = function(P)
+  local s1, s2 = M._splitpath(P)
+  return s2
+end
+
+M.dirname = function(P)
+  return (M._splitpath(P))
+end
+
+M._splitpath = function(P)
+  return string.match(P, '^(.-)[\\/]?([^\\/]*)$')
 end
 
 return M
