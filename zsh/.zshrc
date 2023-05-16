@@ -26,13 +26,16 @@ export ZSH_CUSTOM="$XDG_DATA_HOME"
 ZSH_THEME="af-magic"
 
 # oh-my-zsh plugins
-plugins=(git vi-mode history-substring-search zsh-navigation-tools)
+plugins=(git vi-mode history-substring-search zsh-navigation-tools yarn)
 
 # vi-mode options
 VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 VI_MODE_SET_CURSOR=true
 MODE_INDICATOR="%F{blue}N ~ %f"
 INSERT_MODE_INDICATOR="%F{green}I ~ %f"
+
+# yarn options
+zstyle ':omz:plugins:yarn' global-path no
 
 source $ZSH/oh-my-zsh.sh
 
