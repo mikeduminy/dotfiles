@@ -73,8 +73,8 @@ return {
     { "<leader>fb", openBuffers, desc = "Buffers" },
     { "<leader>fo", prevFiles, desc = "Recent (old files)" },
     { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
-    { "<leader>fN", notifications, desc = "Notifications" },
     { "<leader>fr", resumePicker, desc = "Resume Last Picker" },
+    { "<leader>sN", notifications, desc = "Notifications" },
   },
   opts = {
     defaults = {
@@ -108,7 +108,7 @@ return {
           },
         },
         additional_args = function(opts)
-          return { "--hidden" }
+          return { "--hidden --smart-case" }
         end,
       },
       old_files = {
