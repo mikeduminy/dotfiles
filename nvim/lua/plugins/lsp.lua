@@ -3,7 +3,6 @@ return {
   opts = {
     autoformat = true,
     servers = {
-      jsonls = {},
       tsserver = {
         init_options = {
           -- support large TS projects
@@ -15,15 +14,14 @@ return {
           includeInlayVariableTypeHintsWhenTypeMatchesName = true,
         },
       },
-      eslint = {},
     },
     setup = {
       tsserver = function(_, opts)
         opts.capabilities.documentFormattingProvider = false
       end,
-      eslint = function(_, opts)
-        opts.capabilities.documentFormattingProvider = false
-      end,
+      -- eslint = function(_, opts)
+      --   opts.capabilities.documentFormattingProvider = false
+      -- end,
     },
   },
 }

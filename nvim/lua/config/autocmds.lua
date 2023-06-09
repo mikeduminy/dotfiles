@@ -23,13 +23,3 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
   desc = "Disable mini.indentscope on large files",
 })
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.tsx", "*.ts", "*.jsx", "*.js" },
-  callback = function()
-    if require("lazyvim.plugins.lsp.format").autoformat == true then
-      vim.cmd.EslintFixAll()
-    end
-  end,
-  desc = "ESLint run fix all on save",
-})
