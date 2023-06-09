@@ -108,7 +108,7 @@ return {
           },
         },
         additional_args = function(opts)
-          return { "--hidden --smart-case" }
+          return { "--smart-case" }
         end,
       },
       old_files = {
