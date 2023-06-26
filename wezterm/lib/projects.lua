@@ -20,9 +20,9 @@ local function getProjects()
   local projects = {}
   local _plugins = plugins.getPlugins()
 
-  for _, plugin in ipairs(_plugins) do
-    wezterm.log_info(plugin.module.get_project_dir())
-  end
+  -- for _, plugin in ipairs(_plugins) do
+  --   wezterm.log_info(plugin.module.get_project_dir())
+  -- end
 
   local base_search_command = 'fd --type=d --max-depth=1 .'
 
@@ -38,7 +38,7 @@ local function getProjects()
     local dirs = wezterm.read_dir(project_dir)
     for _, dir in ipairs(dirs) do
       if file.is_dir(dir) then
-        wezterm.log_info(dir)
+        -- wezterm.log_info(dir)
         local parent_dir = file.basename(file.dirname(dir))
         local child_dir = file.basename(dir)
         table.insert(projects, { name = parent_dir .. '/' .. child_dir, location = dir })
@@ -78,8 +78,6 @@ M.getWorkspaceChoices = function()
   for _, project in ipairs(getProjects()) do
     table.insert(choices, { label = project.name, id = project.location })
   end
-
-  wezterm.log_info('final choices: ' .. dump(choices))
 
   return choices
 end

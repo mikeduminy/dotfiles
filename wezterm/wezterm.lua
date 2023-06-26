@@ -186,6 +186,21 @@ return {
       },
     },
 
+    {
+      key = 'r',
+      mods = 'CMD|SHIFT',
+      action = wezterm.action.PromptInputLine {
+        description = 'Enter new name for workspace',
+        action = wezterm.action_callback(function(window, pane, line)
+          if line then
+            local title = window:mux_window():get_workspace()
+            wezterm.log_info('Renaming from "' .. title .. '" to "' .. line .. '"')
+            wezterm.mux.rename_workspace(title, line)
+          end
+        end),
+      },
+    },
+
     { key = 'z', mods = 'CMD', action = wezterm.action.TogglePaneZoomState },
 
     { key = 'h', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Left', 5 } },
