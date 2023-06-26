@@ -79,6 +79,10 @@ M.getWorkspaceChoices = function()
     table.insert(choices, { label = project.name, id = project.location })
   end
 
+  -- wezterm.log_info('choices: ' .. dump(choices))
+
+  table.insert(choices, { label = 'config', id = os.getenv 'XDG_CONFIG_HOME' })
+
   return choices
 end
 

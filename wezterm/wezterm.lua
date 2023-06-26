@@ -148,25 +148,33 @@ return {
     {
       key = 'o',
       mods = 'CMD|SHIFT',
-      action = wezterm.action.InputSelector {
-        title = 'Open Workspace',
-        choices = projects.getWorkspaceChoices(),
-        action = wezterm.action_callback(function(window, pane, id, label)
-          if not id and not label then
-            wezterm.log_info 'cancelled'
-          else
-            window:perform_action(
-              wezterm.action.SwitchToWorkspace {
-                name = file.basename(label),
-                spawn = {
-                  cwd = id,
-                },
-              },
-              pane
-            )
-          end
-        end),
-      },
+      action = wezterm.action_callback(function(window, pane)
+        -- dynamically get list of projects
+        local choices = projects.getWorkspaceChoices()
+
+        window:perform_action(
+          wezterm.action.InputSelector {
+            title = 'Open Workspace',
+            choices = choices,
+            action = wezterm.action_callback(function(window, pane, id, label)
+              if not id and not label then
+                wezterm.log_info 'cancelled'
+              else
+                window:perform_action(
+                  wezterm.action.SwitchToWorkspace {
+                    name = file.basename(label),
+                    spawn = {
+                      cwd = id,
+                    },
+                  },
+                  pane
+                )
+              end
+            end),
+          },
+          pane
+        )
+      end),
     },
 
     -- CMD+P to search open workspaces
@@ -189,16 +197,21 @@ return {
     {
       key = 'r',
       mods = 'CMD|SHIFT',
-      action = wezterm.action.PromptInputLine {
-        description = 'Enter new name for workspace',
-        action = wezterm.action_callback(function(window, pane, line)
-          if line then
-            local title = window:mux_window():get_workspace()
-            wezterm.log_info('Renaming from "' .. title .. '" to "' .. line .. '"')
-            wezterm.mux.rename_workspace(title, line)
-          end
-        end),
-      },
+      action = wezterm.action_callback(function(window, pane)
+        local title = window:mux_window():get_workspace()
+        window:perform_action(
+          wezterm.action.PromptInputLine {
+            description = 'Enter new name for workspace "' .. title .. '"',
+            action = wezterm.action_callback(function(window, pane, line)
+              if line then
+                wezterm.log_info('Renaming from "' .. title .. '" to "' .. line .. '"')
+                wezterm.mux.rename_workspace(title, line)
+              end
+            end),
+          },
+          pane
+        )
+      end),
     },
 
     { key = 'z', mods = 'CMD', action = wezterm.action.TogglePaneZoomState },
