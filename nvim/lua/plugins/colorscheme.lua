@@ -7,4 +7,8 @@ return {
       transparent = true,
     },
   },
+  {
+    "catppuccin/nvim",
+    enabled = false,
+  },
 }

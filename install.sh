@@ -26,9 +26,14 @@ ln -s ~/.xdg/config/LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgen
 # terminal 
 brew install wezterm
 
+# fuzzy finder
+brew install fzf
+
+# faster grep
+brew install ripgrep
+
 # neovim + deps
 brew install neovim \
-  ripgrep \
   stylua \
   lazygit \
   gnu-sed

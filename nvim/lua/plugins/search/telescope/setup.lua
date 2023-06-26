@@ -1,5 +1,10 @@
 local liveGrepRelative = function()
-  local current_file_path = vim.fn.expand("%:p:h")
+  local current_file_path = vim.api.nvim_buf_get_name(0)
+
+  -- remove oil:// prefix if function is run from oil:// buffer
+  if current_file_path:sub(1, 6) == "oil://" then
+    current_file_path = current_file_path:sub(7)
+  end
 
   vim.ui.input({ prompt = "Live grep in folder: ", default = current_file_path, completion = "dir" }, function(input)
     if input == nil then
@@ -18,12 +23,8 @@ local prevFiles = function()
   require("telescope.builtin").oldfiles({ only_cwd = true })
 end
 
-local filesInRootDir = function()
-  require("lazyvim.util").telescope("files")()
-end
-
-local filesInCwd = function()
-  require("lazyvim.util").telescope("files", { cwd = false })()
+local files = function()
+  require("lazyvim.util").telescope("find_files", { cwd = require("lazyvim.util").get_root() })()
 end
 
 local notifications = function()
@@ -66,15 +67,19 @@ end
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
-    -- default is <leader>ff
-    { "<leader>fF", filesInRootDir, desc = "Find Files (root dir)" },
-    -- default is <leader>fF
-    { "<leader>ff", filesInCwd, desc = "Find Files (cwd)" },
+    { "<leader>ff", files, desc = "Find Files" },
     { "<leader>fb", openBuffers, desc = "Buffers" },
     { "<leader>fo", prevFiles, desc = "Recent (old files)" },
     { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
     { "<leader>fr", resumePicker, desc = "Resume Last Picker" },
     { "<leader>sN", notifications, desc = "Notifications" },
+  },
+  dependencies = {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "make",
+    config = function()
+      require("telescope").load_extension("fzf")
+    end,
   },
   opts = {
     defaults = {
@@ -85,7 +90,7 @@ return {
         treesitter = false,
         mime_hook = custom_mime_hook,
       },
-      file_ignore_patterns = { "neo-tree " },
+      file_ignore_patterns = { "neo-tree ", "oil://" },
     },
     pickers = {
       buffers = {
@@ -104,11 +109,11 @@ return {
         mappings = {
           i = {
             -- filter live_grep by file extension
-            ["<c-f>"] = require("plugins.telescope.custom-pickers").actions.set_extension,
+            ["<c-f>"] = require("plugins.search.telescope.custom-pickers").actions.set_extension,
           },
         },
         additional_args = function(opts)
-          return { "--smart-case" }
+          return { "--smart-case", "--hidden" }
         end,
       },
       old_files = {
@@ -118,19 +123,3 @@ return {
     extensions = { "notify" },
   },
 }
-
--- -- might need these backup funtions
--- local function custom_buffer_preview_maker(filepath, bufnr, opts)
---   opts = opts or {}
---
---   -- disable in large files
---   vim.loop.fs_stat(filepath, function(_, stat)
---     if not stat then return end
---     if stat.size > MAX_SIZE then
---       return
---     else
---       require 'telescope.previewers'.buffer_previewer_maker(filepath, bufnr, opts)
---     end
---   end)
--- end
---
