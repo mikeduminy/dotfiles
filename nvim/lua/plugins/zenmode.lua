@@ -21,7 +21,7 @@ return {
       wezterm = {
         enabled = true,
         -- can be either an absolute font size or the number of incremental steps
-        font = "+1", -- (10% increase per step)
+        font = "+0", -- (10% increase per step)
       },
     },
   },
