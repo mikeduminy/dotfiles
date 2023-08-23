@@ -6,7 +6,7 @@
 vim.opt.fillchars = ""
 
 -- goto file (gf) settings
-_G.resolve_module = require("utils.resolve_module")
+_G.resolve_module = require("utils.resolve.resolve_module")
 
 -- goto file (gf) should search these paths
 vim.opt.path = ".,src"
