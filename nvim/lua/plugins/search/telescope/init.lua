@@ -1,12 +1,14 @@
-local liveGrepRelative = function()
-  local current_file_path = vim.api.nvim_buf_get_name(0)
+local file = require("utils.file")
 
-  -- remove oil:// prefix if function is run from oil:// buffer
-  if current_file_path:sub(1, 6) == "oil://" then
-    current_file_path = current_file_path:sub(7)
+local liveGrepRelative = function()
+  local current_path = file.get_current_dir()
+
+  if current_path:sub(1, 6) == "oil://" then
+    -- trim oil:// from start
+    current_path = current_path:sub(7)
   end
 
-  vim.ui.input({ prompt = "Live grep in folder: ", default = current_file_path, completion = "dir" }, function(input)
+  vim.ui.input({ prompt = "Live grep in folder: ", default = current_path, completion = "dir" }, function(input)
     if input == nil then
       return
     end
@@ -24,11 +26,15 @@ local prevFiles = function()
 end
 
 local files = function()
-  require("lazyvim.util").telescope("find_files", { cwd = require("lazyvim.util").get_root() })()
+  require("lazyvim.util").telescope("find_files", { cwd = file.get_root() })()
 end
 
 local notifications = function()
   require("telescope").extensions.notify.notify()
+end
+
+local jumplist = function()
+  require("telescope.builtin").jumplist()
 end
 
 local resumePicker = function()
@@ -67,12 +73,13 @@ end
 return {
   "nvim-telescope/telescope.nvim",
   keys = {
-    { "<leader>ff", files, desc = "Find Files" },
+    { "<leader>ff", files, desc = "Find files" },
     { "<leader>fb", openBuffers, desc = "Buffers" },
     { "<leader>fo", prevFiles, desc = "Recent (old files)" },
     { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
     { "<leader>fr", resumePicker, desc = "Resume Last Picker" },
     { "<leader>sN", notifications, desc = "Notifications" },
+    { "<leader>sj", jumplist, desc = "Jumplist" },
   },
   dependencies = {
     "nvim-telescope/telescope-fzf-native.nvim",

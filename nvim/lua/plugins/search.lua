@@ -1,4 +1,20 @@
 return {
-  require("plugins.search.telescope.setup"),
-  require("plugins.search.fzf-lua.setup"),
+  require("plugins.search.telescope"),
+  {
+    "folke/flash.nvim",
+    opts = {
+      search = {
+        mode = "search",
+      },
+      jump = {
+        nohlsearch = true,
+        autojump = true,
+      },
+      label = {
+        rainbow = {
+          enabled = true,
+        },
+      },
+    },
+  },
 }
