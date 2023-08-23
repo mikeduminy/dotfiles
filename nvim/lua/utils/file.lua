@@ -17,16 +17,29 @@ function M.read(file_path)
 end
 
 function M.get_current_file(opts)
-  if opts and opts.absolute then
-    return vim.fn.expand("%")
+  if opts and opts.relative then
+    -- get current file relative to cwd
+    return vim.fn.expand("%:~:.")
   end
 
-  -- get current file relative to cwd
-  return vim.fn.expand("%:~:.")
+  return vim.fn.expand("%")
+end
+
+function M.get_current_dir(opts)
+  if opts and opts.absolute then
+    -- get current dir relative to cwd
+    return vim.fn.expand("%:~:.:h")
+  end
+
+  return vim.fn.expand("%:h")
 end
 
 function M.is_large_file(bufnr)
   return vim.api.nvim_buf_line_count(bufnr) > 50000
+end
+
+function M.get_root()
+  return require("lazyvim.util").get_root()
 end
 
 return M

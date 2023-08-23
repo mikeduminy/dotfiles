@@ -4,6 +4,9 @@
 
 local map = vim.keymap.set
 
+local file_utils = require("utils.file")
+local git_utils = require("utils.git")
+
 -----------------------------------------------------------------------
 -- Keymaps
 ----------------------------------------------------------------------
@@ -45,8 +48,16 @@ map("n", "<leader><tab>N", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- copy file path (relative)
 map("n", "<leader>cp", function()
-  vim.fn.setreg("+", vim.fn.expand("%:~:."))
+  local file_path = file_utils.get_current_file({ relative = true })
+  vim.fn.setreg("+", file_path)
 end, { desc = "Copy Relative File Path" })
+
+-- copy file path (git)
+map("n", "<leader>sp", function()
+  local file_path = git_utils.get_file()
+  local remote = git_utils.get_remote()
+  vim.fn.setreg("+", remote .. file_path)
+end, { desc = "Copy Git File Path URL" })
 
 -- prompt to remove all open buffers
 map("n", "<leader>bo", function()
