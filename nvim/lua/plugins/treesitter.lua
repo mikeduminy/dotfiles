@@ -14,6 +14,7 @@ return {
     opts.indent.disable = is_large_file
     opts.incremental_selection.disable = is_large_file
 
+    opts.ensure_installed = vim.tbl_extend("force", opts.ensure_installed, { "groovy" })
     return opts
   end,
 }
