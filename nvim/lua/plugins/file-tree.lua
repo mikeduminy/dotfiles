@@ -20,7 +20,7 @@ return {
     opts = {
       filesystem = {
         filtered_items = { hide_dotfiles = false, hide_gitignored = false },
-        follow_current_file = true,
+        follow_current_file = { enabled = true },
         -- hijack_netrw_behavior = "open_current",
         bind_to_cwd = true,
         cwd_target = { current = "tab" },
