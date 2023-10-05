@@ -1,6 +1,8 @@
+local current_folder=$(dirname $0)
+
 if ! type __git_prompt_git > /dev/null; then
     ## if oh-my-zsh git plugin isn't loaded, load a subset of it
-    source $(dirname $0)/oh-my-git.zsh
+    source $current_folder/oh-my-git.zsh
 fi
 
 # Rebase current branch onto the latest main
@@ -25,3 +27,5 @@ alias gtop='git log -1 --format="%H" | cat | xargs echo -n | pbcopy'
 ## Delete local branches that no longer exist on remote (probably due to merge)
 alias gdlb="git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D"
 
+## Open fzf to select a worktree, changes the current directory
+alias gwt="source $current_folder/select_worktree.sh"
