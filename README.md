@@ -33,39 +33,53 @@ ln -s ~/.xdg/config/LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgen
 4. Install homebrew (if you don't have it)
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew update
+brew tap homebrew/cask-fonts
 ```
 5. Install main tools
 ```sh
 brew install \
-  wezterm \
-  neovim  \
-  ripgrep \
-  stylua  \
-  lazygit \
-  gnu-sed
+wezterm \
+neovim  \
+ripgrep \
+stylua  \
+lazygit \
+gnu-sed \
+font-jetbrains-mono-nerd-font \
+ranger
 ```
 6. Install quality-of-life tools
 ```sh
 brew install \
-  bluesnooze
+bluesnooze
+
+brew install --cask \
+1password \
+xcodes \
+insomnia \
+raycast \
+cleanshot \
+microsoft-edge \
+beyond-compare \
+displaylink
 ```
 
 ## Software (installed by installer)
 - [Neovim](https://neovim.io/) - terminal
 - [ripgrep](https://github.com/BurntSushi/ripgrep) - fast file search
 - [stylua](https://github.com/JohnnyMorganz/StyLua) - lua formatter
-- [gnu-sed](https://formulae.brew.sh/formula/gnu-sed) - stream editor
-- [Bluesnooze](https://github.com/odlp/bluesnooze) - Sleeping Mac = Bluetooth off
-- [LazyGit](https://github.com/jesseduffield/lazygit) - Terminal GUI for git
+- [gnu-sed](https://formulae.brew.sh/formula/gnu-sed) - text manipulation 
+- [LazyGit](https://github.com/jesseduffield/lazygit) - terminal UI for git with
+VI bindings
+- [Ranger](https://ranger.github.io/) - terminal file manager with VI bindings
 
-## Quality-of-life software
-- [1Password](https://1password.com/) - Password manager
-- [Beyond Compare](https://www.scootersoftware.com/download.php) - 3-way merge
-  tool
-- [CleanShot X](https://cleanshot.com/) - Better screenshots
-- [DisplayLink Manager](https://www.synaptics.com/products/displaylink-graphics/downloads/macos) - External display support through Dell dock 
-- [Insomnia](https://insomnia.rest/) - REST GUI
-- [Microsoft Edge](https://www.microsoft.com/en-us/edge) - Personal Browser
-- [Raycast](https://www.raycast.com/) - Replacement for Mac Spotlight
+## Quality-of-life software (installed by installer)
+- [Bluesnooze](https://github.com/odlp/bluesnooze) - sleeping Mac = bluetooth off
+- [1Password](https://1password.com/) - password manager
 - [XCodes](https://www.xcodes.app/) - XCode version manager
-
+- [Insomnia](https://insomnia.rest/) - REST GUI
+- [Raycast](https://www.raycast.com/) - replacement for Mac Spotlight
+- [CleanShot X](https://cleanshot.com/) - better screenshots
+- [Microsoft Edge](https://www.microsoft.com/en-us/edge) - personal Browser
+- [Beyond Compare](https://www.scootersoftware.com/download.php) - 3-way merge
+- [DisplayLink Manager](https://www.synaptics.com/products/displaylink-graphics/downloads/macos) - external display support through Dell dock 
