@@ -8,6 +8,7 @@ vim.api.nvim_create_autocmd("Filetype", {
   pattern = {
     "neotree",
     "markdown",
+    "oil",
   },
   callback = function()
     vim.b.miniindentscope_disable = true

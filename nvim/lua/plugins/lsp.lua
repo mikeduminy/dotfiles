@@ -1,7 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
   opts = {
-    autoformat = true,
     servers = {
       tsserver = {
         init_options = {

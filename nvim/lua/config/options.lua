@@ -29,3 +29,6 @@ vim.opt.shell = "/bin/zsh"
 
 -- use a tagstack/web-style jumplist navigation
 vim.opt.jumpoptions = "stack"
+
+-- global autoformat flag
+vim.g.autoformat = 1
