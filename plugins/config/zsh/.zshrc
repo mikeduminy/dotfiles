@@ -16,5 +16,8 @@ if [[ "$(command -v nvim)" ]]; then
   export MANWIDTH=999
 fi
 
+## load utils
+source $(dirname $0)/utils.zsh
+
 ## load aliases
 source $(dirname $0)/aliases.zsh

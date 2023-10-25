@@ -25,7 +25,21 @@ alias gfa='git fetch --tags --force && git fetch --all --prune --jobs=10'
 alias gtop='git log -1 --format="%H" | cat | xargs echo -n | pbcopy'
 
 ## Delete local branches that no longer exist on remote (probably due to merge)
-alias gdlb="git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D"
+gdlb() {
+  # Fetch all remotes and prune deleted branches
+  git fetch --prune --jobs=10
+
+  _commands=(
+    "git branch -v" # show all branches
+    "grep '\[gone\]'" # only show branches that have been merged
+    "sed 's/^.\{1\}//'" # remove the + from the branch name
+    "awk '{print \$1}'" # only keep the branch name
+    "xargs git branch -D" # delete the branches
+  )
+
+  git_delete_local_merged_branches=$(join_by " | " "${_commands[@]}")
+  eval $git_delete_local_merged_branches
+}
 
 ## Open fzf to select a worktree, changes the current directory
 alias gwt="source $current_folder/select_worktree.sh"
