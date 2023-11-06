@@ -15,6 +15,12 @@ if [ ! -d $ZSH ]; then
   ZSH="$ZSH" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 fi
 
+# oh-my-zsh theme
+ZSH_THEME="af-magic"
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}‹"
+ZSH_THEME_GIT_PROMPT_SUFFIX="› %{$reset_color%}"
+
 # oh-my-zsh cache
 export ZDOTDIR="$XDG_CACHE_HOME"
 export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
@@ -22,25 +28,44 @@ export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
 # Location for custom plugins (oh-my-zsh adds "/plugins")
 export ZSH_CUSTOM="$XDG_DATA_HOME"
 
-# oh-my-zsh theme
-ZSH_THEME="af-magic"
+# Install zsh-vi-mode
+if [ ! -d $ZSH_CUSTOM/plugins/zsh-vi-mode ]; then
+  echo "Installing zsh-vi-mode..."
+  git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode > /dev/null
+  echo "Done."
+  # TODO: periodically check for updates or switch to a plugin manager
+fi
 
 # oh-my-zsh plugins
-plugins=(git vi-mode history-substring-search zsh-navigation-tools yarn)
+plugins=(
+  git
+  history-substring-search
+  zsh-navigation-tools
+  yarn
+  zsh-vi-mode
+)
 
-# vi-mode options
-VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
-VI_MODE_SET_CURSOR=true
-MODE_INDICATOR="%F{blue}N ~ %f"
-INSERT_MODE_INDICATOR="%F{green}I ~ %f"
+## Plugin configuration - start
+### zsh-vi-mode
+function rebindHistorySearch () {
+  # zsh-navigation-tools options
+  # manually set this because zsh-vi-mode overrides it
+  bindkey -M viins '^R' znt-history-widget
+}
 
-# yarn options
+zvm_after_init_commands=(rebindHistorySearch)
+ZVM_VI_EDITOR=nvim
+ZVM_VI_SURROUND_BINDKEY=s-prefix
+ZVM_VI_HIGHLIGHT_FOREGROUND=#c8d3f5
+ZVM_VI_HIGHLIGHT_BACKGROUND=#2d3f76
+ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold,underline
+
+### yarn
 zstyle ':omz:plugins:yarn' global-path no
 
-source $ZSH/oh-my-zsh.sh
+## Plugin configuration - end
 
-PROMPT="$PROMPT\$(vi_mode_prompt_info)"
-# RPROMPT="\$(vi_mode_prompt_info)$RPROMPT"
+source $ZSH/oh-my-zsh.sh
 
 #################################################################
 # Custom config                                                 #
