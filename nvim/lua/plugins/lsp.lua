@@ -8,10 +8,10 @@ return {
           maxTsServerMemory = 8192,
           -- disableAutomaticTypingAcquisition = true,
         },
-        -- preferences = {
-        --   includeCompletionsForModuleExports = false,
-        --   includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-        -- },
+        preferences = {
+          includeCompletionsForModuleExports = false,
+          includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+        },
       },
     },
     setup = {
