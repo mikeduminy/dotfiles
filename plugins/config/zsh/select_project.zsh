@@ -22,7 +22,7 @@ project_folders=$(fd --min-depth 1 --max-depth 1 -t directory . ${project_roots[
 project_folders+=(${(s/:/)PROJECT_FOLDERS})
 
 # 2. Select a project using fzf (all paths are relative to $HOME)
-selected_folder=$(printf '%s\n' "${project_folders[@]}" | sed "s|$HOME/||" | fzf)
+selected_folder=$(printf '%s\n' "${project_folders[@]}" | sed "s|$HOME/||" | fzf --layout reverse --height 50%)
 local retval=$?
 if (($retval == 0)); then
 	# 3. Switch to the workspace by communicating with wezterm

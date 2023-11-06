@@ -39,8 +39,6 @@ fi
 # oh-my-zsh plugins
 plugins=(
   git
-  history-substring-search
-  zsh-navigation-tools
   yarn
   zsh-vi-mode
 )
@@ -48,9 +46,8 @@ plugins=(
 ## Plugin configuration - start
 ### zsh-vi-mode
 function rebindHistorySearch () {
-  # zsh-navigation-tools options
   # manually set this because zsh-vi-mode overrides it
-  bindkey -M viins '^R' znt-history-widget
+  bindkey -M viins '^R' fzf-history-widget
 }
 
 zvm_after_init_commands=(rebindHistorySearch)
@@ -85,3 +82,4 @@ if [ -e "$base16_shell_path" ]; then
   source "$XDG_DATA_HOME/base16-shell/base16-shell.plugin.zsh"
 fi
 unset base16_shell_path
+
