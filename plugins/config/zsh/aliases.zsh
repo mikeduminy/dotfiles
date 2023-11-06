@@ -10,3 +10,6 @@ alias lg="lazygit"
 
 alias vi="nvim"
 alias vim="nvim"
+
+alias select-project=$(dirname $0)/select_project.zsh
+alias sp=select-project

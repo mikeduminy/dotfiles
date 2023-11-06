@@ -1,15 +1,13 @@
 local wezterm = require 'wezterm'
 local colors = require 'colors'
 local navigation = require 'navigation'
-local multiplex = require 'multiplex'
 local projects = require 'lib.projects'
 local file = require 'utils.file'
 
--- setup zen mode
 require 'lib.zenmode'
+require 'lib.select-project'
 
 navigation.setup_navigation()
-multiplex.setup_multiplexer()
 
 local function get_process(tab)
   local process_icons = {
@@ -82,6 +80,8 @@ wezterm.on('update-status', function(window)
 end)
 
 return {
+  default_cwd = wezterm.home_dir .. '/.xdg/config',
+  default_workspace = 'config',
   font = wezterm.font_with_fallback {
     'JetBrainsMono Nerd Font',
   },

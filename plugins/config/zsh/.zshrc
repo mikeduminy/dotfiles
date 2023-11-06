@@ -4,17 +4,14 @@
 export LANG="en_US.UTF-8"
 export EDITOR='nvim'
 
-# xdg stuff
-# export ASDF_DATA_DIR="${XDG_DATA_HOME}"/asdf
-# export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
-# export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
-# export HISTFILE="$XDG_STATE_HOME"/zsh/history
-
 if [[ "$(command -v nvim)" ]]; then
   export EDITOR='nvim'
   export MANPAGER='nvim +Man!' # use nvim as man pager
   export MANWIDTH=999
 fi
+
+export PROJECT_ROOTS="$HOME/Source:$PROJECT_ROOTS"
+export PROJECT_FOLDERS="$XDG_CONFIG_HOME:$PROJECT_FOLDERS"
 
 ## load utils
 source $(dirname $0)/utils.zsh
