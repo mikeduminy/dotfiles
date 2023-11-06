@@ -13,8 +13,21 @@ fi
 export PROJECT_ROOTS="$HOME/Source:$PROJECT_ROOTS"
 export PROJECT_FOLDERS="$XDG_CONFIG_HOME:$PROJECT_FOLDERS"
 
-# Completions
 [ -s ~/.bun/_bun ] && source ~/.bun/_bun
+
+## FZF options
+export FZF_COMPLETION_OPTS='--border --info=inline'
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ## load utils
