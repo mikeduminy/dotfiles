@@ -26,20 +26,21 @@ require("lazy").setup({
   install = { colorscheme = { "tokyonight" } },
   checker = {
     enabled = true, -- automatically check for plugin updates
+    notify = false,
     frequency = 60 * 60 * 24, -- check for updates every day
   },
   performance = {
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
-        "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
-        "tarPlugin",
+        -- "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        -- "tarPlugin",
         "tohtml",
-        -- "tutor",
-        "zipPlugin",
+        "tutor",
+        -- "zipPlugin",
       },
     },
   },
