@@ -2,8 +2,8 @@ local wezterm = require 'wezterm'
 
 -- see also https://github.com/wez/wezterm/discussions/2550
 wezterm.on('user-var-changed', function(window, pane, name, value)
-  local overrides = window:get_config_overrides() or {}
   if name == 'ZEN_MODE' then
+    local overrides = window:get_config_overrides() or {}
     local incremental = value:find '+'
     local number_value = tonumber(value)
     if incremental ~= nil then
@@ -20,6 +20,6 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
       overrides.font_size = number_value
       overrides.enable_tab_bar = false
     end
+    window:set_config_overrides(overrides)
   end
-  window:set_config_overrides(overrides)
 end)
