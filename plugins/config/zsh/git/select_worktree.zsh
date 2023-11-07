@@ -1,8 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/zsh
 
-# This script will change the current working directory to the selected git worktree.
-# In order for that to work this script needs to be sourced.
-# eg. source select_worktree.sh
+# Load wezterm helper functions
+source $XDG_CONFIG_HOME/wezterm/api.zsh
 
 selected_worktree_dir=""
 current_dir=$(pwd)
@@ -11,14 +10,14 @@ function is_git_repo() {
   git rev-parse --is-inside-work-tree > /dev/null 2>&1
 }
 
-# Returns a list of worktrees in the format: <folder basename> <branch>
+# Returns a list of worktrees in the format: <home-relative folder> <branch>
 function simple_worktree_list() {
-  git worktree list | awk '{sub(".*/", "", $1); print $1" "$3}'
+  git worktree list | awk '{print $1" "$3}' | sed "s|$HOME/||"
 }
 
 # Returns the path to the worktree with the given folder name
 function find_path_to_worktree() {
-  git worktree list | grep "$1" | awk '{print $1}'
+  git worktree list | grep "$1" | awk '{print $1}' | head -n 1
 }
 
 function git_work_tree_change_cwd() {
@@ -31,7 +30,6 @@ function git_work_tree_change_cwd() {
     echo "Only one worktree found. Nothing to change to."
     return
   fi
-
   local selected_worktree
   selected_worktree=$(simple_worktree_list | fzf --reverse --prompt "Select worktree: " --keep-right)
   selected_worktree_dir_name=$(echo "$selected_worktree" | awk '{print $1}')
@@ -47,12 +45,12 @@ function git_work_tree_change_cwd() {
 git_work_tree_change_cwd
 
 if [[ -d "$selected_worktree_dir" ]]; then
-  folder=$(basename "$selected_worktree_dir")
   if [[ "$selected_worktree_dir" == "$current_dir" ]]; then
-    echo "Already in $folder"
+    echo "Already in $selected_worktree_dir_name"
   else
-    echo "Switching to worktree: $folder"
-    cd "$selected_worktree_dir" || return
+    echo "Switching to worktree: $selected_worktree_dir_name"
+    
+		wezterm-switch-workspace "$selected_worktree_dir_name" "$HOME/$selected_worktree_dir_name"
   fi
 else
   # The directory does not exist or no worktree was selected

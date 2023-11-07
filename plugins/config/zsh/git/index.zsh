@@ -41,5 +41,5 @@ gdlb() {
   eval $git_delete_local_merged_branches
 }
 
-## Open fzf to select a worktree, changes the current directory
-alias gwt="source $current_folder/select_worktree.sh"
+## Open fzf to select a worktree, open a new terminal workspace at the worktree
+alias gwt="$current_folder/select_worktree.zsh"
