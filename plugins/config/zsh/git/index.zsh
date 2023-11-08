@@ -43,3 +43,12 @@ gdlb() {
 
 ## Open fzf to select a worktree, open a new terminal workspace at the worktree
 alias gwt="$current_folder/select_worktree.zsh"
+
+gch() {
+  selected_branch=$(git branch --all | fzf)
+  if [ $? -eq 0 ]; then
+    trimmed_branch=$(echo $selected_branch | xargs)
+    echo "Checking out $trimmed_branch"
+    git checkout $trimmed_branch
+  fi
+}
