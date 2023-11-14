@@ -1,0 +1,30 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+format = """
+$directory\
+$nodejs\
+$git_branch\
+$git_status\
+$git_state\
+\n$character\
+"""
+
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
+vimcmd_symbol = '[❮](bold green)'
+vimcmd_replace_one_symbol = '[❮](bold purple)'
+vimcmd_replace_symbol = '[❮](bold purple)'
+vimcmd_visual_symbol = '[❮](bold yellow)'
+
+
+[nodejs]
+symbol = ' '
+style = 'bold green'
+version_format = 'v${major}.${minor}'
+format = '[$symbol\[$version\]]($style) '
+detect_extensions = ['js', 'ts', 'jsx', 'tsx', 'mjs', 'cjs']

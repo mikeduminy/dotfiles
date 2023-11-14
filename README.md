@@ -46,7 +46,8 @@ stylua  \
 lazygit \
 gnu-sed \
 font-jetbrains-mono-nerd-font \
-ranger
+ranger \
+starship
 ```
 6. Install quality-of-life tools
 ```sh
@@ -72,6 +73,7 @@ displaylink
 - [LazyGit](https://github.com/jesseduffield/lazygit) - terminal UI for git with
 VI bindings
 - [Ranger](https://ranger.github.io/) - terminal file manager with VI bindings
+- [Starship](https://starship.rs/) - custom shell prompt
 
 ## Quality-of-life software (installed by installer)
 - [Bluesnooze](https://github.com/odlp/bluesnooze) - sleeping Mac = bluetooth off

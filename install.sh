@@ -1,10 +1,10 @@
 #!/bin/bash
 
 function logStep() {
-  # log steps in the terminal in blue with a nice header
-  echo -e "\e[1;34m--------------------\e[0m"
-  echo -e "\e[1;34m- $1\e[0m"
-  echo -e "\e[1;34m--------------------\e[0m"
+	# log steps in the terminal in blue with a nice header
+	echo -e "\e[1;34m--------------------\e[0m"
+	echo -e "\e[1;34m- $1\e[0m"
+	echo -e "\e[1;34m--------------------\e[0m"
 }
 
 # Ensure xdg folders exist
@@ -38,39 +38,38 @@ brew tap homebrew/cask-fonts
 
 # list of brew packages to install
 brew_libs=(
-  "wezterm" # terminal
-  "fzf" # fuzzy finder
-  "ripgrep" # faster grep
-  "stylua" # lua formatter
-  "lazygit" # git tui
-  "gnu-sed" # text manipulation
-  "neovim" # editor
-  "font-jetbrains-mono-nerd-font" # font
-  "bluesnooze" # bluetooth manager for mac
-  "ranger" # file manager
+	"wezterm"                       # terminal
+	"fzf"                           # fuzzy finder
+	"ripgrep"                       # faster grep
+	"stylua"                        # lua formatter
+	"lazygit"                       # git tui
+	"gnu-sed"                       # text manipulation
+	"neovim"                        # editor
+	"font-jetbrains-mono-nerd-font" # font
+	"bluesnooze"                    # bluetooth manager for mac
+	"ranger"                        # file manager
+	"starship"                      # shell prompt
 )
 
 logStep "Installing brew packages"
-for lib in "${brew_libs[@]}"
-do
-  brew install "$lib"
+for lib in "${brew_libs[@]}"; do
+	brew install "$lib"
 done
 
 brew_casks=(
-  "1password" # password manager
-  "xcodes" # xcode version manager
-  "insomnia" # rest api client
-  "raycast" # productivity search tool
-  "cleanshot" # screenshot tool
-  "microsoft-edge" # browser
-  "beyond-compare" # file comparison tool
-  "displaylink" # dell dock driver
-  )
+	"1password"      # password manager
+	"xcodes"         # xcode version manager
+	"insomnia"       # rest api client
+	"raycast"        # productivity search tool
+	"cleanshot"      # screenshot tool
+	"microsoft-edge" # browser
+	"beyond-compare" # file comparison tool
+	"displaylink"    # dell dock driver
+)
 
 logStep "Installing brew casks"
-for cask in "${brew_casks[@]}"
-do
-  brew install --cask "$cask"
+for cask in "${brew_casks[@]}"; do
+	brew install --cask "$cask"
 done
 
 # close and re-open terminal

@@ -83,3 +83,5 @@ if [ -e "$base16_shell_path" ]; then
 fi
 unset base16_shell_path
 
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
+eval "$(starship init zsh)"
