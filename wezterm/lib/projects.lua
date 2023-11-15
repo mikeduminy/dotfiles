@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local file = require 'utils.file'
 local plugins = require 'lib.plugins'
 
-local M = {}
+local module = {}
 
 -- Returns a table of project names and their locations
 local function getProjects()
@@ -28,7 +28,7 @@ local function getProjects()
 end
 
 -- Provides a table of choices for the workspace picker
-M.getWorkspaceChoices = function()
+function module.getWorkspaceChoices()
   local choices = {}
 
   for _, project in ipairs(getProjects()) do
@@ -40,4 +40,4 @@ M.getWorkspaceChoices = function()
   return choices
 end
 
-return M
+return module

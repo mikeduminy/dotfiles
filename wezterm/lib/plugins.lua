@@ -1,12 +1,12 @@
 local wezterm = require 'wezterm'
 
-local M = {}
+local module = {}
 
 local debug = true
 
 local plugins = {}
 
-M.getPlugins = function()
+function module.getPlugins()
   -- if plugins has anything in it, return it
   if #plugins > 0 then
     return plugins
@@ -31,4 +31,4 @@ M.getPlugins = function()
   return plugins
 end
 
-return M
+return module

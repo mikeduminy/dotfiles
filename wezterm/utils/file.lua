@@ -1,9 +1,9 @@
-local string = require 'string'
+local module = {}
 
-local M = {}
-
---- Check if a file or directory exists in this path
-M.exists = function(file)
+-- Check if a file or directory exists in this path
+--- @param file string
+--- @return boolean, string?: true if it exists, false if not, and an optional error message
+function module.exists(file)
   local ok, err, code = os.rename(file, file)
   if not ok then
     if code == 13 then
@@ -15,23 +15,35 @@ M.exists = function(file)
 end
 
 --- Check if a directory exists in this path
-M.is_dir = function(path)
+--- @param path string
+--- @return boolean, string?: true if it exists, false if not, and an optional error message
+function module.is_dir(path)
   -- "/" works on both Unix and Windows
-  return M.exists(path .. '/')
+  return module.exists(path .. '/')
 end
 
 -- lua equivalents of POSIX functions
-M.basename = function(P)
-  local s1, s2 = M._splitpath(P)
-  return s2
+
+--- @param path string
+--- @return string: filename path
+module.basename = function(path)
+  local _, filename = module._splitpath(path)
+  return filename
 end
 
-M.dirname = function(P)
-  return (M._splitpath(P))
+--- @param path string
+--- @return string: directory part
+module.dirname = function(path)
+  local dir, _ = module._splitpath(path)
+  return dir
 end
 
-M._splitpath = function(P)
-  return string.match(P, '^(.-)[\\/]?([^\\/]*)$')
+--- Split a path into directory and filename parts
+--- @private
+--- @param path string
+--- @return string, string: directory part, filename part
+function module._splitpath(path)
+  return path:match '^(.-)[\\/]?([^\\/]*)$'
 end
 
-return M
+return module

@@ -1,13 +1,14 @@
 local wezterm = require 'wezterm'
 local colors = require 'colors'
 local navigation = require 'navigation'
-local projects = require 'lib.projects'
-local file = require 'utils.file'
-
-require 'lib.zenmode'
-require 'lib.select-project'
+local keys = require 'keys'
+local status = require 'lib.status'
+local events = require 'events'
 
 navigation.setup_navigation()
+
+wezterm.on('user-var-changed', events.handle_user_var_changed)
+wezterm.on('update-status', status.handle_status)
 
 local function get_process(tab)
   local process_icons = {
@@ -49,201 +50,69 @@ local function get_process(tab)
   )
 end
 
-local function get_current_working_dir(tab)
-  local current_dir = tab.active_pane.current_working_dir
+--- @param tab_info _.wezterm.TabInformation
+local function get_current_working_dir(tab_info)
+  local current_dir = tab_info.active_pane.current_working_dir.file_path
   local HOME_DIR = string.format('file://%s', os.getenv 'HOME')
 
   return current_dir == HOME_DIR and '  ~'
     or string.format('  %s', string.gsub(current_dir, '(.*[/\\])(.*)', '%2'))
 end
 
-wezterm.on('format-tab-title', function(tab)
+--- @param tab_info _.wezterm.TabInformation
+wezterm.on('format-tab-title', function(tab_info)
   return wezterm.format {
     { Attribute = { Intensity = 'Half' } },
-    { Text = string.format(' %s  ', tab.tab_index + 1) },
+    { Text = string.format(' %s  ', tab_info.tab_index + 1) },
     'ResetAttributes',
-    { Text = get_process(tab) },
+    { Text = get_process(tab_info) },
     { Text = ' ' },
-    { Text = get_current_working_dir(tab) },
+    { Text = get_current_working_dir(tab_info) },
     { Text = ' ' },
     { Attribute = { Intensity = 'Half' } },
     { Text = '|' },
   }
 end)
 
-wezterm.on('update-status', function(window)
-  window:set_right_status(wezterm.format {
-    { Attribute = { Intensity = 'Half' } },
-    { Attribute = { Italic = true } },
-    { Text = wezterm.strftime ' %A, %d %B %Y %I:%M %p ' },
-  })
-end)
-
-return {
-  default_cwd = wezterm.home_dir .. '/.xdg/config',
-  default_workspace = 'config',
-  font = wezterm.font_with_fallback {
-    'JetBrainsMono Nerd Font',
-  },
-  font_size = 14.5,
-  adjust_window_size_when_changing_font_size = false,
-  line_height = 1.1,
-  window_decorations = 'TITLE|RESIZE',
-  color_scheme = 'tokyonight_moon',
-  window_padding = {
-    left = '1cell',
-    right = '1cell',
-    top = '0cell',
-    bottom = '0cell',
-  },
-  window_background_opacity = 0.95,
-  use_resize_increments = true,
-  use_fancy_tab_bar = true,
-  initial_cols = 110,
-  initial_rows = 25,
-  inactive_pane_hsb = {
-    hue = 1.0,
-    saturation = 0.9,
-    brightness = 0.8,
-  },
-  tab_bar_at_bottom = false,
-  show_new_tab_button_in_tab_bar = false,
-  tab_max_width = 50,
-  keys = {
-    {
-      key = 'w',
-      mods = 'CMD',
-      action = wezterm.action.CloseCurrentPane { confirm = true },
-    },
-    {
-      key = 'n',
-      mods = 'CMD',
-      action = wezterm.action { SpawnTab = 'CurrentPaneDomain' },
-    },
-
-    -- CMD+S -> CTRL+S
-    {
-      key = 's',
-      mods = 'CMD',
-      action = wezterm.action.SendKey { key = 's', mods = 'CTRL' },
-    },
-
-    {
-      mods = 'CMD',
-      key = [[\]],
-      action = wezterm.action {
-        SplitHorizontal = { domain = 'CurrentPaneDomain' },
-      },
-    },
-    {
-      mods = 'CMD|SHIFT',
-      key = [[-]],
-      action = wezterm.action {
-        SplitVertical = { domain = 'CurrentPaneDomain' },
-      },
-    },
-
-    -- CMD+SHIFT+O to switch workspaces
-    {
-      key = 'o',
-      mods = 'CMD|SHIFT',
-      action = wezterm.action_callback(function(window, pane)
-        -- dynamically get list of projects
-        local choices = projects.getWorkspaceChoices()
-
-        window:perform_action(
-          wezterm.action.InputSelector {
-            title = 'Open Workspace',
-            choices = choices,
-            action = wezterm.action_callback(function(window, pane, id, label)
-              if not id and not label then
-                wezterm.log_info 'cancelled'
-              else
-                window:perform_action(
-                  wezterm.action.SwitchToWorkspace {
-                    name = file.basename(label),
-                    spawn = {
-                      cwd = id,
-                    },
-                  },
-                  pane
-                )
-              end
-            end),
-          },
-          pane
-        )
-      end),
-    },
-
-    -- CMD+P to search open workspaces
-    {
-      key = 'p',
-      mods = 'CMD',
-      action = wezterm.action.ShowLauncherArgs {
-        flags = 'FUZZY|WORKSPACES',
-      },
-    },
-    -- CMD+SHIFT+P to search commands/actions
-    {
-      key = 'p',
-      mods = 'CMD|SHIFT',
-      action = wezterm.action.ShowLauncherArgs {
-        flags = 'FUZZY|COMMANDS',
-      },
-    },
-
-    {
-      key = 'r',
-      mods = 'CMD|SHIFT',
-      action = wezterm.action_callback(function(window, pane)
-        local title = window:mux_window():get_workspace()
-        window:perform_action(
-          wezterm.action.PromptInputLine {
-            description = 'Enter new name for workspace "' .. title .. '"',
-            action = wezterm.action_callback(function(window, pane, line)
-              if line then
-                wezterm.log_info('Renaming from "' .. title .. '" to "' .. line .. '"')
-                wezterm.mux.rename_workspace(title, line)
-              end
-            end),
-          },
-          pane
-        )
-      end),
-    },
-
-    { key = 'z', mods = 'CMD', action = wezterm.action.TogglePaneZoomState },
-
-    { key = 'h', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Left', 8 } },
-    { key = 'j', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Down', 8 } },
-    { key = 'k', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Up', 8 } },
-    { key = 'l', mods = 'CMD|CTRL', action = wezterm.action.AdjustPaneSize { 'Right', 8 } },
-
-    { key = 'h', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-left' },
-    { key = 'j', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-down' },
-    { key = 'k', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-up' },
-    { key = 'l', mods = 'CMD', action = wezterm.action.EmitEvent 'ActivatePaneDirection-right' },
-
-    -- { key = 'h', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Left' },
-    -- { key = 'j', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Down' },
-    -- { key = 'k', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Up' },
-    -- { key = 'l', mods = 'CMD|SHIFT', action = wezterm.action.ActivatePaneDirection 'Right' },
-
-    { key = 'h', mods = 'CMD|SHIFT', action = wezterm.action.SwitchWorkspaceRelative(-1) },
-    { key = 'l', mods = 'CMD|SHIFT', action = wezterm.action.SwitchWorkspaceRelative(1) },
-
-    { key = '[', mods = 'ALT', action = wezterm.action { ActivateTabRelative = -1 } },
-    { key = ']', mods = 'ALT', action = wezterm.action { ActivateTabRelative = 1 } },
-    { key = 'v', mods = 'ALT', action = wezterm.action.ActivateCopyMode },
-  },
-  scrollback_lines = 6000, -- default is 3500
-  switch_to_last_active_tab_when_closing_tab = true, -- default is false
-  front_end = 'WebGpu',
-  audible_bell = 'Disabled',
-  max_fps = 120,
-  hide_tab_bar_if_only_one_tab = true,
+local config = wezterm.config_builder()
+config.default_cwd = wezterm.home_dir .. '/.xdg/config'
+config.default_workspace = 'config'
+config.font = wezterm.font_with_fallback {
+  'JetBrainsMono Nerd Font',
 }
+config.font_size = 14.5
+config.adjust_window_size_when_changing_font_size = false
+config.line_height = 1.1
+config.window_decorations = 'TITLE|RESIZE'
+config.color_scheme = 'tokyonight_moon'
+config.window_padding = {
+  left = '1cell',
+  right = '1cell',
+  top = '0cell',
+  bottom = '0cell',
+}
+config.window_background_opacity = 0.95
+config.use_resize_increments = true
+config.use_fancy_tab_bar = false
+config.show_new_tab_button_in_tab_bar = false
+config.show_tabs_in_tab_bar = false
+config.tab_bar_at_bottom = false
+config.hide_tab_bar_if_only_one_tab = false
+config.initial_cols = 110
+config.initial_rows = 25
+config.inactive_pane_hsb = {
+  hue = 1.0,
+  saturation = 0.9,
+  brightness = 0.8,
+}
+config.keys = keys.key_table
+config.scrollback_lines = 6000 -- default is 3500
+config.switch_to_last_active_tab_when_closing_tab = true -- default is false
+config.front_end = 'WebGpu'
+config.audible_bell = 'Disabled'
+config.max_fps = 120
 
--- Hot to upgrade wezterm
+return config
+
+-- upgrade wezterm cmd
 -- brew upgrade --cask wez/wezterm/wezterm
