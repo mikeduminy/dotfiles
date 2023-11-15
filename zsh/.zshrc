@@ -15,12 +15,6 @@ if [ ! -d $ZSH ]; then
   ZSH="$ZSH" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 fi
 
-# oh-my-zsh theme
-ZSH_THEME="af-magic"
-
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}‹"
-ZSH_THEME_GIT_PROMPT_SUFFIX="› %{$reset_color%}"
-
 # oh-my-zsh cache
 export ZDOTDIR="$XDG_CACHE_HOME"
 export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"

@@ -14,6 +14,8 @@ export XDG_STATE_HOME="$HOME/.xdg/state"
 export XDG_CACHE_HOME="$HOME/.xdg/cache"
 export XDG_RUNTIME_DIR="$HOME/.xdg/runtime"
 
+if [[ -d "~/Library/Application Support/JetBrains/Toolbox/scripts" ]]; then
+  # Added by Toolbox App
+  export PATH="$PATH:~/Library/Application Support/JetBrains/Toolbox/scripts"
+fi
 
-# Added by Toolbox App
-export PATH="$PATH:~/Library/Application Support/JetBrains/Toolbox/scripts"
