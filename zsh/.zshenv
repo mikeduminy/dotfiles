@@ -18,6 +18,9 @@ export XDG_RUNTIME_DIR="$HOME/.xdg/runtime"
 # use builtin functions like dirname we ensure that `/usr/bin` is in $PATH
 export PATH="$PATH:/usr/bin"
 
+# Uncomment to get debug logs
+# export MIKE_DEBUG=true
+
 # zsh needs some additional set up in the system files
 # so for now keep loading this here
 for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshenv; do source $file; done

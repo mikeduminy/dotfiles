@@ -1,4 +1,5 @@
-# echo "loading: $0"
+# Conditionally log if MIKE_DEBUG is set
+[[ ! -z $MIKE_DEBUG ]] && echo "loading: $0"
 
 ## defaults
 export LANG="en_US.UTF-8"
