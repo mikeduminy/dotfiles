@@ -1,5 +1,6 @@
 local module = {}
 
+--- @param pane _.wezterm.Pane
 function module.get_pane_with_info(pane)
   local current_pane_id = pane:pane_id()
 

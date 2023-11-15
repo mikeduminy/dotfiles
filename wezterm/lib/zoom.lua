@@ -21,10 +21,14 @@ module.toggle_pane_zoom = wezterm.action_callback(function(window, pane)
   return window:perform_action({ SetPaneZoomState = should_zoom }, pane)
 end)
 
+--- @param pane _.wezterm.Pane
 function module.is_zoomed(pane)
   local pane_info = paneUtils.get_pane_with_info(pane)
   if pane_info then
-    set_pane_zoom(pane, pane_info.is_zoomed)
+    -- update zoom state if it changed without a manual toggle
+    if pane_info.is_zoomed ~= pane_zoom[pane:pane_id()] then
+      set_pane_zoom(pane, pane_info.is_zoomed)
+    end
   end
   return pane_zoom[pane:pane_id()]
 end

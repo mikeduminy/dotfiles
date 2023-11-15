@@ -20,6 +20,8 @@ local function buildLeftStatus(_, pane)
   local escapedHomeDir = utils.escapePattern(wezterm.home_dir)
   local cwd = cwdUrl.file_path:gsub(escapedHomeDir, '~', 1)
 
+  table.insert(status, { Attribute = { Intensity = 'Half' } })
+  table.insert(status, { Foreground = { Color = colors.lavender } })
   table.insert(status, { Text = cwd })
 
   return status
@@ -33,14 +35,18 @@ local function buildRightStatus(window, pane)
   if zoom.is_zoomed(pane) then
     table.insert(status, { Attribute = { Underline = 'Single' } })
     table.insert(status, { Foreground = { Color = colors.red } })
-    table.insert(status, { Text = 'focused' })
+    table.insert(status, { Text = '[ focused ]' })
   end
 
   if #status > 0 then
     table.insert(status, 'ResetAttributes')
-    table.insert(status, { Text = ' | ' })
+    table.insert(status, { Text = ' ' })
   end
 
+  table.insert(status, { Attribute = { Intensity = 'Half' } })
+  table.insert(status, { Text = 'Workspace is ' })
+  table.insert(status, { Attribute = { Intensity = 'Bold' } })
+  table.insert(status, { Foreground = { Color = colors.blue } })
   table.insert(status, { Text = window:active_workspace() })
   table.insert(status, { Text = ' ' })
 

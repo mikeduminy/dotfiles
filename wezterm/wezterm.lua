@@ -67,8 +67,8 @@ wezterm.on('format-tab-title', function(tab_info)
     'ResetAttributes',
     { Text = get_process(tab_info) },
     { Text = ' ' },
-    { Text = get_current_working_dir(tab_info) },
-    { Text = ' ' },
+    -- { Text = get_current_working_dir(tab_info) },
+    -- { Text = ' ' },
     { Attribute = { Intensity = 'Half' } },
     { Text = '|' },
   }
