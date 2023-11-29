@@ -13,6 +13,8 @@ $git_state\
 \n$character\
 """
 
+command_timeout = 1500
+
 [character]
 success_symbol = '[❯](bold green)'
 error_symbol = '[❯](bold red)'
