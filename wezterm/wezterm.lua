@@ -61,16 +61,20 @@ end
 
 --- @param tab_info _.wezterm.TabInformation
 wezterm.on('format-tab-title', function(tab_info)
+  local is_active = tab_info.is_active
+  local intensity = is_active and 'Bold' or 'Half'
+
   return wezterm.format {
-    { Attribute = { Intensity = 'Half' } },
-    { Text = string.format(' %s  ', tab_info.tab_index + 1) },
-    'ResetAttributes',
-    { Text = get_process(tab_info) },
     { Text = ' ' },
+    { Attribute = { Intensity = intensity } },
+    { Foreground = { Color = is_active and colors.red or colors.blue } },
+    { Text = is_active and '[' or ' ' },
+    { Text = string.format(' %s ', tab_info.tab_index + 1) }, -- TODO: only show when more than 1 tab?
+    { Text = is_active and ']' or ' ' },
+    { Text = ' ' },
+    { Text = get_process(tab_info) },
+    { Text = (' '):rep(2) },
     -- { Text = get_current_working_dir(tab_info) },
-    -- { Text = ' ' },
-    { Attribute = { Intensity = 'Half' } },
-    { Text = '|' },
   }
 end)
 
@@ -95,9 +99,9 @@ config.window_background_opacity = 0.95
 config.use_resize_increments = true
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
-config.show_tabs_in_tab_bar = false
+config.show_tabs_in_tab_bar = true
 config.tab_bar_at_bottom = false
-config.hide_tab_bar_if_only_one_tab = false
+config.hide_tab_bar_if_only_one_tab = true
 config.initial_cols = 110
 config.initial_rows = 25
 config.inactive_pane_hsb = {

@@ -22,7 +22,7 @@ local function buildLeftStatus(_, pane)
 
   table.insert(status, { Attribute = { Intensity = 'Half' } })
   table.insert(status, { Foreground = { Color = colors.lavender } })
-  table.insert(status, { Text = cwd })
+  table.insert(status, { Text = cwd .. ' ' })
 
   return status
 end
