@@ -32,3 +32,18 @@ vim.opt.jumpoptions = "stack"
 
 -- Enable LazyVim autoformat
 vim.g.autoformat = true
+
+local function set_ft_option(ft, option, value)
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = ft,
+    group = vim.api.nvim_create_augroup("FtOptions", {}),
+    desc = ('set option "%s" to "%s" for this filetype'):format(option, value),
+    callback = function()
+      vim.opt_local[option] = value
+    end,
+  })
+end
+
+-- clear formatexpr in markdown files which enables `gq` to reformat according
+-- to textwidth
+set_ft_option({ "markdown" }, "formatexpr", "")
