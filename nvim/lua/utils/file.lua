@@ -39,7 +39,7 @@ function M.is_large_file(bufnr)
 end
 
 function M.get_root()
-  return require("lazyvim.util").get_root()
+  return require("lazyvim.util").root.get()
 end
 
 return M
