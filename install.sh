@@ -38,7 +38,6 @@ brew tap homebrew/cask-fonts
 
 # list of brew packages to install
 brew_libs=(
-	"wezterm"                       # terminal
 	"fzf"                           # fuzzy finder
 	"ripgrep"                       # faster grep
 	"stylua"                        # lua formatter
@@ -49,6 +48,16 @@ brew_libs=(
 	"bluesnooze"                    # bluetooth manager for mac
 	"ranger"                        # file manager
 	"starship"                      # shell prompt
+	"fd"                            # faster find
+	"bat"                           # cat with syntax highlighting
+	"eza"                           # better ls
+	"procs"                         # modern ps
+	"sd"                            # better, more intuitive sed
+	"zoxide"                        # better cd
+	"dust"                          # newer, faster du
+	"tokei"                         # code line counter
+	"hyperfine"                     # benchmarking tool
+
 )
 
 logStep "Installing brew packages"
@@ -57,6 +66,7 @@ for lib in "${brew_libs[@]}"; do
 done
 
 brew_casks=(
+	"wezterm"        # terminal
 	"1password"      # password manager
 	"xcodes"         # xcode version manager
 	"insomnia"       # rest api client

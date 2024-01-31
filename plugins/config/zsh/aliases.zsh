@@ -14,3 +14,8 @@ alias vih="nvim ." # open nvim in current directory
 
 alias select-project=$(dirname $0)/select_project.zsh
 alias sp=select-project
+
+alias cd="z"
+alias cat="bat"
+alias ls="eza"
+alias procs="procs --load-config $XDG_CONFIG_HOME/procs/config.toml"

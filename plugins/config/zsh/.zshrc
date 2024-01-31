@@ -14,7 +14,13 @@ fi
 export PROJECT_ROOTS="$HOME/Source:$PROJECT_ROOTS"
 export PROJECT_FOLDERS="$XDG_CONFIG_HOME:$PROJECT_FOLDERS"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 [ -s ~/.bun/_bun ] && source ~/.bun/_bun
+
+if type zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
 ## FZF options
 export FZF_COMPLETION_OPTS='--border --info=inline'

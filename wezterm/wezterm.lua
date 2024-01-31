@@ -118,5 +118,7 @@ config.max_fps = 120
 
 return config
 
--- upgrade wezterm cmd
+-- upgrade wezterm
 -- brew upgrade --cask wez/wezterm/wezterm
+-- upgrade wezterm-nightly
+-- brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest

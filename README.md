@@ -39,15 +39,23 @@ brew tap homebrew/cask-fonts
 5. Install main tools
 ```sh
 brew install \
-wezterm \
 neovim  \
 ripgrep \
 stylua  \
 lazygit \
 gnu-sed \
 font-jetbrains-mono-nerd-font \
-ranger \
-starship
+starship \
+fd \
+bat \
+eza \
+procs \
+sd \
+zoxide \
+dust \
+tokei \
+hyperfine
+
 ```
 6. Install quality-of-life tools
 ```sh
@@ -55,6 +63,7 @@ brew install \
 bluesnooze
 
 brew install --cask \
+wezterm \
 1password \
 xcodes \
 insomnia \
@@ -66,14 +75,23 @@ displaylink
 ```
 
 ## Software (installed by installer)
-- [Neovim](https://neovim.io/) - terminal
+- [WezTerm](https://wezfurlong.org/wezterm/) - terminal emulator
+- [Neovim](https://neovim.io/) - new vim
 - [ripgrep](https://github.com/BurntSushi/ripgrep) - fast file search
 - [stylua](https://github.com/JohnnyMorganz/StyLua) - lua formatter
 - [gnu-sed](https://formulae.brew.sh/formula/gnu-sed) - text manipulation 
 - [LazyGit](https://github.com/jesseduffield/lazygit) - terminal UI for git with
 VI bindings
-- [Ranger](https://ranger.github.io/) - terminal file manager with VI bindings
 - [Starship](https://starship.rs/) - custom shell prompt
+- [fd](https://github.com/sharkdp/fd) - faster find
+- [bat](https://github.com/sharkdp/bat) - cat with syntax highlighting
+- [eza](https://github.com/eza-community/eza) - better ls
+- [procs](https://github.com/dalance/procs) - modern ps
+- [sd](https://github.com/chmln/sd) - better, more intuitive sed
+- [zoxide](https://github.com/ajeetdsouza/zoxide) - better cd
+- [dust](https://github.com/bootandy/dust) - newer, faster du
+- [tokei] - code line counter
+- [hyperfine](https://github.com/sharkdp/hyperfine) - benchmarking tool
 
 ## Quality-of-life software (installed by installer)
 - [Bluesnooze](https://github.com/odlp/bluesnooze) - sleeping Mac = bluetooth off
