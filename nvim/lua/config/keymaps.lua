@@ -90,3 +90,51 @@ map("n", "<leader>bo", function()
     vim.cmd("%bd | e# | bd#")
   end
 end, { desc = "Delete all buffers" })
+
+-- navigate to next item in quickfix list
+map("n", "]q", function()
+  if require("trouble").is_open() then
+    require("trouble").next({ skip_groups = true, jump = true })
+  else
+    local ok, err = pcall(vim.cmd.cnext)
+    if not ok then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
+  end
+end, { desc = "Next trouble/quickfix item" })
+
+-- navigate to prev item in quickfix list
+map("n", "[q", function()
+  if require("trouble").is_open() then
+    require("trouble").next({ skip_groups = true, jump = true })
+  else
+    local ok, err = pcall(vim.cmd.cnext)
+    if not ok then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
+  end
+end, { desc = "Next trouble/quickfix item" })
+
+-- navigate to next FILE in quickfix list
+map("n", "]Q", function()
+  if require("trouble").is_open() then
+    -- trouble doesn't have an API for this
+  else
+    local ok, err = pcall(vim.cmd.cnfile)
+    if not ok then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
+  end
+end, { desc = "Next quickfix file" })
+
+-- navigate to prev FILE in quickfix list
+map("n", "[Q", function()
+  if require("trouble").is_open() then
+    -- trouble doesn't have an API for this
+  else
+    local ok, err = pcall(vim.cmd.cpfile)
+    if not ok then
+      vim.notify(err, vim.log.levels.ERROR)
+    end
+  end
+end, { desc = "Previous quickfix file" })
