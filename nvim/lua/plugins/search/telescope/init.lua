@@ -71,62 +71,93 @@ local function custom_mime_hook(filepath, bufnr, opts)
 end
 
 return {
-  "nvim-telescope/telescope.nvim",
-  keys = {
-    { "<leader>ff", files, desc = "Find files" },
-    { "<leader>fb", openBuffers, desc = "Buffers" },
-    { "<leader>fo", prevFiles, desc = "Recent (old files)" },
-    { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
-    { "<leader>fr", resumePicker, desc = "Resume Last Picker" },
-    { "<leader>sN", notifications, desc = "Notifications" },
-    { "<leader>sj", jumplist, desc = "Jumplist" },
-  },
-  dependencies = {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    build = "make",
-    config = function()
-      require("telescope").load_extension("fzf")
-    end,
-  },
-  opts = {
-    defaults = {
-      -- enable the following if telescope hangs when previewing large files
-      -- buffer_previewer_maker = custom_buffer_preview_maker,
-      preview = {
-        filesize_limit = MAX_SIZE,
-        treesitter = false,
-        mime_hook = custom_mime_hook,
-      },
-      file_ignore_patterns = { "neo-tree ", "oil://" },
+  {
+    "nvim-telescope/telescope.nvim",
+    keys = {
+      { "<leader>ff", files, desc = "Find files" },
+      { "<leader>fb", openBuffers, desc = "Buffers" },
+      { "<leader>fo", prevFiles, desc = "Recent (old files)" },
+      { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
+      { "<leader>fr", resumePicker, desc = "Resume Last Picker" },
+      { "<leader>sN", notifications, desc = "Notifications" },
+      { "<leader>sj", jumplist, desc = "Jumplist" },
     },
-    pickers = {
-      buffers = {
-        theme = "dropdown",
-        initial_mode = "insert",
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      config = function()
+        require("telescope").load_extension("fzf")
+      end,
+    },
+    opts = {
+      defaults = {
+        -- enable the following if telescope hangs when previewing large files
+        -- buffer_previewer_maker = custom_buffer_preview_maker,
         preview = {
-          hide_on_startup = true,
+          filesize_limit = MAX_SIZE,
+          treesitter = false,
+          mime_hook = custom_mime_hook,
         },
-        ignore_current_buffer = true,
-        show_all_buffers = false, -- ignore unloaded buffers
-        sort_lastused = true,
-        sort_mru = true,
+        file_ignore_patterns = { "neo-tree ", "oil://" },
       },
-      live_grep = {
-        path_display = { shorten = { len = 4, exclude = { 1, -1 } } },
-        mappings = {
-          i = {
-            -- filter live_grep by file extension
-            ["<c-f>"] = require("plugins.search.telescope.custom-pickers").actions.set_extension,
+      pickers = {
+        buffers = {
+          theme = "dropdown",
+          initial_mode = "insert",
+          preview = {
+            hide_on_startup = true,
           },
+          ignore_current_buffer = true,
+          show_all_buffers = false, -- ignore unloaded buffers
+          sort_lastused = true,
+          sort_mru = true,
         },
-        additional_args = function(opts)
-          return { "--smart-case", "--hidden" }
-        end,
+        live_grep = {
+          path_display = { shorten = { len = 4, exclude = { 1, -1 } } },
+          mappings = {
+            i = {
+              -- filter live_grep by file extension
+              ["<c-f>"] = require("plugins.search.telescope.custom-pickers").actions.set_extension,
+            },
+          },
+          additional_args = function(opts)
+            return { "--smart-case", "--hidden" }
+          end,
+        },
+        old_files = {
+          initial_mode = "normal",
+        },
       },
-      old_files = {
-        initial_mode = "normal",
+      extensions = { "notify" },
+    },
+  },
+  {
+    "debugloop/telescope-undo.nvim",
+    dependencies = {
+      {
+        "nvim-telescope/telescope.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
       },
     },
-    extensions = { "notify" },
+    keys = {
+      {
+        "<leader>u",
+        "<cmd>Telescope undo<cr>",
+        desc = "undo history",
+      },
+    },
+    opts = {
+      extensions = {
+        undo = {
+          use_delta = true,
+        },
+      },
+    },
+    config = function(_, opts)
+      -- Calling telescope's setup from multiple specs does not hurt, it will happily merge the
+      -- configs for us
+      require("telescope").setup(opts)
+      require("telescope").load_extension("undo")
+    end,
   },
 }

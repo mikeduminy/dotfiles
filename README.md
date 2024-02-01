@@ -54,7 +54,8 @@ sd \
 zoxide \
 dust \
 tokei \
-hyperfine
+hyperfine \
+git-delta
 
 ```
 6. Install quality-of-life tools
@@ -80,8 +81,7 @@ displaylink
 - [ripgrep](https://github.com/BurntSushi/ripgrep) - fast file search
 - [stylua](https://github.com/JohnnyMorganz/StyLua) - lua formatter
 - [gnu-sed](https://formulae.brew.sh/formula/gnu-sed) - text manipulation 
-- [LazyGit](https://github.com/jesseduffield/lazygit) - terminal UI for git with
-VI bindings
+- [LazyGit](https://github.com/jesseduffield/lazygit) - terminal UI for git with VI bindings
 - [Starship](https://starship.rs/) - custom shell prompt
 - [fd](https://github.com/sharkdp/fd) - faster find
 - [bat](https://github.com/sharkdp/bat) - cat with syntax highlighting
@@ -92,6 +92,7 @@ VI bindings
 - [dust](https://github.com/bootandy/dust) - newer, faster du
 - [tokei] - code line counter
 - [hyperfine](https://github.com/sharkdp/hyperfine) - benchmarking tool
+- [git-delta](https://github.com/dandavison/delta) - better git diff
 
 ## Quality-of-life software (installed by installer)
 - [Bluesnooze](https://github.com/odlp/bluesnooze) - sleeping Mac = bluetooth off

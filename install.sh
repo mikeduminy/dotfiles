@@ -57,7 +57,7 @@ brew_libs=(
 	"dust"                          # newer, faster du
 	"tokei"                         # code line counter
 	"hyperfine"                     # benchmarking tool
-
+	"git-delta"                     # better git diff
 )
 
 logStep "Installing brew packages"
