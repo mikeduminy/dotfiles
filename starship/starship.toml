@@ -13,6 +13,7 @@ $git_state\
 \n$character\
 """
 
+# helpful for slow git status calls
 command_timeout = 2000
 
 [character]
@@ -24,11 +25,12 @@ vimcmd_replace_symbol = '[❮](bold purple)'
 vimcmd_visual_symbol = '[❮](bold yellow)'
 
 [git_status]
-stashed = ''
+stashed = ''   # disable stashed count
+untracked = '' # disable untracked count (can improve performance for large repositories)
 
 [nodejs]
-symbol = ' '
+symbol = ''
 style = 'bold green'
-version_format = 'v${major}.${minor}'
-format = '[$symbol\[$version\]]($style) '
+version_format = '${major}.${minor}'
+format = '[$symbol ($version)]($style) '
 detect_extensions = ['js', 'ts', 'jsx', 'tsx', 'mjs', 'cjs']
