@@ -69,38 +69,38 @@ brew tap homebrew/cask-fonts
 5. Install main tools
 ```sh
 brew install \
-neovim  \
-ripgrep \
-stylua  \
-lazygit \
-gnu-sed \
-font-jetbrains-mono-nerd-font \
-starship \
-fd \
-bat \
-eza \
-procs \
-sd \
-zoxide \
-dust \
-tokei \
-hyperfine \
-git-delta
+  neovim  \
+  ripgrep \
+  stylua  \
+  lazygit \
+  gnu-sed \
+  font-jetbrains-mono-nerd-font \
+  starship \
+  fd \
+  bat \
+  eza \
+  procs \
+  sd \
+  zoxide \
+  dust \
+  tokei \
+  hyperfine \
+  git-delta
 
 ```
 6. Install quality-of-life tools
 ```sh
 brew install \
-bluesnooze
+  bluesnooze
 
 brew install --cask \
-wezterm \
-1password \
-xcodes \
-insomnia \
-raycast \
-cleanshot \
-microsoft-edge \
-beyond-compare \
-displaylink
+  wezterm \
+  1password \
+  xcodes \
+  insomnia \
+  raycast \
+  cleanshot \
+  microsoft-edge \
+  beyond-compare \
+  displaylink
 ```
