@@ -18,7 +18,37 @@ NOTE: Only intended to be used on a Mac.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/HEAD/install.sh)"
 ```
 
-## Getting started (manual)
+## Software
+- [WezTerm](https://wezfurlong.org/wezterm/) - terminal emulator
+- [Neovim](https://neovim.io/) - new vim
+- [ripgrep](https://github.com/BurntSushi/ripgrep) - fast file search
+- [stylua](https://github.com/JohnnyMorganz/StyLua) - lua formatter
+- [gnu-sed](https://formulae.brew.sh/formula/gnu-sed) - text manipulation
+- [LazyGit](https://github.com/jesseduffield/lazygit) - terminal UI for git with VI bindings
+- [Starship](https://starship.rs/) - custom shell prompt
+- [fd](https://github.com/sharkdp/fd) - faster find
+- [bat](https://github.com/sharkdp/bat) - cat with syntax highlighting
+- [eza](https://github.com/eza-community/eza) - better ls
+- [procs](https://github.com/dalance/procs) - modern ps
+- [sd](https://github.com/chmln/sd) - better, more intuitive sed
+- [zoxide](https://github.com/ajeetdsouza/zoxide) - better cd
+- [dust](https://github.com/bootandy/dust) - newer, faster du
+- [tokei] - code line counter
+- [hyperfine](https://github.com/sharkdp/hyperfine) - benchmarking tool
+- [git-delta](https://github.com/dandavison/delta) - better git diff
+
+## Quality-of-life software
+- [Bluesnooze](https://github.com/odlp/bluesnooze) - sleeping Mac = bluetooth off
+- [1Password](https://1password.com/) - password manager
+- [XCodes](https://www.xcodes.app/) - XCode version manager
+- [Insomnia](https://insomnia.rest/) - REST GUI
+- [Raycast](https://www.raycast.com/) - replacement for Mac Spotlight
+- [CleanShot X](https://cleanshot.com/) - better screenshots
+- [Microsoft Edge](https://www.microsoft.com/en-us/edge) - personal Browser
+- [Beyond Compare](https://www.scootersoftware.com/download.php) - 3-way merge
+- [DisplayLink Manager](https://www.synaptics.com/products/displaylink-graphics/downloads/macos) - external display support through Dell dock
+
+## Manual installation
 1. Clone this repo into `~/.xdg/config`
 2. Link the zsh config files from this repo to the root ones
 ````
@@ -74,33 +104,3 @@ microsoft-edge \
 beyond-compare \
 displaylink
 ```
-
-## Software (installed by installer)
-- [WezTerm](https://wezfurlong.org/wezterm/) - terminal emulator
-- [Neovim](https://neovim.io/) - new vim
-- [ripgrep](https://github.com/BurntSushi/ripgrep) - fast file search
-- [stylua](https://github.com/JohnnyMorganz/StyLua) - lua formatter
-- [gnu-sed](https://formulae.brew.sh/formula/gnu-sed) - text manipulation 
-- [LazyGit](https://github.com/jesseduffield/lazygit) - terminal UI for git with VI bindings
-- [Starship](https://starship.rs/) - custom shell prompt
-- [fd](https://github.com/sharkdp/fd) - faster find
-- [bat](https://github.com/sharkdp/bat) - cat with syntax highlighting
-- [eza](https://github.com/eza-community/eza) - better ls
-- [procs](https://github.com/dalance/procs) - modern ps
-- [sd](https://github.com/chmln/sd) - better, more intuitive sed
-- [zoxide](https://github.com/ajeetdsouza/zoxide) - better cd
-- [dust](https://github.com/bootandy/dust) - newer, faster du
-- [tokei] - code line counter
-- [hyperfine](https://github.com/sharkdp/hyperfine) - benchmarking tool
-- [git-delta](https://github.com/dandavison/delta) - better git diff
-
-## Quality-of-life software (installed by installer)
-- [Bluesnooze](https://github.com/odlp/bluesnooze) - sleeping Mac = bluetooth off
-- [1Password](https://1password.com/) - password manager
-- [XCodes](https://www.xcodes.app/) - XCode version manager
-- [Insomnia](https://insomnia.rest/) - REST GUI
-- [Raycast](https://www.raycast.com/) - replacement for Mac Spotlight
-- [CleanShot X](https://cleanshot.com/) - better screenshots
-- [Microsoft Edge](https://www.microsoft.com/en-us/edge) - personal Browser
-- [Beyond Compare](https://www.scootersoftware.com/download.php) - 3-way merge
-- [DisplayLink Manager](https://www.synaptics.com/products/displaylink-graphics/downloads/macos) - external display support through Dell dock 
