@@ -1,5 +1,10 @@
 local file = require("utils.file")
 
+local getPickers = function()
+  local builtins = require("telescope.builtin")
+  return builtins
+end
+
 local liveGrepRelative = function()
   local current_path = file.get_current_dir()
 
@@ -13,16 +18,8 @@ local liveGrepRelative = function()
       return
     end
 
-    require("telescope.builtin").live_grep({ search_dirs = { input } })
+    getPickers().live_grep({ search_dirs = { input } })
   end)
-end
-
-local openBuffers = function()
-  require("telescope.builtin").buffers({ only_cwd = true })
-end
-
-local prevFiles = function()
-  require("telescope.builtin").oldfiles({ only_cwd = true })
 end
 
 local files = function()
@@ -31,14 +28,6 @@ end
 
 local notifications = function()
   require("telescope").extensions.notify.notify()
-end
-
-local jumplist = function()
-  require("telescope.builtin").jumplist()
-end
-
-local resumePicker = function()
-  require("telescope.builtin").resume({ initial_mode = "normal" })
 end
 
 local MAX_SIZE = 128 * 1024 -- 128kb
@@ -75,12 +64,12 @@ return {
     "nvim-telescope/telescope.nvim",
     keys = {
       { "<leader>ff", files, desc = "Find files" },
-      { "<leader>fb", openBuffers, desc = "Buffers" },
-      { "<leader>fo", prevFiles, desc = "Recent (old files)" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      { "<leader>fo", "<cmd>Telescope oldfiles<cr>", desc = "Recent (old files)" },
       { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
-      { "<leader>fr", resumePicker, desc = "Resume Last Picker" },
+      { "<leader>fr", "<cmd>Telescope resume<cr>", desc = "Resume Last Picker" },
       { "<leader>sN", notifications, desc = "Notifications" },
-      { "<leader>sj", jumplist, desc = "Jumplist" },
+      { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
     },
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
@@ -101,18 +90,32 @@ return {
         file_ignore_patterns = { "neo-tree ", "oil://" },
       },
       pickers = {
+        find_files = {
+          theme = "dropdown",
+        },
+        resume = {
+          theme = "dropdown",
+          initial_mode = "normal",
+        },
+        jumplist = {
+          theme = "dropdown",
+          initial_mode = "normal",
+        },
         buffers = {
           theme = "dropdown",
-          initial_mode = "insert",
-          preview = {
-            hide_on_startup = true,
-          },
+          only_cwd = true,
           ignore_current_buffer = true,
           show_all_buffers = false, -- ignore unloaded buffers
           sort_lastused = true,
           sort_mru = true,
         },
+        oldfiles = {
+          theme = "dropdown",
+          initial_mode = "insert",
+          only_cwd = true,
+        },
         live_grep = {
+          theme = "dropdown",
           path_display = { shorten = { len = 4, exclude = { 1, -1 } } },
           mappings = {
             i = {
@@ -123,9 +126,6 @@ return {
           additional_args = function(opts)
             return { "--smart-case", "--hidden" }
           end,
-        },
-        old_files = {
-          initial_mode = "normal",
         },
       },
       extensions = { "notify" },
