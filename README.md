@@ -33,7 +33,7 @@ NOTE: Only intended to be used on a Mac.
 - [sd](https://github.com/chmln/sd) - better, more intuitive sed
 - [zoxide](https://github.com/ajeetdsouza/zoxide) - better cd
 - [dust](https://github.com/bootandy/dust) - newer, faster du
-- [tokei] - code line counter
+- [tokei](https://github.com/XAMPPRocky/tokei) - code line counter
 - [hyperfine](https://github.com/sharkdp/hyperfine) - benchmarking tool
 - [git-delta](https://github.com/dandavison/delta) - better git diff
 
