@@ -1,23 +1,8 @@
-[user]
-	email = michael-james.duminy@klarna.com
-	name = Mike Duminy
-[lfs]
-	locksverify = false
-[branch]
-	autosetuprebase = always
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-[oh-my-zsh]
-	hide-status = 1
-	hide-dirty = 1
-[diff]
-	tool = bc
-[merge]
-	tool = bc
-[mergetool "bc"]
-	trustExitCode = true
-[mergetool]
-	keepBackup = false
+; Use work settings in work folder
+; Note: must be included first
+[includeIf "gitdir:~/Klarna/"]
+path = ~/.xdg/config/plugins/work/git/config
+
+; Use personal settings in all other folders
+[include]
+  path = ~/.xdg/config/plugins/config/git/config

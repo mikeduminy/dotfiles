@@ -1,0 +1,23 @@
+[user]
+	email = mjduminy@gmail.com
+	name = Mike Duminy
+[branch]
+	autosetuprebase = always
+[oh-my-zsh]
+	hide-status = 1
+	hide-dirty = 1
+[diff]
+	tool = bc
+[merge]
+	tool = bc
+[mergetool "bc"]
+	trustExitCode = true
+[mergetool]
+	keepBackup = false
+[lfs]
+	locksverify = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
