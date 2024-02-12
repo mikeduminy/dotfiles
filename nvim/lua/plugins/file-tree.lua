@@ -20,15 +20,32 @@ return {
       use_default_keymaps = false,
       keymaps = {
         ["-"] = "actions.parent",
+        ["<S-k>"] = "actions.parent",
+        ["<S-j>"] = {
+          callback = function()
+            -- only allow this keybinding to open directories
+            local oil = require("oil")
+            local entry = oil.get_cursor_entry()
+            if entry and entry.type == "directory" then
+              oil.select()
+            end
+          end,
+        },
         ["<C-p>"] = "actions.preview",
         ["<CR>"] = "actions.select",
         ["<Leader>_"] = "actions.select_split",
         ["<Leader>|"] = "actions.select_vsplit",
-        ["?"] = "actions.show_help",
         ["R"] = "actions.refresh",
         ["_"] = "actions.open_cwd",
-        ["`"] = "actions.tcd",
         ["q"] = "actions.close",
+        ["g?"] = "actions.show_help",
+        ["<C-t>"] = "actions.select_tab",
+        ["`"] = "actions.cd",
+        ["~"] = "actions.tcd",
+        ["gs"] = "actions.change_sort",
+        ["gx"] = "actions.open_external",
+        ["g."] = "actions.toggle_hidden",
+        ["g\\"] = "actions.toggle_trash",
       },
       view_options = {
         -- Show files and directories that start with "."
