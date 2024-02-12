@@ -17,5 +17,5 @@ alias sp=select-project
 
 alias cd="z"
 alias cat="bat"
-alias ls="eza"
+alias ls="eza --all --group-directories-first --icons"
 alias procs="procs --load-config $XDG_CONFIG_HOME/procs/config.toml"
