@@ -64,10 +64,10 @@ ln -s ~/.xdg/config/LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgen
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew update
-brew tap homebrew/cask-fonts
 ```
 5. Install main tools
 ```sh
+brew tap homebrew/cask-fonts
 brew install \
   neovim  \
   ripgrep \
