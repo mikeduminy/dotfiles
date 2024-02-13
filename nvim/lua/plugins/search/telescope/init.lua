@@ -108,6 +108,11 @@ return {
           show_all_buffers = false, -- ignore unloaded buffers
           sort_lastused = true,
           sort_mru = true,
+          mappings = {
+            i = {
+              ["<c-d>"] = require("telescope.actions").delete_buffer,
+            },
+          },
         },
         oldfiles = {
           theme = "dropdown",
