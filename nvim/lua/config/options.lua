@@ -40,6 +40,9 @@ local function set_ft_option(ft, option, value)
     desc = ('set option "%s" to "%s" for this filetype'):format(option, value),
     callback = function()
       vim.opt_local[option] = value
+      -- markdown files use whitespace to mean something
+      -- TODO: find a better way to disable only trim_trailing_whitespace
+      vim.b.editorconfig = false
     end,
   })
 end
