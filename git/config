@@ -1,8 +1,8 @@
-; Use work settings in work folder
-; Note: must be included first
-[includeIf "gitdir:~/Klarna/"]
-path = ~/.xdg/config/plugins/work/git/config
-
 ; Use personal settings in all other folders
 [include]
   path = ~/.xdg/config/plugins/config/git/config
+
+; Use work settings in work folder
+; This overrides the personal settings
+[includeIf "gitdir:~/Klarna/"]
+  path = ~/.xdg/config/plugins/work/git/config
