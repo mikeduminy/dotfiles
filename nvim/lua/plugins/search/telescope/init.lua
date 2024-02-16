@@ -86,12 +86,17 @@ return {
           filesize_limit = MAX_SIZE,
           treesitter = false,
           mime_hook = custom_mime_hook,
+          hide_on_startup = true,
         },
         file_ignore_patterns = { "neo-tree ", "oil://" },
+        cache_picker = {
+          num_pickers = 10,
+        },
       },
       pickers = {
         find_files = {
           theme = "dropdown",
+          mappings = {},
         },
         resume = {
           theme = "dropdown",
@@ -112,12 +117,23 @@ return {
             i = {
               ["<c-d>"] = require("telescope.actions").delete_buffer,
             },
+            n = {
+              ["<c-d>"] = require("telescope.actions").delete_buffer,
+            },
           },
         },
         oldfiles = {
           theme = "dropdown",
           initial_mode = "insert",
           only_cwd = true,
+          layout_config = {
+            anchor = "N",
+          },
+          mappings = {
+            n = {
+              ["<S-p>"] = require("telescope.actions.layout").toggle_preview,
+            },
+          },
         },
         live_grep = {
           theme = "dropdown",
