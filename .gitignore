@@ -15,3 +15,6 @@ gatsby/
 # say no to submodules
 plugins/*/
 !plugins/config
+
+# ignore android cache
+.android
