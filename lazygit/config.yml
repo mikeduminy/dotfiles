@@ -6,6 +6,9 @@ gui:
   mainPanelSplitMode: 'horizontal'
   diffView:
     sideBySide: true
+  expandFocusedSidePanel: true
+  showFileTree: true
+  border: 'rounded'
 git:
   autoFetch: false
   fetchAll: false # only fetch current branch
@@ -15,4 +18,5 @@ git:
 os:
   editPreset: 'nvim'
 notARepository: 'quit'
+quitOnTopLevelReturn: true
 
