@@ -59,6 +59,17 @@ local function custom_mime_hook(filepath, bufnr, opts)
   end
 end
 
+local default_layout_config = {
+  anchor = "N",
+  width = function(self, max_columns, max_lines)
+    -- this function is called every time the picker is drawn
+    local percent = 0.8
+    local max_width = math.min(120, max_columns)
+    local min_width = math.min(120, max_columns - 20)
+    return math.min(math.max(math.floor(max_columns * percent), max_width), min_width)
+  end,
+}
+
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -92,21 +103,29 @@ return {
         cache_picker = {
           num_pickers = 10,
         },
+        layout_strategy = "vertical",
+        layout_config = {
+          anchor = "N",
+        },
       },
       pickers = {
         find_files = {
           theme = "dropdown",
+          layout_config = default_layout_config,
           mappings = {},
         },
         resume = {
           theme = "dropdown",
+          layout_config = default_layout_config,
           initial_mode = "normal",
         },
         jumplist = {
           theme = "dropdown",
+          layout_config = default_layout_config,
           initial_mode = "normal",
         },
         buffers = {
+          layout_config = default_layout_config,
           theme = "dropdown",
           only_cwd = true,
           ignore_current_buffer = true,
@@ -124,11 +143,9 @@ return {
         },
         oldfiles = {
           theme = "dropdown",
+          layout_config = default_layout_config,
           initial_mode = "insert",
           only_cwd = true,
-          layout_config = {
-            anchor = "N",
-          },
           mappings = {
             n = {
               ["<S-p>"] = require("telescope.actions.layout").toggle_preview,
@@ -137,6 +154,7 @@ return {
         },
         live_grep = {
           theme = "dropdown",
+          layout_config = default_layout_config,
           path_display = { shorten = { len = 4, exclude = { 1, -1 } } },
           mappings = {
             i = {
