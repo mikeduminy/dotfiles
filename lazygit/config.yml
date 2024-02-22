@@ -4,6 +4,14 @@ gui:
   showFileTree: false
   showRandomTip: false
   mainPanelSplitMode: 'horizontal'
+  diffView:
+    sideBySide: true
+git:
+  autoFetch: false
+  fetchAll: false # only fetch current branch
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never --syntax-theme base16-256 -s
 os:
   editPreset: 'nvim'
 notARepository: 'quit'
