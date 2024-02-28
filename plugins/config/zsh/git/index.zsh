@@ -44,6 +44,7 @@ gdlb() {
 ## Open fzf to select a worktree, open a new terminal workspace at the worktree
 alias gwt="$current_folder/select_worktree.zsh"
 
+## Open fzf to select a branch and check it out
 gch() {
   selected_branch=$(git branch --all | fzf)
   if [ $? -eq 0 ]; then
@@ -51,4 +52,13 @@ gch() {
     echo "Checking out $trimmed_branch"
     git checkout $trimmed_branch
   fi
+}
+
+## Search git history for a string
+gfind() {
+  if [ -z "$1" ]; then
+    echo "Usage: gfind <search_term> <optional: path>"
+    return 1
+  fi
+  git log -S"$1" -p -- $2
 }
