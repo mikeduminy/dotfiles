@@ -68,6 +68,14 @@ local default_layout_config = {
     local min_width = math.min(120, max_columns - 20)
     return math.min(math.max(math.floor(max_columns * percent), max_width), min_width)
   end,
+  height = function(self, max_columns, max_lines)
+    -- this function is called every time the picker is drawn
+    -- vim.notify(vim.inspect({ max_columns = max_columns, max_lines = max_lines }))
+    local percent = 0.3
+    local max_height = math.min(20, max_lines)
+    local min_height = math.min(20, max_lines - 5)
+    return math.min(math.max(math.floor(max_lines * percent), max_height), min_height)
+  end,
 }
 
 return {
