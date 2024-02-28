@@ -5,7 +5,7 @@ gui:
   showRandomTip: false
   mainPanelSplitMode: 'horizontal'
   diffView:
-    sideBySide: true
+    sideBySide: false
   expandFocusedSidePanel: true
   showFileTree: true
   border: 'rounded'
@@ -14,7 +14,7 @@ git:
   fetchAll: false # only fetch current branch
   paging:
     colorArg: always
-    pager: delta --dark --paging=never --syntax-theme base16-256 -s
+    pager: delta --dark --paging=never --syntax-theme base16-256
 os:
   editPreset: 'nvim'
 notARepository: 'quit'
