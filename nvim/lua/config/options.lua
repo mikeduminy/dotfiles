@@ -28,7 +28,7 @@ vim.opt.textwidth = 80
 vim.opt.shell = "/bin/zsh"
 
 -- use a tagstack/web-style jumplist navigation
-vim.opt.jumpoptions = "stack"
+-- vim.opt.jumpoptions = "stack"
 
 -- don't use swap files
 vim.opt.swapfile = false
