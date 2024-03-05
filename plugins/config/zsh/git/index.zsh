@@ -13,7 +13,7 @@ alias grbm='gfa; git rebase origin/$(git_main_branch)'
 alias gmt='gmtl' # oh-my-zsh git plugin replaced gmt with gmtl
 
 # Open diff tool
-alias gdt='git difftool'
+alias gdt='git difftool --dir-diff'
 
 # Interactively rebase the current branch onto the common ancestor of the current branch and the main branch
 alias grbis='git rebase -i `git merge-base \`current_branch\` origin/$(git_main_branch)`'

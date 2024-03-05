@@ -8,6 +8,8 @@
 	hide-dirty = 1
 [diff]
 	tool = bc
+[difftool "bc"]
+  cmd = "bcomp -expandall $LOCAL $REMOTE"
 [merge]
 	tool = bc
 [mergetool "bc"]
