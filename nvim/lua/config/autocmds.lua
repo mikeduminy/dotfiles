@@ -18,8 +18,12 @@ vim.api.nvim_create_autocmd("Filetype", {
 
 vim.api.nvim_create_autocmd("BufEnter", {
   callback = function(data)
-    if file.is_large_file(data.buf) then
-      vim.b.miniindentscope_disable = true
+    local bufsize = file.get_buf_size(data.buf)
+    if bufsize then
+      local max_file_size = 1024 * 1024 -- 1MiB
+      if bufsize > max_file_size then
+        vim.b.miniindentscope_disable = true
+      end
     end
   end,
   desc = "Disable mini.indentscope on large files",

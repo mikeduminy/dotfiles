@@ -3,8 +3,14 @@ local file = require("utils.file")
 return {
   "nvim-treesitter/nvim-treesitter",
   opts = function(_, opts)
+    local max_file_size = 1024 * 1024
     local function is_large_file(_lang, bufnr)
-      return file.is_large_file(bufnr)
+      local bufsize = file.get_buf_size(bufnr)
+      if bufsize > max_file_size then
+        vim.notify("File is too large to enable treesitter", vim.log.levels.WARN)
+        return true
+      end
+      return false
     end
 
     if opts.context_commentstring then

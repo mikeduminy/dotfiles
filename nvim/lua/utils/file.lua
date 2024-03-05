@@ -34,8 +34,17 @@ function module.get_current_dir(opts)
   return vim.fn.expand("%:h")
 end
 
-function module.is_large_file(bufnr)
-  return vim.api.nvim_buf_line_count(bufnr) > 50000
+--- Get the size of a buffer in KiB
+---@param bufnr number
+---@return integer|nil size in MiB if buffer is valid, nil otherwise
+function module.get_buf_size(bufnr)
+  local ok, stats = pcall(function()
+    return vim.loop.fs_stat(vim.api.nvim_buf_get_name(bufnr))
+  end)
+  if not (ok and stats) then
+    return nil
+  end
+  return stats.size
 end
 
 function module.get_root()
