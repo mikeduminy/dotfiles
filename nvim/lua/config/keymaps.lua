@@ -45,6 +45,9 @@ end
 -- hack for better saving using CMD+s
 map("n", withModifier("s"), ":write", { desc = "Save buffer", remap = true })
 
+map("n", "<leader>wa", "<cmd>wa<cr>", { desc = "Save all" })
+map("n", "<leader>wq", "<cmd>wq<cr>", { desc = "Save & Quit" })
+
 -- splits
 map("n", "<leader>ww", "<C-W>p", { desc = "Other window", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete window", remap = true })

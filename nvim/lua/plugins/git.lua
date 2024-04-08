@@ -7,5 +7,15 @@ return {
         enable = false,
       },
     },
+    keys = {
+      {
+        "<leader>gb",
+        function()
+          local gs = require("gitsigns")
+          gs.toggle_current_line_blame()
+        end,
+        desc = "Toggle current line blame",
+      },
+    },
   },
 }
