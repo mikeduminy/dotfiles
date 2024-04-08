@@ -3,8 +3,10 @@ return {
   {
     "folke/flash.nvim",
     opts = {
-      search = {
-        mode = "search",
+      modes = {
+        search = {
+          enabled = false,
+        },
       },
       jump = {
         nohlsearch = true,
