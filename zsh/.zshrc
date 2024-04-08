@@ -16,7 +16,6 @@ if [ ! -d $ZSH ]; then
 fi
 
 # oh-my-zsh cache
-export ZDOTDIR="$XDG_CACHE_HOME"
 export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
 
 # Location for custom plugins (oh-my-zsh adds "/plugins")
