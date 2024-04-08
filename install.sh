@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[[ $(uname -s) == "Darwin"* ]] && IS_MAC=true || IS_MAC=false
+
 function logStep() {
 	# log steps in the terminal in blue with a nice header
 	echo -e "\e[1;34m--------------------\e[0m"
@@ -58,6 +60,7 @@ brew_libs=(
 	"tokei"                         # code line counter
 	"hyperfine"                     # benchmarking tool
 	"git-delta"                     # better git diff
+	"zsh"                           # zsh shell
 )
 
 logStep "Installing brew packages"
@@ -81,6 +84,13 @@ logStep "Installing brew casks"
 for cask in "${brew_casks[@]}"; do
 	brew install --cask "$cask"
 done
+
+# set zsh as default shell
+chsh -s /opt/homebrew/bin/zsh
+if $IS_MAC; then
+	# set zsh as default shell for mac
+	sudo dscl . -create /Users/$USER UserShell /opt/homebrew/bin/zsh
+fi
 
 # close and re-open terminal
 reset
