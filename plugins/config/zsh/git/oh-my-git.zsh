@@ -58,6 +58,8 @@ alias gp='git push'
 alias gpf='git push --force-with-lease'
 alias gpf!='git push --force'
 
+alias gpl='git pull'
+
 alias grb='git rebase'
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'

@@ -62,3 +62,7 @@ gfind() {
   fi
   git log -S"$1" -p -- $2
 }
+
+alias gdlf="$current_folder/remove_locked_index.zsh"
+
+alias gpl='git pull'

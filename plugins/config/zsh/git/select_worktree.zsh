@@ -3,17 +3,17 @@
 # Load wezterm helper functions
 source $XDG_CONFIG_HOME/wezterm/api.zsh
 
-function is_git_repo() {
+local function is_git_repo() {
   git rev-parse --is-inside-work-tree > /dev/null 2>&1
 }
 
 # Returns a list of worktrees in the format: <home-relative folder> <branch>
-function simple_worktree_list() {
+local function simple_worktree_list() {
   git worktree list | awk '{print $1" "$3}' | sed "s|$HOME/||"
 }
 
 # Returns the path to the worktree with the given folder name
-function find_path_to_worktree() {
+local function find_path_to_worktree() {
   git worktree list | grep "$1" | awk '{print $1}' | head -n 1
 }
 
