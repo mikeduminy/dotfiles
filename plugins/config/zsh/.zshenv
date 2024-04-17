@@ -2,3 +2,5 @@
 [[ ! -z $MIKE_DEBUG ]] && echo "loading: $0"
 
 source $(dirname $0)/paths.zsh
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
