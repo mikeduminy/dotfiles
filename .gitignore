@@ -11,10 +11,12 @@ configstore/*
 lazygit/state.yml
 github-copilot/*
 gatsby/
+irb/irb_history
 
 # say no to submodules
 plugins/*/
 !plugins/config
+tmux/plugins/*
 
 # ignore android cache
 .android

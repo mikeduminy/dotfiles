@@ -85,12 +85,15 @@ for cask in "${brew_casks[@]}"; do
 	brew install --cask "$cask"
 done
 
-# set zsh as default shell
-chsh -s /opt/homebrew/bin/zsh
 if $IS_MAC; then
+	logStep "Changing default shell to installed zsh"
+	chsh -s /opt/homebrew/bin/zsh
 	# set zsh as default shell for mac
 	sudo dscl . -create /Users/$USER UserShell /opt/homebrew/bin/zsh
 fi
+
+logStep "Cloning tmux plugin manager"
+git clone https://github.com/tmux-plugins/tpm $XDG_DATA_HOME/tmux/plugins/tpm
 
 # close and re-open terminal
 reset
