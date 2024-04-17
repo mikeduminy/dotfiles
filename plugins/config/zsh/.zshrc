@@ -11,8 +11,13 @@ if [[ "$(command -v nvim)" ]]; then
   export MANWIDTH=999
 fi
 
-export PROJECT_ROOTS="$HOME/Source:$PROJECT_ROOTS"
-export PROJECT_FOLDERS="$XDG_CONFIG_HOME:$PROJECT_FOLDERS"
+if [[ $PROJECT_ROOTS != *"$HOME/Source:"* ]]; then
+  export PROJECT_ROOTS="$HOME/Source:$PROJECT_ROOTS"
+fi
+
+if [[ $PROJECT_FOLDERS != *"$XDG_CONFIG_HOME:"* ]]; then
+  export PROJECT_FOLDERS="$XDG_CONFIG_HOME:$PROJECT_FOLDERS"
+fi
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
