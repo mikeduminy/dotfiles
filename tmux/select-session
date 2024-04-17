@@ -1,0 +1,23 @@
+#!/bin/zsh
+
+raw_tmux_sessions=$(tmux list-sessions -F "#{session_name} - #{session_path}" 2>/dev/null)
+
+declare -A tmux_sessions
+for session in $raw_tmux_sessions; do
+  session_name=$(echo $session | awk -F' - ' '{print $1}')
+  session_path=$(echo $session | awk -F' - ' '{print $2}')
+
+  # Remove the leading $HOME from the path
+  session_path=${session_path#$HOME/}
+
+  tmux_sessions[$session_name]=$session_path
+done
+
+selected_item=$(echo ${(k)tmux_sessions} | fzf-tmux --reverse -w 50% -h 50% -m --preview-window=right:70%)
+
+if [[ -z $selected_item ]]; then
+  exit 0
+fi
+
+tmux switch-client -t $selected_item
+exit 0
