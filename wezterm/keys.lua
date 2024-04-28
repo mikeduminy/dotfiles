@@ -51,6 +51,7 @@ module.key_table = {
         wezterm.action.InputSelector {
           title = 'Open Workspace',
           choices = choices,
+          fuzzy = true,
           action = wezterm.action_callback(function(w, p, id, label)
             if not id and not label then
               wezterm.log_info 'cancelled'

@@ -1,5 +1,7 @@
 local wezterm = require 'wezterm'
 local zenmode = require 'lib.zenmode'
+local projects = require 'lib.projects'
+local string = require 'utils.string'
 
 local module = {}
 
@@ -28,6 +30,10 @@ local event_map = {
 
     local cmd_context = wezterm.json_parse(value)
     hacky_user_commands[cmd_context.cmd](window, pane, cmd_context)
+  end,
+  ['PROJECT_ROOTS'] = function(_, _, _, value)
+    local roots = string.split(value, ':')
+    projects.setProjectRoots(roots)
   end,
   ['ZEN_MODE'] = zenmode.handle_event,
 }

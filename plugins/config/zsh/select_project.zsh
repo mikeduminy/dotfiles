@@ -43,7 +43,7 @@ if (($retval == 0)); then
   # 2.1. Get the selected folder from the selected item
   selected_folder=$(echo $selected_item | awk '{print $1}')
 	# 3. Switch to the workspace by communicating with wezterm
-	wezterm-switch-workspace "$selected_folder" "$HOME/$selected_folder"
+	__wezterm_switch_workspace "$selected_folder" "$HOME/$selected_folder"
 else
 	# user cancelled fzf
 	return

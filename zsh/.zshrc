@@ -78,3 +78,6 @@ unset base16_shell_path
 
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 eval "$(starship init zsh)"
+
+# Setup wezterm
+source $XDG_CONFIG_HOME/wezterm/init.zsh

@@ -1,3 +1,5 @@
+local tableUtils = require 'utils.table'
+
 local module = {}
 
 -- Escapes special regex patterns in a string
@@ -23,5 +25,7 @@ function module.tconcat(t1, t2)
     table.insert(t1, v)
   end
 end
+
+module.mergeValues = tableUtils.mergeValues
 
 return module
