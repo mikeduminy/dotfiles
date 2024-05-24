@@ -42,5 +42,5 @@ selected_worktree_dir=$(find_path_to_worktree "$selected_worktree_dir_name")
 [[ "$selected_worktree_dir" == $(pwd) ]] && echo "Already in $selected_worktree_dir_name" && return;
 
 echo "Switching to worktree: $selected_worktree_dir_name"
-wezterm-switch-workspace "$selected_worktree_dir_name" "$HOME/$selected_worktree_dir_name"
+__wezterm_switch_workspace "$selected_worktree_dir_name" "$HOME/$selected_worktree_dir_name"
 
