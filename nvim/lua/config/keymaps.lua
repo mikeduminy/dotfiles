@@ -80,7 +80,8 @@ end, { desc = "Copy Relative File Path" })
 map("n", "<leader>sp", function()
   local file_path = git_utils.get_file()
   local remote = git_utils.get_remote()
-  vim.fn.setreg("+", remote .. file_path)
+  local current_line = vim.fn.line(".")
+  vim.fn.setreg("+", remote .. file_path .. "#" .. current_line)
 end, { desc = "Copy Git File Path URL" })
 
 -- prompt to remove all open buffers
