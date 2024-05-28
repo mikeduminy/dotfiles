@@ -11,7 +11,7 @@ return {
     {
       "<leader>xN",
       function()
-        require("trouble").previous({ skip_groups = true, jump = true })
+        require("trouble").prev({ skip_groups = true, jump = true })
       end,
       desc = "Previous Diagnostic (Trouble)",
     },
