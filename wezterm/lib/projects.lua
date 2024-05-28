@@ -4,20 +4,6 @@ local utils = require 'utils'
 
 local module = {}
 
-local project_roots = nil
-local cached_projects = nil
-local cached_since = nil
-
-local cache_ttl = 5 * 60 -- 5 minutes
-
-local function currentTime()
-  return tonumber(wezterm.time.now():format '%s')
-end
-
-local function isCacheStale()
-  return cached_since + cache_ttl < currentTime()
-end
-
 local function getBranchName(projectDir)
   local gitDir = projectDir .. '/.git'
   -- Check if the project is a git repository, we use file.exists instead of
@@ -45,16 +31,17 @@ local function getBranchName(projectDir)
   return stdout
 end
 
--- Returns a table of project names and their locations
 local function getProjects()
-  if cached_projects and not isCacheStale() then
-    wezterm.log_info('returning cached projects' .. ' (cached for ' .. currentTime() - cached_since .. ' seconds)')
-    return cached_projects
-  end
+  return wezterm.GLOBAL.projects or {}
+end
 
+local function setProjects(projects)
+  wezterm.GLOBAL.projects = projects
+end
+
+-- Returns a table of project names and their locations
+local function buildProjects(project_dirs)
   local projects = {}
-
-  local project_dirs = project_roots or {}
 
   for _, project_dir in ipairs(project_dirs) do
     local dirs = wezterm.read_dir(project_dir)
@@ -68,19 +55,17 @@ local function getProjects()
     end
   end
 
-  wezterm.log_info 'caching projects'
-  cached_projects = projects
-  cached_since = currentTime()
-
   return projects
 end
 
 --- @param input table
 function module.setProjectRoots(input)
+  local project_roots = wezterm.GLOBAL.project_roots or {}
   project_roots = utils.mergeValues(project_roots or {}, input)
+  wezterm.GLOBAL.project_roots = project_roots
 
-  -- init cache
-  getProjects()
+  local projects = buildProjects(project_roots)
+  setProjects(projects)
 end
 
 -- Provides a table of choices for the workspace picker

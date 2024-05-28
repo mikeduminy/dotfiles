@@ -1,7 +1,6 @@
 local wezterm = require 'wezterm'
 local zoom = require 'lib.zoom'
 local projects = require 'lib.projects'
-local file = require 'utils.file'
 
 local module = {}
 
@@ -56,9 +55,17 @@ module.key_table = {
             if not id and not label then
               wezterm.log_info 'cancelled'
             else
+              local workspaceLabel = label
+              -- get the first section of the label
+              -- eg. "project-root/project-folder - branch-name" -> "project-root/project-folder"
+              for i in string.gmatch(workspaceLabel, '[^%-]+') do
+                workspaceLabel = i
+                break
+              end
+
               w:perform_action(
                 wezterm.action.SwitchToWorkspace {
-                  name = file.basename(label),
+                  name = workspaceLabel,
                   spawn = {
                     cwd = id,
                   },
