@@ -66,3 +66,16 @@ gfind() {
 alias gdlf="$current_folder/remove_locked_index.zsh"
 
 alias gpl='git pull'
+
+# Checkout a branch using fzf, excluding the current branch
+gcoi() {
+  _commands=(
+    "git branch" # show all branches
+    'grep -v "^\*"' # exclude the current branch
+    "fzf --height=20% --reverse --info=inline" # interactive search
+    "xargs git checkout" # checkout the selected branch
+  )
+
+  cmd=$(join_by " | " "${_commands[@]}")
+  eval $cmd
+}
