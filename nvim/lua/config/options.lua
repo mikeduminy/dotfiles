@@ -53,3 +53,9 @@ end
 -- clear formatexpr in markdown files which enables `gq` to reformat according
 -- to textwidth
 set_ft_option({ "markdown" }, "formatexpr", "")
+
+-- podspec and Podfile are ruby files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.podspec", "Podfile" },
+  command = "set filetype=ruby",
+})
