@@ -26,6 +26,23 @@ local files = function()
   require("lazyvim.util").telescope("find_files", { cwd = file.get_root() })()
 end
 
+local filesRelative = function()
+  local current_path = file.get_current_dir()
+
+  if current_path:sub(1, 6) == "oil://" then
+    -- trim oil:// from start
+    current_path = current_path:sub(7)
+  end
+
+  vim.ui.input({ prompt = "Find files in folder: ", default = current_path, completion = "dir" }, function(input)
+    if input == nil then
+      return
+    end
+
+    getPickers().find_files({ search_dirs = { input } })
+  end)
+end
+
 local notifications = function()
   require("telescope").extensions.notify.notify()
 end
@@ -82,9 +99,11 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     keys = {
+      { "<leader><leader>", files, desc = "Find files" },
       { "<leader>ff", files, desc = "Find files" },
+      { "<leader>fF", filesRelative, desc = "Find files (relative)" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>fo", "<cmd>Telescope oldfiles<cr>", desc = "Recent (old files)" },
+      -- { "<leader>fo", "<cmd>Telescope oldfiles<cr>", desc = "Recent (old files)" },
       { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
       { "<leader>fr", "<cmd>Telescope resume<cr>", desc = "Resume Last Picker" },
       { "<leader>sN", notifications, desc = "Notifications" },
@@ -188,7 +207,7 @@ return {
     },
     keys = {
       {
-        "<leader>u",
+        "<leader>fu",
         "<cmd>Telescope undo<cr>",
         desc = "undo history",
       },
@@ -209,7 +228,26 @@ return {
   },
   {
     "nvim-telescope/telescope-frecency.nvim",
-    config = function()
+    keys = {
+      {
+        "<leader>fo",
+        "<cmd>Telescope frecency theme=dropdown<cr>",
+        desc = "Frecent Files",
+      },
+    },
+    opts = {
+      extensions = {
+        frecency = {
+          hide_current_buffer = true, -- Do not show the current buffer
+          default_workspace = "CWD", -- Use the current working directory
+          db_safe_mode = false, -- Do not prompt to remove entries from the database
+          show_unindexed = false, -- Do not include unindexed files
+          path_display = { shorten = { len = 4, exclude = { 1, -1 } } },
+        },
+      },
+    },
+    config = function(_, opts)
+      require("telescope").setup(opts)
       require("telescope").load_extension("frecency")
     end,
   },
