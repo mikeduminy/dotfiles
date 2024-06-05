@@ -78,7 +78,7 @@ function module.getWorkspaceChoices()
   for _, project in ipairs(getProjects()) do
     local label = project.name
     if project.branch ~= '' then
-      label = label .. ' - ' .. project.branch
+      label = label .. ' | ' .. project.branch
     end
     table.insert(choices, { label = label, id = project.location })
   end

@@ -1,6 +1,7 @@
 local wezterm = require 'wezterm'
 local zoom = require 'lib.zoom'
 local projects = require 'lib.projects'
+local stringUtils = require 'utils.string'
 
 local module = {}
 
@@ -57,11 +58,9 @@ module.key_table = {
             else
               local workspaceLabel = label
               -- get the first section of the label
-              -- eg. "project-root/project-folder - branch-name" -> "project-root/project-folder"
-              for i in string.gmatch(workspaceLabel, '[^%-]+') do
-                workspaceLabel = i
-                break
-              end
+              -- eg. "project-root/project-folder | branch-name" -> "project-root/project-folder"
+              local splitLabel = stringUtils.split(workspaceLabel, '|')
+              workspaceLabel = splitLabel[1]
 
               w:perform_action(
                 wezterm.action.SwitchToWorkspace {
