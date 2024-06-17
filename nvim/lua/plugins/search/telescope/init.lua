@@ -72,10 +72,6 @@ local find_frecent_files = function()
   })
 end
 
-local search_notifications = function()
-  require("telescope").extensions.notify.notify()
-end
-
 local MAX_SIZE = 128 * 1024 -- 128kb
 
 local function custom_mime_hook(filepath, bufnr, opts)
@@ -116,7 +112,6 @@ return {
       -- { "<leader>fo", "<cmd>Telescope oldfiles<cr>", desc = "Recent (old files)" },
       { "<leader>f/", grep_relative, desc = "Find in Files (Grep)" },
       { "<leader>fr", "<cmd>Telescope resume<cr>", desc = "Resume Last Picker" },
-      { "<leader>sN", search_notifications, desc = "Notifications" },
       { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
     },
     dependencies = {

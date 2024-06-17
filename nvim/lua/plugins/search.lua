@@ -1,5 +1,5 @@
 return {
-  require("plugins.search.telescope"),
+  require("plugins.search.fzf"),
   {
     "folke/flash.nvim",
     opts = {
