@@ -45,7 +45,7 @@ end
 
 -- find files in the directory of the buffer
 local find_files = function()
-  require("lazyvim.util").telescope("find_files", { cwd = file.get_root() })()
+  require("lazyvim.util.pick").open("find_files", { cwd = file.get_root() })
 end
 
 local find_files_relative = function()
