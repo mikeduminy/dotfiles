@@ -20,3 +20,4 @@ tmux/plugins/*
 
 # ignore android cache
 .android
+htop/htoprc
