@@ -100,7 +100,7 @@ end, { desc = "Delete all buffers" })
 -- navigate to next item in quickfix list
 map("n", "]q", function()
   if require("trouble").is_open() then
-    require("trouble").next({ skip_groups = true, jump = true })
+    require("trouble").next()
   else
     local ok, err = pcall(vim.cmd.cnext)
     if not ok then
@@ -112,7 +112,7 @@ end, { desc = "Next trouble/quickfix item" })
 -- navigate to prev item in quickfix list
 map("n", "[q", function()
   if require("trouble").is_open() then
-    require("trouble").next({ skip_groups = true, jump = true })
+    require("trouble").prev()
   else
     local ok, err = pcall(vim.cmd.cnext)
     if not ok then
