@@ -74,14 +74,16 @@ map("n", "<leader><tab>N", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 map("n", "<leader>cp", function()
   local file_path = file_utils.get_current_file({ relative = true })
   vim.fn.setreg("+", file_path)
+
+  vim.notify("Copied to clipboard\n" .. file_path, vim.log.levels.INFO, { title = "File Path" })
 end, { desc = "Copy Relative File Path" })
 
 -- copy file path (git)
 map("n", "<leader>sp", function()
-  local file_path = git_utils.get_file()
-  local remote = git_utils.get_remote()
-  local current_line = vim.fn.line(".")
-  vim.fn.setreg("+", remote .. file_path .. "#" .. current_line)
+  local url = git_utils.get_line_on_remote()
+  vim.fn.setreg("+", url)
+
+  vim.notify("Copied to clipboard\n" .. url, vim.log.levels.INFO, { title = "Git URL" })
 end, { desc = "Copy Git File Path URL" })
 
 -- prompt to remove all open buffers
