@@ -1,11 +1,32 @@
 local file = require("utils.file")
 
-local getPickers = function()
+local default_layout_config = {
+  anchor = "N",
+  width = function(self, max_columns, max_lines)
+    -- this function is called every time the picker is drawn
+    local percent = 0.8
+    local max_width = math.min(120, max_columns)
+    local min_width = math.min(120, max_columns - 20)
+    return math.min(math.max(math.floor(max_columns * percent), max_width), min_width)
+  end,
+  height = function(self, max_columns, max_lines)
+    -- this function is called every time the picker is drawn
+    -- vim.notify(vim.inspect({ max_columns = max_columns, max_lines = max_lines }))
+    local percent = 0.3
+    local max_height = math.min(20, max_lines)
+    local min_height = math.min(20, max_lines - 5)
+    return math.min(math.max(math.floor(max_lines * percent), max_height), min_height)
+  end,
+}
+
+-- helper function to get the built-in pickers
+local get_pickers = function()
   local builtins = require("telescope.builtin")
   return builtins
 end
 
-local liveGrepRelative = function()
+-- grep in the directory of the buffer
+local grep_relative = function()
   local current_path = file.get_current_dir()
 
   if current_path:sub(1, 6) == "oil://" then
@@ -18,15 +39,16 @@ local liveGrepRelative = function()
       return
     end
 
-    getPickers().live_grep({ search_dirs = { input } })
+    get_pickers().live_grep({ search_dirs = { input } })
   end)
 end
 
-local files = function()
+-- find files in the directory of the buffer
+local find_files = function()
   require("lazyvim.util").telescope("find_files", { cwd = file.get_root() })()
 end
 
-local filesRelative = function()
+local find_files_relative = function()
   local current_path = file.get_current_dir()
 
   if current_path:sub(1, 6) == "oil://" then
@@ -39,11 +61,18 @@ local filesRelative = function()
       return
     end
 
-    getPickers().find_files({ search_dirs = { input } })
+    get_pickers().find_files({ search_dirs = { input } })
   end)
 end
 
-local notifications = function()
+local find_frecent_files = function()
+  require("telescope").extensions.frecency.frecency({
+    theme = "dropdown",
+    layout_config = default_layout_config,
+  })
+end
+
+local search_notifications = function()
   require("telescope").extensions.notify.notify()
 end
 
@@ -76,37 +105,18 @@ local function custom_mime_hook(filepath, bufnr, opts)
   end
 end
 
-local default_layout_config = {
-  anchor = "N",
-  width = function(self, max_columns, max_lines)
-    -- this function is called every time the picker is drawn
-    local percent = 0.8
-    local max_width = math.min(120, max_columns)
-    local min_width = math.min(120, max_columns - 20)
-    return math.min(math.max(math.floor(max_columns * percent), max_width), min_width)
-  end,
-  height = function(self, max_columns, max_lines)
-    -- this function is called every time the picker is drawn
-    -- vim.notify(vim.inspect({ max_columns = max_columns, max_lines = max_lines }))
-    local percent = 0.3
-    local max_height = math.min(20, max_lines)
-    local min_height = math.min(20, max_lines - 5)
-    return math.min(math.max(math.floor(max_lines * percent), max_height), min_height)
-  end,
-}
-
 return {
   {
     "nvim-telescope/telescope.nvim",
     keys = {
-      { "<leader><leader>", files, desc = "Find files" },
-      { "<leader>ff", files, desc = "Find files" },
-      { "<leader>fF", filesRelative, desc = "Find files (relative)" },
+      { "<leader><leader>", find_files, desc = "Find files" },
+      { "<leader>ff", find_files, desc = "Find files" },
+      { "<leader>fF", find_files_relative, desc = "Find files (relative)" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       -- { "<leader>fo", "<cmd>Telescope oldfiles<cr>", desc = "Recent (old files)" },
-      { "<leader>f/", liveGrepRelative, desc = "Find in Files (Grep)" },
+      { "<leader>f/", grep_relative, desc = "Find in Files (Grep)" },
       { "<leader>fr", "<cmd>Telescope resume<cr>", desc = "Resume Last Picker" },
-      { "<leader>sN", notifications, desc = "Notifications" },
+      { "<leader>sN", search_notifications, desc = "Notifications" },
       { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
     },
     dependencies = {
@@ -231,7 +241,7 @@ return {
     keys = {
       {
         "<leader>fo",
-        "<cmd>Telescope frecency theme=dropdown<cr>",
+        find_frecent_files,
         desc = "Frecent Files",
       },
     },
