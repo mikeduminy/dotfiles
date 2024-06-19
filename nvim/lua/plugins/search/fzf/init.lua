@@ -69,8 +69,9 @@ return {
       table.insert(opts, 1, "fzf-native")
 
       return vim.tbl_deep_extend("force", opts, {
-        files = {
+        defaults = {
           previewer = false,
+          git_icons = false,
         },
       })
     end,
