@@ -16,7 +16,7 @@ local wezterm = {
   ---@module 'wezterm.time'
   time = {},
 
-  ---@type table<string, any>
+  ---@type table<string, userdata>
   GLOBAL = {},
 
   ---@type _.wezterm.KeyAssignment
@@ -216,6 +216,10 @@ local wezterm = {
   ---@param str string
   ---@return string
   utf16_to_utf8 = function(str) end,
+
+  ---@param input table|userdata
+  ---@return string
+  to_string = function (input) end,
 }
 
 return wezterm

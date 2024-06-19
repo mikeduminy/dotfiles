@@ -4,6 +4,9 @@ local navigation = require 'navigation'
 local keys = require 'keys'
 local status = require 'lib.status'
 local events = require 'events'
+local utils = require 'utils'
+
+utils.log.enable_debug(false)
 
 navigation.setup_navigation()
 

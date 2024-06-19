@@ -1,14 +1,37 @@
 local wezterm = require 'wezterm'
 local file = require 'utils.file'
 local utils = require 'utils'
+local string = require 'utils.string'
 
 local module = {}
 
+--- @return table<string>
+local function _getProjects()
+  return wezterm.GLOBAL.projects or {}
+end
+
+--- @param projects table<string>
+local function _setProjects(projects)
+  wezterm.GLOBAL.projects = projects
+end
+
+--- @return table<string>
+local function _getProjectRoots()
+  return string.split(wezterm.GLOBAL.project_roots or '', ':')
+end
+
+--- @param roots table<string>
+local function _setProjectRoots(roots)
+  wezterm.GLOBAL.project_roots = table.concat(roots, ':')
+end
+
+--- @param projectDir string The directory of the project
 local function getBranchName(projectDir)
   local gitDir = projectDir .. '/.git'
   -- Check if the project is a git repository, we use file.exists instead of
   -- file.is_dir to handle the case where .git is a symlink
   if not (file.exists(gitDir)) then
+    utils.log.debug('not a git repository: ' .. projectDir)
     return ''
   end
 
@@ -24,23 +47,17 @@ local function getBranchName(projectDir)
     'HEAD',
   }
   if not success then
-    wezterm.log_error('failed to get branch name: ' .. stderr)
+    utils.log.debug('failed to get branch name: ' .. stderr)
     return ''
   end
 
-  return stdout
+  return string.split(stdout, '\n')[1]
 end
 
-local function getProjects()
-  return wezterm.GLOBAL.projects or {}
-end
-
-local function setProjects(projects)
-  wezterm.GLOBAL.projects = projects
-end
-
--- Returns a table of project names and their locations
+--- Returns a table of project names and their locations
+--- @param project_dirs table<string>
 local function buildProjects(project_dirs)
+  --- @type table<string, table>
   local projects = {}
 
   for _, project_dir in ipairs(project_dirs) do
@@ -50,7 +67,8 @@ local function buildProjects(project_dirs)
         local parent_dir = file.basename(file.dirname(dir))
         local child_dir = file.basename(dir)
         local branchName = getBranchName(dir)
-        table.insert(projects, { name = parent_dir .. '/' .. child_dir, branch = branchName, location = dir })
+        local project = { name = parent_dir .. '/' .. child_dir, branch = branchName, location = dir }
+        table.insert(projects, project)
       end
     end
   end
@@ -60,12 +78,13 @@ end
 
 --- @param input table
 function module.setProjectRoots(input)
-  local project_roots = wezterm.GLOBAL.project_roots or {}
-  project_roots = utils.mergeValues(project_roots or {}, input)
-  wezterm.GLOBAL.project_roots = project_roots
+  local roots = _getProjectRoots()
+  local newRoots = utils.mergeValues(roots, input)
+  _setProjectRoots(newRoots)
 
+  local project_roots = _getProjectRoots()
   local projects = buildProjects(project_roots)
-  setProjects(projects)
+  _setProjects(projects)
 end
 
 -- Provides a table of choices for the workspace picker
@@ -75,7 +94,7 @@ function module.getWorkspaceChoices()
   table.insert(choices, { label = 'config', id = os.getenv 'XDG_CONFIG_HOME' })
 
   -- TODO: Add a frecency algorithm to sort the projects
-  for _, project in ipairs(getProjects()) do
+  for _, project in ipairs(_getProjects()) do
     local label = project.name
     if project.branch ~= '' then
       label = label .. ' | ' .. project.branch

@@ -1,5 +1,6 @@
 local wezterm = require 'wezterm'
 local zoom = require 'lib.zoom'
+local utils = require 'utils'
 local projects = require 'lib.projects'
 local stringUtils = require 'utils.string'
 
@@ -54,7 +55,7 @@ module.key_table = {
           fuzzy = true,
           action = wezterm.action_callback(function(w, p, id, label)
             if not id and not label then
-              wezterm.log_info 'cancelled'
+              utils.log.info 'cancelled'
             else
               local workspaceLabel = label
               -- get the first section of the label
@@ -106,7 +107,7 @@ module.key_table = {
           description = 'Enter new name for workspace "' .. title .. '"',
           action = wezterm.action_callback(function(_, _, line)
             if line then
-              wezterm.log_info('Renaming from "' .. title .. '" to "' .. line .. '"')
+              utils.log.info('Renaming from "' .. title .. '" to "' .. line .. '"')
               wezterm.mux.rename_workspace(title, line)
             end
           end),

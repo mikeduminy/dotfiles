@@ -1,4 +1,5 @@
 local tableUtils = require 'utils.table'
+local log = require 'utils.log'
 
 local module = {}
 
@@ -27,5 +28,6 @@ function module.tconcat(t1, t2)
 end
 
 module.mergeValues = tableUtils.mergeValues
+module.log = log
 
 return module
