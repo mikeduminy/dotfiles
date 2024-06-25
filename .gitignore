@@ -21,3 +21,6 @@ tmux/plugins/*
 # ignore android cache
 .android
 htop/htoprc
+
+# ignore work stuff
+homebrew/
