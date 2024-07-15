@@ -79,3 +79,23 @@ gcoi() {
   cmd=$(join_by " | " "${_commands[@]}")
   eval $cmd
 }
+
+# Open git history for a folder, default to entire repo, or provide a path to
+# search for the folder
+ghist() {
+  if [ -z "$1" ]; then
+    root=$(git rev-parse --show-toplevel)
+  else 
+    root=$(grealpath $1)
+  fi 
+
+  folder=$(fd -t=d --base-directory=$root | fzf)
+
+  if [ $? -eq 0 ]; then
+    abs_path="$root/$folder"
+    rel_path=$(grealpath --relative-to=$PWD "$abs_path")
+    echo "Searching git history in $rel_path"
+    git log -- $rel_path
+  fi
+}
+
