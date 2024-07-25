@@ -27,6 +27,10 @@ local grep_relative = function()
   end)
 end
 
+local buffers = function()
+  require("fzf-lua").buffers()
+end
+
 -- find files in the directory of the buffer
 local find_files = function()
   require("lazyvim.util.pick").open("files", { cwd = file.get_root() })
@@ -76,12 +80,12 @@ return {
       })
     end,
     keys = {
-      { "<leader><leader>", find_files, desc = "Find files" },
+      { "<leader><leader>", buffers, desc = "Find buffers" },
       { "<leader>ff", find_files, desc = "Find files" },
       { "<leader>fF", find_files_relative, desc = "Find files (relative)" },
       { "<leader>f/", grep_relative, desc = "Find in Files (Grep)" },
-      { "<leader>fr", resume, desc = "Resume Last Picker" },
-      { "<leader>fo", old_files, desc = "Old Files" },
+      { "<leader>fr", resume, desc = "Resume last picker" },
+      { "<leader>fo", old_files, desc = "Old files" },
       { "<leader>fP", pickers, desc = "Pickers" },
     },
   },
