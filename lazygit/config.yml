@@ -1,14 +1,11 @@
 # See options here = https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
 gui:
-  windowSize: 'half' # requires lazygit 0.37.0
-  showFileTree: false
+  windowSize: "half" # requires lazygit 0.37.0
   showRandomTip: false
-  mainPanelSplitMode: 'horizontal'
-  diffView:
-    sideBySide: false
+  mainPanelSplitMode: "horizontal"
   expandFocusedSidePanel: true
   showFileTree: true
-  border: 'rounded'
+  border: "rounded"
 git:
   autoFetch: false
   fetchAll: false # only fetch current branch
@@ -18,7 +15,6 @@ git:
   commit:
     autoWrapCommitMessage: false
 os:
-  editPreset: 'nvim'
-notARepository: 'quit'
+  editPreset: "nvim"
+notARepository: "quit"
 quitOnTopLevelReturn: true
-
