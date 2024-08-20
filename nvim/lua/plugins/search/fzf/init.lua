@@ -77,6 +77,10 @@ return {
           previewer = false,
           git_icons = false,
         },
+        oldfiles = {
+          cwd_only = true,
+          include_current_session = true,
+        },
       })
     end,
     keys = {

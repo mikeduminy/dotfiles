@@ -124,5 +124,5 @@ return config
 
 -- upgrade wezterm
 -- brew upgrade --cask wez/wezterm/wezterm
--- upgrade wezterm-nightly
--- brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest
+-- upgrade wezterm@nightly
+-- brew upgrade --cask wezterm@nightly --no-quarantine --greedy-latest
