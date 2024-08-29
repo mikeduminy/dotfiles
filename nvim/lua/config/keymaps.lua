@@ -70,6 +70,16 @@ map("n", "<leader><tab>n", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>N", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
+-- center screen
+map("n", "<C-u>", "<C-u>zz", { desc = "Screen up (centered)" })
+map("n", "<C-d>", "<C-d>zz", { desc = "Screen down (centered)" })
+map("n", "gg", "ggzz", { desc = "Scroll to top (centered)" })
+map("n", "G", "Gzz", { desc = "Scroll to bottom (centered)" })
+map("n", "n", "nzzzv", { desc = "Search next (centered)" })
+map("n", "N", "Nzzzv", { desc = "Search prev (centered)" })
+map("n", "}", "}zz", { desc = "Move to next paragraph (centered)" })
+map("n", "{", "{zz", { desc = "Move to prev paragraph (centered)" })
+
 -- copy file path (relative)
 map("n", "<leader>cp", function()
   local file_path = file_utils.get_current_file({ relative = true })
