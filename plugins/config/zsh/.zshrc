@@ -42,6 +42,12 @@ _fzf_compgen_dir() {
 }
 eval "$(fzf --zsh)"
 
+# bun completions
+[ -s "/Users/michael-james.duminy/.bun/_bun" ] && source "/Users/michael-james.duminy/.bun/_bun"
+
+## load paths
+source $(dirname $0)/paths.zsh
+
 ## load utils
 source $(dirname $0)/utils.zsh
 
