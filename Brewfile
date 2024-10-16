@@ -1,11 +1,9 @@
 # Setup MAC OS GUI apps
-tap "homebrew/cask"
 cask_args appdir: "~/Applications", require_sha: true
 
 isMac = OS.mac? # Check if the OS is macOS
 
 # Terminal 
-## isWezterm = system("wezterm --version") # Check if wezterm is installed
 cask "wezterm@nightly", greedy: true, args: { no_quarantine: true }
 
 # Shell and prompt
@@ -16,7 +14,7 @@ brew "zoxide"   # better cd
 
 # Neovim
 brew "neovim"
-brew "font-jetbrains-mono-nerd-font" # font for terminal and editor
+cask "font-jetbrains-mono-nerd-font" # font for terminal and editor
 brew "fzf"                           # fuzzy finder
 brew "fd"                            # faster find
 brew "ripgrep"                       # faster grep
@@ -41,7 +39,7 @@ brew "xdg-ninja" # XDG compliance checker
 
 # GUI Apps
 if isMac 
-  brew "bluesnooze" # bluetooth autosleep
+  cask "bluesnooze" # bluetooth autosleep
   cask "xcodes"     # Xcode version manager
   cask "raycast"    # command palette
   cask "cleanshot"  # screen capture
@@ -49,7 +47,6 @@ end
 cask "1password"      # password manager
 cask "insomnia"       # REST client
 cask "microsoft-edge" # browser
-cask "firefox"        # browser
 cask "beyond-compare" # file comparison tool
 cask "displaylink"    # dell dock driver
 
@@ -61,4 +58,3 @@ vscode "esbenp.prettier-vscode"     # prettier integration
 vscode "github.copilot"             # github copilot
 vscode "github.copilot-chat"        # github copilot chat
 vscode "ms-vsliveshare.vsliveshare" # MS live share
-
