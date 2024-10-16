@@ -3,18 +3,13 @@ tap "homebrew/cask"
 cask_args appdir: "~/Applications", require_sha: true
 
 isMac = OS.mac? # Check if the OS is macOS
-# isWezterm = system("wezterm --version") # Check if wezterm is installed
 
 # Terminal 
+## isWezterm = system("wezterm --version") # Check if wezterm is installed
 cask "wezterm@nightly", greedy: true, args: { no_quarantine: true }
 
 # Shell and prompt
-system "sudo chsh -s /opt/homebrew/bin/zsh"
 brew "zsh"
-if isMac
-  ## Mac needs additional setup to change the shell
-  system "sudo dscl . -create /Users/$USER UserShell /opt/homebrew/bin/zsh"
-end
 brew "starship" # shell prompt
 brew "eza"      # better ls
 brew "zoxide"   # better cd
@@ -54,6 +49,7 @@ end
 cask "1password"      # password manager
 cask "insomnia"       # REST client
 cask "microsoft-edge" # browser
+cask "firefox"        # browser
 cask "beyond-compare" # file comparison tool
 cask "displaylink"    # dell dock driver
 
@@ -65,3 +61,4 @@ vscode "esbenp.prettier-vscode"     # prettier integration
 vscode "github.copilot"             # github copilot
 vscode "github.copilot-chat"        # github copilot chat
 vscode "ms-vsliveshare.vsliveshare" # MS live share
+
