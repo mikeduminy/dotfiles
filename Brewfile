@@ -40,7 +40,6 @@ brew "xdg-ninja" # XDG compliance checker
 # GUI Apps
 if isMac 
   cask "bluesnooze" # bluetooth autosleep
-  cask "xcodes"     # Xcode version manager
   cask "raycast"    # command palette
   cask "cleanshot"  # screen capture
 end
@@ -48,7 +47,7 @@ cask "1password"      # password manager
 cask "insomnia"       # REST client
 cask "microsoft-edge" # browser
 cask "beyond-compare" # file comparison tool
-cask "displaylink"    # dell dock driver
+cask "displaylink"    # dell dock driver (needs admin privileges)
 
 # VSCode
 cask "visual-studio-code"
