@@ -50,6 +50,9 @@ ZVM_VI_HIGHLIGHT_FOREGROUND=#c8d3f5
 ZVM_VI_HIGHLIGHT_BACKGROUND=#2d3f76
 ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold,underline
 
+# drastically speed up vi mode
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=false
+
 ### yarn
 zstyle ':omz:plugins:yarn' global-path no
 
