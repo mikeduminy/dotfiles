@@ -15,7 +15,7 @@ NOTE: Only intended to be used on a Mac.
 
 ## Quickstart
 ```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/HEAD/bootstrap.sh)"
 ```
 
 ## Software
