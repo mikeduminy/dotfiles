@@ -1,3 +1,8 @@
+if [ -n "$PROFILE_SHELL" ]; then
+  # start profiling
+  zmodload zsh/zprof
+fi
+
 #################################################################
 # Interactive shell entrypoint                                  #
 #################################################################
@@ -84,3 +89,10 @@ eval "$(starship init zsh)"
 
 # Setup wezterm
 source $XDG_CONFIG_HOME/wezterm/init.zsh
+
+source ~/.keprc
+
+if [ -n "$PROFILE_SHELL" ]; then
+  # stop profiling
+  zprof
+fi
