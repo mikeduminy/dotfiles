@@ -16,6 +16,9 @@ alias lg="lazygit"
 # open lazygit focusing on a specific path
 alias lgf="lazygit --filter"
 
+## load utils
+source $(dirname $0)/utils.zsh
+
 # project switching
 alias select-project=$(dirname $0)/select_project.zsh
 alias sp=select-project
