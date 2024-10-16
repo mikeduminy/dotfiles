@@ -1,6 +1,19 @@
+--- Executes an LSP server command.
+--- @param command string
+--- @param args? lsp.LSPAny[]
+local function execLspCommand(command, args)
+  return function()
+    vim.lsp.buf.execute_command({ command = command, arguments = args or nil })
+  end
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
+    keys = {
+      { "<leader>tsr", execLspCommand("typescript.restartTsServer") },
+      { "<leader>tsl", execLspCommand("typescript.openTsServerLog") },
+    },
     opts = {
       servers = {
         -- tsserver = {
@@ -18,7 +31,7 @@ return {
           settings = {
             typescript = {
               tsserver = {
-                maxTsServerMemory = 6 * 1024,
+                maxTsServerMemory = 8 * 1024,
               },
             },
           },
@@ -34,9 +47,6 @@ return {
             end
           end)
         end,
-        -- eslint = function(_, opts)
-        --   opts.capabilities.documentFormattingProvider = false
-        -- end,
       },
     },
   },
