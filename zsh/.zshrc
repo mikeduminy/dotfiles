@@ -90,6 +90,11 @@ eval "$(starship init zsh)"
 # Setup wezterm
 source $XDG_CONFIG_HOME/wezterm/init.zsh
 
+# only load brew shellenv if it is not loaded, check for the presence of HOMEBREW_PREFIX
+if [ -z "$HOME_BREW_PREFIX" ]; then
+  eval "$('/opt/homebrew/bin/brew' shellenv)"
+fi
+
 source ~/.keprc
 
 if [ -n "$PROFILE_SHELL" ]; then
