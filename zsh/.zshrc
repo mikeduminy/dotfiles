@@ -1,3 +1,8 @@
+if [ -n "$PROFILE_SHELL" ]; then
+  # start profiling
+  zmodload zsh/zprof
+fi
+
 #################################################################
 # Interactive shell entrypoint                                  #
 #################################################################
@@ -50,6 +55,9 @@ ZVM_VI_HIGHLIGHT_FOREGROUND=#c8d3f5
 ZVM_VI_HIGHLIGHT_BACKGROUND=#2d3f76
 ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold,underline
 
+# drastically speed up vi mode
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=false
+
 ### yarn
 zstyle ':omz:plugins:yarn' global-path no
 
@@ -81,3 +89,15 @@ eval "$(starship init zsh)"
 
 # Setup wezterm
 source $XDG_CONFIG_HOME/wezterm/init.zsh
+
+# only load brew shellenv if it is not loaded, check for the presence of HOMEBREW_PREFIX
+if [ -z "$HOME_BREW_PREFIX" ]; then
+  eval "$('/opt/homebrew/bin/brew' shellenv)"
+fi
+
+source ~/.keprc
+
+if [ -n "$PROFILE_SHELL" ]; then
+  # stop profiling
+  zprof
+fi

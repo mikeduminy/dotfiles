@@ -48,6 +48,8 @@ map("n", withModifier("s"), ":write", { desc = "Save buffer", remap = true })
 map("n", "<leader>wa", "<cmd>wa<cr>", { desc = "Save all" })
 map("n", "<leader>wq", "<cmd>wq<cr>", { desc = "Save & Quit" })
 
+map("n", "<leader>rr", "<cmd>e<cr>", { desc = "Reload file" })
+
 -- splits
 map("n", "<leader>ww", "<C-W>p", { desc = "Other window", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete window", remap = true })
