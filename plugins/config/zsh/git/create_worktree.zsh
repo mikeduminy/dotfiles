@@ -63,26 +63,16 @@ repo_parent_name=$(basename $repo_parent)
 # Prompt to select an existing branch or create a new one
 CHOICE=$(gum choose --limit=1 "Create a new branch" "Select an existing branch" "Cancel")
 
-worktree_args=()
-worktree_path="$repo_parent"
+worktree_path=$repo_parent
 
 case $CHOICE in
   "Create a new branch")
     branch=$(gum input --prompt "Enter a new branch name: ")
-    # Trim whitespace around the branch name
-    branch=$(echo $branch | xargs)
-    worktree_path="$worktree_path/$branch"
-
-    worktree_args+=("-b=$branch")
-    worktree_args+=("$worktree_path")
+    is_new_branch=1
     ;;
   "Select an existing branch")
     branch=$(git branch --all | fzf --prompt "Select branch: " --reverse --keep-right)
-    # Trim whitespace around the branch name
-    branch=$(echo $branch | xargs)
-    worktree_path="$worktree_path/$branch"
-
-    worktree_args+=("$worktree_path $existing_branch")
+    is_new_branch=0
     ;;
   *)
     info "Choice required, exiting"
@@ -90,32 +80,83 @@ case $CHOICE in
     ;;
 esac
 
+# Trim whitespace around the branch name
+branch=$(echo $branch | xargs)
+
 # exit if no branch was selected
 if [[ -z $branch ]] then
   info "No branch selected, exiting"
   return
 fi
 
-# Create the worktree
-info "Creating worktree for branch: $branch in $repo_parent"
+local function create_worktree() {
+  branch=$1
+  dir=$2
+  is_new_branch=$3
 
-echo "worktree_args: ${worktree_args[@]}"
+  info "Creating worktree for branch $branch in $dir"
 
-if [[ $DRY_RUN == 1 ]] then
-  debug "Dry run, skipping worktree creation, would have run:"
-  debug "git worktree add ${worktree_args[@]}"
-  debug "Skipping workspace switch"
-  return
-else
-  git worktree add ${worktree_args[@]}
+  if [[ $DRY_RUN == 1 ]] then
+    debug "Dry run, skipping worktree creation, would have run:"
+    if [[ $is_new_branch == 1 ]] then
+      debug "git worktree add -b $branch $dir"
+    else
+      debug "git worktree add $dir"
+    fi
+    debug "Skipping workspace switch"
+    return
+  fi
+  
+  if [[ $is_new_branch == 1 ]] then
+    git worktree add -b $branch $dir
+  else 
+    git worktree add $dir $branch
+  fi
+}
+
+local function switch_workspace() {
+  local workspace_name=$1
+  local working_dir=$2
+  # Check if we're already in the selected worktree
+  if [[ $worktree_path == $(pwd) ]] then
+    info "Already in workspace: $workspace_name"
+    return
+  fi
+
+  info "Switching to workspace: $workspace_name"
+  __wezterm_switch_workspace "$workspace_name" "$working_dir"
+}
+
+# Construct the worktree path and workspace name
+worktree_path="$worktree_path/$branch"
+workspace_name="$repo_parent_name/$branch"
+
+# Check if the branch already exists and offer to switch to it
+branch_exists=$(git branch --all | grep -cE "$branch$")
+if [[ $branch_exists -gt 0 ]] then
+  info "Branch $branch already exists"
+
+  worktree_exists=$(simple_worktree_list | grep -c "$branch")
+  if [[ $worktree_exists -gt 0 ]] then
+    info "Worktree already exists for branch: $branch"
+
+    gum confirm "Switch to worktree" && 
+      switch_workspace "$workspace_name" "$worktree_path"
+    return
+  else
+    # Branch exists but no worktree, create a worktree
+    gum confirm "Create worktree for branch?" &&
+      create_worktree $branch $worktree_path 0
+
+    gum confirm "Switch to worktree" && 
+      switch_workspace "$workspace_name" "$worktree_path"
+    return
+  fi
 fi
 
-info "Created worktree: $worktree_path"
+# Branch does not exist, create a new worktree
+create_worktree $branch $worktree_path $is_new_branch
 
 # Switch to the new worktree
-gum confirm "Switch to new worktree" || return
-
-workspace_name="$repo_parent_name/$branch"
-info "Switching to workspace: $workspace_name"
-__wezterm_switch_workspace "$workspace_name" "$worktree_path"
-
+gum confirm "Switch to new worktree" && 
+  switch_workspace "$workspace_name" "$worktree_path"
