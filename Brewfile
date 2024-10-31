@@ -36,6 +36,7 @@ brew "hyperfine" # benchmarking tool
 brew "jq"        # json parser
 brew "htop"      # system monitor
 brew "xdg-ninja" # XDG compliance checker
+brew "gum"       # glamorous shell scripts 
 
 # GUI Apps
 if isMac 

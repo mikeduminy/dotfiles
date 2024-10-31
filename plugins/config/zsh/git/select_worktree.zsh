@@ -17,16 +17,14 @@ local function find_path_to_worktree() {
   git worktree list | grep "$1" | awk '{print $1}' | head -n 1
 }
 
-is_git_repo || return
+is_git_repo || (error "Not in a git repo" && return)
 
-local worktrees_count_str
 worktrees_count_str=$(simple_worktree_list | wc -l | awk '{print $1}')
-local worktrees_count_int=$((worktrees_count_str + 0))
+worktrees_count_int=$((worktrees_count_str + 0))
 
 # No worktrees found
 [[ $worktrees_count_int -lt 2 ]] && echo "No worktrees found." && return;
 
-local selected_worktree
 selected_worktree=$(simple_worktree_list | (fzf --reverse --prompt "Select worktree: " --keep-right))
 
 # check if user cancelled fzf
@@ -41,6 +39,6 @@ selected_worktree_dir=$(find_path_to_worktree "$selected_worktree_dir_name")
 # No need to switch if we're already in the selected worktree
 [[ "$selected_worktree_dir" == $(pwd) ]] && echo "Already in $selected_worktree_dir_name" && return;
 
-echo "Switching to worktree: $selected_worktree_dir_name"
+info "Switching to worktree: $selected_worktree_dir_name"
 __wezterm_switch_workspace "$selected_worktree_dir_name" "$HOME/$selected_worktree_dir_name"
 

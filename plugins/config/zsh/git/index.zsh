@@ -44,6 +44,14 @@ gdlb() {
 ## Open fzf to select a worktree, open a new terminal workspace at the worktree
 alias gwt="$current_folder/select_worktree.zsh"
 
+
+## Select a branch or create a new one, then create a worktree
+unalias gwta # oh-my-zsh git plugin sets this
+alias gwta="$current_folder/create_worktree.zsh"
+
+## Delete a worktree
+alias gwtd="$current_folder/delete_worktree.zsh"
+
 ## Open fzf to select a branch and check it out
 gch() {
   selected_branch=$(git branch --all | fzf)
