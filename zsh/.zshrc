@@ -1,3 +1,5 @@
+export LANG=en_US.UTF-8
+
 if [ -n "$PROFILE_SHELL" ]; then
   # start profiling
   zmodload zsh/zprof
