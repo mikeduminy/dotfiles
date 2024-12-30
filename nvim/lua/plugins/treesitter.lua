@@ -11,6 +11,7 @@ local function is_large_file(_lang, bufnr)
   return false
 end
 
+--- @type table<integer, LazyPluginSpec>
 return {
   {
     -- configured in lazyvim
