@@ -3,22 +3,22 @@ local function next_group() end
 --- @type LazyPluginSpec
 return {
   "folke/trouble.nvim",
-  keys = {
-    {
-      "<leader>xn",
-      function()
-        require("trouble").next({ skip_groups = true, jump = true })
-      end,
-      desc = "Next Diagnostic (Trouble)",
-    },
-    {
-      "<leader>xN",
-      function()
-        require("trouble").prev({ skip_groups = true, jump = true })
-      end,
-      desc = "Previous Diagnostic (Trouble)",
-    },
-  },
+  -- keys = {
+  --   {
+  --     "<leader>xn",
+  --     function()
+  --       require("trouble").next({ skip_groups = true, jump = true })
+  --     end,
+  --     desc = "Next Diagnostic (Trouble)",
+  --   },
+  --   {
+  --     "<leader>xN",
+  --     function()
+  --       require("trouble").prev({ skip_groups = true, jump = true })
+  --     end,
+  --     desc = "Previous Diagnostic (Trouble)",
+  --   },
+  -- },
   opts = {
     --- @type table<string, trouble.Action>
     keys = {
