@@ -20,6 +20,7 @@ local wezterm = {
   GLOBAL = {},
 
   ---@type _.wezterm.KeyAssignment
+  ---@diagnostic disable-next-line: missing-fields
   action = {},
 
   ---@type string
@@ -219,7 +220,7 @@ local wezterm = {
 
   ---@param input table|userdata
   ---@return string
-  to_string = function (input) end,
+  to_string = function(input) end,
 }
 
 return wezterm

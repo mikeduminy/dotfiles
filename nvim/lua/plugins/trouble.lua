@@ -1,4 +1,4 @@
-local function next_group() end
+---@diagnostic disable: unused-local
 
 --- @type LazyPluginSpec
 return {
