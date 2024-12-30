@@ -11,7 +11,7 @@ end
 --- @param msg string
 function M.debug(msg)
   if debug_enabled then
-    wezterm.log_debug(msg)
+    wezterm.log_info(msg)
   end
 end
 

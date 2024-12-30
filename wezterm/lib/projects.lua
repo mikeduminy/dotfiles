@@ -1,7 +1,7 @@
 local wezterm = require 'wezterm'
 local file = require 'utils.file'
 local utils = require 'utils'
-local string = require 'utils.string'
+local stringUtil = require 'utils.string'
 
 local module = {}
 
@@ -17,7 +17,7 @@ end
 
 --- @return table<string>
 local function _getProjectRoots()
-  return string.split(wezterm.GLOBAL.project_roots or '', ':')
+  return stringUtil.split(wezterm.GLOBAL.project_roots or '', ':')
 end
 
 --- @param roots table<string>
@@ -51,26 +51,62 @@ local function getBranchName(projectDir)
     return ''
   end
 
-  return string.split(stdout, '\n')[1]
+  return stringUtil.split(stdout, '\n')[1]
 end
 
 --- Returns a table of project names and their locations
 --- @param project_dirs table<string>
 local function buildProjects(project_dirs)
+  utils.log.debug 'run_child_process started'
+
+  -- get the user's home directory
+  --- @type string
+  ---@diagnostic disable-next-line: assign-type-mismatch
+  local HOME = os.getenv 'HOME'
+
+  -- remove HOME from project_dirs
+  for i, dir in ipairs(project_dirs) do
+    project_dirs[i] = string.gsub(dir, HOME, '')
+  end
+
+  -- build a single glob pattern for fd
+  local glob = '{' .. table.concat(project_dirs, ',') .. '}/**/.git'
+
+  local success, stdout, stderr = wezterm.run_child_process {
+    '/opt/homebrew/bin/fd',
+    '--unrestricted',
+    '--no-require-git',
+    '--no-ignore-parent',
+    '--max-depth',
+    '3',
+    '--type',
+    'dir',
+    '--exclude',
+    'node_modules',
+    '--full-path',
+    '--glob',
+    glob,
+    '--format',
+    '{//}',
+    os.getenv 'HOME',
+  }
+
+  if not success then
+    utils.log.debug('failed to get branch name: ' .. stderr)
+    return {}
+  end
+
+  local output = stringUtil.split(stdout, '\n')
+
   --- @type table<string, table>
   local projects = {}
 
-  for _, project_dir in ipairs(project_dirs) do
-    local dirs = wezterm.read_dir(project_dir)
-    for _, dir in ipairs(dirs) do
-      if file.is_dir(dir) then
-        local parent_dir = file.basename(file.dirname(dir))
-        local child_dir = file.basename(dir)
-        local branchName = getBranchName(dir)
-        local project = { name = parent_dir .. '/' .. child_dir, branch = branchName, location = dir }
-        table.insert(projects, project)
-      end
-    end
+  for _, dir in ipairs(output) do
+    local parent_dir = file.basename(file.dirname(dir))
+    local child_dir = file.basename(dir)
+    local branchName = getBranchName(dir)
+    local project = { name = parent_dir .. '/' .. child_dir, branch = branchName, location = dir }
+    table.insert(projects, project)
   end
 
   return projects
