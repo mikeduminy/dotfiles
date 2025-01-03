@@ -12,6 +12,7 @@ lazygit/state.yml
 github-copilot/*
 gatsby/
 irb/irb_history
+colima/
 
 # say no to submodules
 plugins/*/
