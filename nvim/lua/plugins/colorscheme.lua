@@ -6,9 +6,6 @@ return {
     opts = {
       flavour = "mocha",
       transparent_background = true,
-      integrations = {
-        leap = true,
-      },
     },
   },
   {
