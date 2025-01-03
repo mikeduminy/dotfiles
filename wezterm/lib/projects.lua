@@ -6,16 +6,6 @@ local stringUtil = require 'utils.string'
 local module = {}
 
 --- @return table<string>
-local function _getProjects()
-  return wezterm.GLOBAL.projects or {}
-end
-
---- @param projects table<string>
-local function _setProjects(projects)
-  wezterm.GLOBAL.projects = projects
-end
-
---- @return table<string>
 local function _getProjectRoots()
   return stringUtil.split(wezterm.GLOBAL.project_roots or '', ':')
 end
@@ -74,13 +64,15 @@ local function buildProjects(project_dirs)
 
   local success, stdout, stderr = wezterm.run_child_process {
     '/opt/homebrew/bin/fd',
-    '--unrestricted',
+    '--unrestricted', -- include hidden files
     '--no-require-git',
     '--no-ignore-parent',
     '--max-depth',
     '3',
     '--type',
-    'dir',
+    'dir', -- git repositories have .git as a directory
+    '--type',
+    'file', -- git worktrees have .git as a file
     '--exclude',
     'node_modules',
     '--full-path',
@@ -112,15 +104,34 @@ local function buildProjects(project_dirs)
   return projects
 end
 
+--- @param projects table<string>
+local function _setProjects(projects)
+  wezterm.GLOBAL.projects = projects
+end
+
+--- @return table<string>
+local function _getProjects()
+  local projects = wezterm.GLOBAL.projects or {}
+
+  if #projects == 0 then
+    local project_roots = _getProjectRoots()
+    projects = buildProjects(project_roots)
+    _setProjects(projects)
+    return projects
+  end
+
+  return wezterm.GLOBAL.projects or {}
+end
+
 --- @param input table
 function module.setProjectRoots(input)
   local roots = _getProjectRoots()
   local newRoots = utils.mergeValues(roots, input)
   _setProjectRoots(newRoots)
 
-  local project_roots = _getProjectRoots()
-  local projects = buildProjects(project_roots)
-  _setProjects(projects)
+  -- local project_roots = _getProjectRoots()
+  -- local projects = buildProjects(project_roots)
+  -- _setProjects(projects)
 end
 
 -- Provides a table of choices for the workspace picker
