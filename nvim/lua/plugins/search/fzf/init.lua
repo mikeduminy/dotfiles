@@ -77,7 +77,9 @@ return {
           previewer = false,
           git_icons = false,
         },
+        files = { formatter = "path.filename_first" },
         oldfiles = {
+          formatter = "path.filename_first",
           cwd_only = true,
           include_current_session = true,
         },
