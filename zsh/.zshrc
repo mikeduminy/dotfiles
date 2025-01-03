@@ -63,7 +63,7 @@ VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=false
 ### yarn
 zstyle ':omz:plugins:yarn' global-path no
 
-## Plugin configuration - end
+zstyle ':omz:update' mode disabled
 
 source $ZSH/oh-my-zsh.sh
 
@@ -74,26 +74,14 @@ source $ZSH/oh-my-zsh.sh
 # Load additional custom zsh stuff
 for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshrc; do source $file; done
 
-#################################################################
-# Theme                                                         #
-#################################################################
-
-base16_shell_path="$XDG_DATA_HOME/base16-shell/base16-shell.plugin.zsh"
-if [ -e "$base16_shell_path" ]; then
-  export BASE16_THEME_DEFAULT="tomorrow-night"
-  export BASE16_CONFIG_PATH="$XDG_DATA_HOME/base16-project"
-  source "$XDG_DATA_HOME/base16-shell/base16-shell.plugin.zsh"
-fi
-unset base16_shell_path
+# Setup wezterm (must be after loading nested zshrcs)
+source $XDG_CONFIG_HOME/wezterm/init.zsh
 
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 eval "$(starship init zsh)"
 
-# Setup wezterm
-source $XDG_CONFIG_HOME/wezterm/init.zsh
-
-# only load brew shellenv if it is not loaded, check for the presence of HOMEBREW_PREFIX
 if [ -z "$HOME_BREW_PREFIX" ]; then
+  # avoid loading homebrew multiple times
   eval "$('/opt/homebrew/bin/brew' shellenv)"
 fi
 
