@@ -1,18 +1,20 @@
 return {
   {
-    "folke/tokyonight.nvim",
-    lazy = true,
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
     opts = {
-      style = "moon",
-      transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
+      flavour = "mocha",
+      transparent_background = true,
+      integrations = {
+        leap = true,
       },
     },
   },
   {
-    "catppuccin/nvim",
-    enabled = false,
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",
+    },
   },
 }
