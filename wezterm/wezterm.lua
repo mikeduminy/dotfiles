@@ -68,9 +68,9 @@ wezterm.on('format-tab-title', function(tab_info)
   local intensity = is_active and 'Bold' or 'Half'
 
   return wezterm.format {
-    { Text = ' ' },
     { Attribute = { Intensity = intensity } },
-    { Foreground = { Color = is_active and colors.red or colors.blue } },
+    { Foreground = { Color = is_active and colors.crust or colors.text } },
+    { Background = { Color = is_active and colors.mauve or colors.mantle } },
     { Text = is_active and '[' or ' ' },
     { Text = string.format(' %s ', tab_info.tab_index + 1) }, -- TODO: only show when more than 1 tab?
     { Text = is_active and ']' or ' ' },
@@ -91,7 +91,7 @@ config.font_size = 14.5
 config.adjust_window_size_when_changing_font_size = false
 config.line_height = 1.1
 config.window_decorations = 'RESIZE'
-config.color_scheme = 'tokyonight_moon'
+config.color_scheme = 'Catppuccin Mocha'
 config.window_padding = {
   left = '1cell',
   right = '1cell',

@@ -21,7 +21,8 @@ local function buildLeftStatus(_, pane)
   local cwd = cwdUrl.file_path:gsub(escapedHomeDir, '~', 1)
 
   table.insert(status, { Attribute = { Intensity = 'Half' } })
-  table.insert(status, { Foreground = { Color = colors.lavender } })
+  table.insert(status, { Foreground = { Color = colors.teal } })
+  table.insert(status, { Background = { Color = colors.crust } })
   table.insert(status, { Text = cwd .. ' ' })
 
   return status
@@ -33,8 +34,8 @@ local function buildRightStatus(window, pane)
   local status = {}
 
   if zoom.is_zoomed(pane) then
-    table.insert(status, { Attribute = { Underline = 'Single' } })
-    table.insert(status, { Foreground = { Color = colors.red } })
+    table.insert(status, { Attribute = { Underline = 'Double' } })
+    table.insert(status, { Foreground = { Color = colors.maroon } })
     table.insert(status, { Text = '[ focused ]' })
   end
 
@@ -46,7 +47,8 @@ local function buildRightStatus(window, pane)
   table.insert(status, { Attribute = { Intensity = 'Half' } })
   table.insert(status, { Text = 'Workspace is ' })
   table.insert(status, { Attribute = { Intensity = 'Bold' } })
-  table.insert(status, { Foreground = { Color = colors.blue } })
+  table.insert(status, { Foreground = { Color = colors.text } })
+  table.insert(status, { Background = { Color = colors.surface2 } })
   table.insert(status, { Text = window:active_workspace() })
   table.insert(status, { Text = ' ' })
 
