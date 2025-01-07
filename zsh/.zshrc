@@ -38,7 +38,6 @@ fi
 
 # oh-my-zsh plugins
 plugins=(
-  git
   yarn
   zsh-vi-mode
 )
