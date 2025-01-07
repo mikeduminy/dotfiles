@@ -4,8 +4,9 @@ alias config="$EDITOR $XDG_CONFIG_HOME"
 alias configdir="cd $XDG_CONFIG_HOME"
 
 # install brew packages from Brewfile
-alias brewup="pushd $XDG_CONFIG_HOME && brew bundle --file Brewfile --verbose && popd"
+alias brewup="brew bundle --file $XDG_CONFIG_HOME/Brewfile"
 
+# load git aliases
 source $(dirname $0)/git/index.zsh
 
 # count open file descriptors
