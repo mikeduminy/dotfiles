@@ -31,20 +31,16 @@ done
 source $XDG_CONFIG_HOME/wezterm/api.zsh
 
 local current_folder=$(dirname $0)
-source $current_folder/oh-my-git.zsh
-source $current_folder/../utils.zsh
 
-local function is_git_repo() {
-  git rev-parse --is-inside-work-tree > /dev/null 2>&1
-}
+# Load common git functions
+source $current_folder/common.zsh
+
+ensure_git_repo || return
 
 # Returns a list of worktrees in the format: <home-relative folder> <branch>
 local function simple_worktree_list() {
   git worktree list | awk '{print $1" "$3}' | sed "s|$HOME/||"
 }
-
-# Check if we're in a git repo, if not, exit
-is_git_repo || (error "Not in a git repo" && return)
 
 # If repo is not on the main branch, warn and prompt to continue
 current_branch=$(git rev-parse --abbrev-ref HEAD)

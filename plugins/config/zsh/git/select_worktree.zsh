@@ -3,9 +3,10 @@
 # Load wezterm helper functions
 source $XDG_CONFIG_HOME/wezterm/api.zsh
 
-local function is_git_repo() {
-  git rev-parse --is-inside-work-tree > /dev/null 2>&1
-}
+# Load common git functions
+source $(dirname $0)/common.zsh
+
+ensure_git_repo || return
 
 # Returns a list of worktrees in the format: <home-relative folder> <branch>
 local function simple_worktree_list() {
@@ -17,7 +18,6 @@ local function find_path_to_worktree() {
   git worktree list | grep "$1" | awk '{print $1}' | head -n 1
 }
 
-is_git_repo || (error "Not in a git repo" && return)
 
 worktrees_count_str=$(simple_worktree_list | wc -l | awk '{print $1}')
 worktrees_count_int=$((worktrees_count_str + 0))

@@ -6,12 +6,12 @@
 #
 # It can be run from anywhere in a git repository and works in worktrees as well.
 
-# check if we are in a git repository
-local is_git_repo=$(git rev-parse --is-inside-work-tree 2>&1)
-if [[ $is_git_repo != "true" ]]; then
-  echo "Not in a git repository"
-  exit 1
-fi
+local current_folder=$(dirname $0)
+
+# Load common git functions
+source $current_folder/common.zsh
+
+ensure_git_repo || return
 
 local index_lock_file=$(git rev-parse --git-path index.lock)
 if [[ -f $index_lock_file ]]; then
