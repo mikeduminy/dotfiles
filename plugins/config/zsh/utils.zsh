@@ -15,6 +15,7 @@ function _log() {
     echo "[$1] $2"
   fi
 }
+
 alias info="_log info $1"
 alias error="_log error $1"
 alias warn="_log warn $1"

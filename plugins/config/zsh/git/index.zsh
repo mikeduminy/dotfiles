@@ -1,16 +1,13 @@
 local current_folder=$(dirname $0)
 
-if ! type __git_prompt_git > /dev/null; then
-    ## if oh-my-zsh git plugin isn't loaded, load a subset of it
-    source $current_folder/oh-my-git.zsh
-fi
+# load git aliases
+source $current_folder/oh-my-git.zsh
 
 # Rebase current branch onto the latest main
-unalias grbm # oh-my-zsh git plugin sets this
 alias grbm='gfa; git rebase origin/$(git_main_branch)'
 
 # Open merge tool
-alias gmt='gmtl' # oh-my-zsh git plugin replaced gmt with gmtl
+alias gmt='git mergetool --no-prompt'
 
 # Open diff tool
 alias gdt='git difftool --dir-diff'
@@ -27,26 +24,38 @@ alias gtop='git log -1 --format="%H" | cat | xargs echo -n | pbcopy'
 ## Delete local branches that no longer exist on remote (probably due to merge)
 gdlb() {
   # Fetch all remotes and prune deleted branches
-  git fetch --prune --jobs=10
+  echo "Fetching all remotes and pruning deleted branches..."
+  gfa
 
   _commands=(
     "git branch -v" # show all branches
     "grep '\[gone\]'" # only show branches that have been merged
     "sed 's/^.\{1\}//'" # remove the + from the branch name
     "awk '{print \$1}'" # only keep the branch name
-    "xargs git branch -D" # delete the branches
   )
 
-  git_delete_local_merged_branches=$(join_by " | " "${_commands[@]}")
-  eval $git_delete_local_merged_branches
+  git_list_local_merged_branches=$(join_by " | " "${_commands[@]}")
+  branches=$(eval $git_list_local_merged_branches)
+
+  if [ -n "$branches" ]; then
+    echo "The following branches will be deleted:"
+    echo "$branches"
+    if gum confirm "Do you want to proceed?"; then
+      echo "$branches" | xargs git branch -D
+    else
+      echo "Operation cancelled."
+    fi
+  else
+    echo "No branches to delete."
+  fi
 }
+
+alias grnb="$current_folder/rename_branch.zsh"
 
 ## Open fzf to select a worktree, open a new terminal workspace at the worktree
 alias gwt="$current_folder/select_worktree.zsh"
 
-
 ## Select a branch or create a new one, then create a worktree
-unalias gwta # oh-my-zsh git plugin sets this
 alias gwta="$current_folder/create_worktree.zsh"
 
 ## Delete a worktree
@@ -71,8 +80,10 @@ gfind() {
   git log -S"$1" -p -- $2
 }
 
+# Delete locked index file (can sometimes happen)
 alias gdlf="$current_folder/remove_locked_index.zsh"
 
+# Pull
 alias gpl='git pull'
 
 # Checkout a branch using fzf, excluding the current branch
