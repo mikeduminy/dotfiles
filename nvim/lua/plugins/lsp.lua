@@ -15,6 +15,11 @@ return {
       { "<leader>tsl", execLspCommand("typescript.openTsServerLog") },
     },
     opts = {
+      capabilities = {
+        general = {
+          positionEncodings = { "utf-8" },
+        },
+      },
       servers = {
         -- tsserver = {
         --   init_options = {

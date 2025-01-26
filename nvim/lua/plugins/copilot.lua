@@ -11,4 +11,19 @@ return {
       })
     end,
   },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    opts = function(_, opts)
+      opts = vim.tbl_deep_extend("force", {
+        mappings = {
+          reset = {
+            -- the default <C-l> mapping is used by Navigator
+            normal = "<C-r>",
+            insert = "<C-r>",
+          },
+        },
+      }, opts)
+      return opts
+    end,
+  },
 }
