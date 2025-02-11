@@ -17,9 +17,10 @@ alias vi="nvim" # use neovim as default editor
 alias vim="nvim"
 alias vih="nvim ." # open nvim in current directory
 
+# lazygit
 alias lg="lazygit"
-# open lazygit focusing on a specific path
-alias lgf="lazygit --filter"
+alias gg="lazygit"
+alias lgf="lazygit --filter" # open lazygit focusing on a specific path
 
 ## load utils
 source $(dirname $0)/utils.zsh
