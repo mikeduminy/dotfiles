@@ -5,6 +5,15 @@ alias configdir="cd $XDG_CONFIG_HOME"
 
 # install brew packages from Brewfile
 alias brewup="brew bundle --file $XDG_CONFIG_HOME/Brewfile"
+brew() {
+  # intercept brew unlock command to remove lock files
+  if [ "$1" = "unlock" ]; then
+    rm -rf "$(brew --prefix)/var/homebrew/locks"
+    echo "Forcefully removed all brew locks"
+  else
+    command brew "$@"
+  fi
+}
 
 # load git aliases
 source $(dirname $0)/git/index.zsh
