@@ -9,7 +9,8 @@
 for i in "$@"; do
   case $i in
   --help)
-    echo "Usage: gwta [--dry-run]"
+    echo "Usage: gwta [--dry-run] <branch>"
+    echo "  <branch>: The branch to create a worktree for (optional)"
     echo "  --dry-run: Print the commands that would be run without executing them"
     return
     ;;
@@ -22,6 +23,7 @@ for i in "$@"; do
     shift
     ;;
   *)
+    BRANCH=$i
     shift
     ;;
   esac
@@ -55,29 +57,35 @@ fi
 repo_root=$(git rev-parse --show-toplevel)
 repo_parent=$(dirname $repo_root)
 repo_parent_name=$(basename $repo_parent)
-
-# Prompt to select an existing branch or create a new one
-CHOICE=$(gum choose --limit=1 "Create a new branch" "Select an existing branch" "Cancel")
-
 worktree_path=$repo_parent
 
-case $CHOICE in
-  "Create a new branch")
-    branch=$(gum input --prompt "Enter a new branch name: ")
-    is_new_branch=1
-    ;;
-  "Select an existing branch")
-    branch=$(git branch --all | fzf --prompt "Select branch: " --reverse --keep-right)
-    is_new_branch=0
-    ;;
-  *)
-    info "Choice required, exiting"
-    return
-    ;;
-esac
+# if no branch was provided, prompt to select or create one
+if [[ -z $BRANCH ]] then
+  # Prompt to select an existing branch or create a new one
+  CHOICE=$(gum choose --limit=1 "Create a new branch" "Select an existing branch" "Cancel")
 
-# Trim whitespace around the branch name
-branch=$(echo $branch | xargs)
+  case $CHOICE in
+    "Create a new branch")
+      branch=$(gum input --prompt "Enter a new branch name: ")
+      is_new_branch=1
+      ;;
+    "Select an existing branch")
+      branch=$(git branch --all | fzf --prompt "Select branch: " --reverse --keep-right)
+      is_new_branch=0
+      ;;
+    *)
+      info "Choice required, exiting"
+      return
+      ;;
+  esac
+
+  # Trim whitespace around the branch name
+  branch=$(echo $branch | xargs)
+else
+  branch=$BRANCH
+  # check if branch is new
+  is_new_branch=$(git branch --all | grep -cE "$branch$")
+fi
 
 # exit if no branch was selected
 if [[ -z $branch ]] then
