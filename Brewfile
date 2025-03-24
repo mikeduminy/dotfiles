@@ -8,6 +8,7 @@ cask "wezterm@nightly", greedy: true, args: { no_quarantine: true }
 
 # Shell and prompt
 brew "zsh"
+brew "zsh-vi-mode" # vi mode for zsh
 brew "starship" # shell prompt
 brew "eza"      # better ls
 brew "zoxide"   # better cd

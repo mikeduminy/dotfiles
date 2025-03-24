@@ -28,21 +28,18 @@ export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
 # Location for custom plugins (oh-my-zsh adds "/plugins")
 export ZSH_CUSTOM="$XDG_DATA_HOME"
 
-# Install zsh-vi-mode
-if [ ! -d $ZSH_CUSTOM/plugins/zsh-vi-mode ]; then
-  echo "Installing zsh-vi-mode..."
-  git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode > /dev/null
-  echo "Done."
-  # TODO: periodically check for updates or switch to a plugin manager
-fi
-
 # oh-my-zsh plugins
 plugins=(
   yarn
-  zsh-vi-mode
 )
 
 ## Plugin configuration - start
+zstyle ':omz:plugins:yarn' global-path no
+
+zstyle ':omz:update' mode disabled
+
+source $ZSH/oh-my-zsh.sh
+
 ### zsh-vi-mode
 function rebindHistorySearch () {
   # manually set this because zsh-vi-mode overrides it
@@ -58,13 +55,7 @@ ZVM_VI_HIGHLIGHT_EXTRASTYLE=bold,underline
 
 # drastically speed up vi mode
 VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=false
-
-### yarn
-zstyle ':omz:plugins:yarn' global-path no
-
-zstyle ':omz:update' mode disabled
-
-source $ZSH/oh-my-zsh.sh
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 #################################################################
 # Custom config                                                 #
