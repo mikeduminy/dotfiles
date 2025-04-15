@@ -1,22 +1,27 @@
-local module = {}
+local M = {}
 
-function module.readable(file_path)
+---@param file_path string
+function M.readable(file_path)
   return vim.fn.filereadable(file_path) ~= 0
 end
 
-function module.is_directory(file_path)
+---@param file_path string
+function M.is_directory(file_path)
   return vim.fn.isdirectory(file_path) ~= 0
 end
 
-function module.get_file_extension(url)
+---@param url string
+function M.get_file_extension(url)
   return url:match("^.+(%..+)$")
 end
 
-function module.read(file_path)
+---@param file_path string
+function M.read(file_path)
   return vim.fn.readfile(file_path)
 end
 
-function module.get_current_file(opts)
+---@param opts? { relative?: boolean }
+function M.get_current_file(opts)
   if opts and opts.relative then
     -- get current file relative to cwd
     return vim.fn.expand("%:~:.")
@@ -25,7 +30,8 @@ function module.get_current_file(opts)
   return vim.fn.expand("%")
 end
 
-function module.get_current_dir(opts)
+---@param opts? { absolute?: boolean }
+function M.get_current_dir(opts)
   if opts and opts.absolute then
     -- get current dir relative to cwd
     return vim.fn.expand("%:~:.:h")
@@ -37,7 +43,7 @@ end
 --- Get the size of a buffer in KiB
 ---@param bufnr number
 ---@return integer|nil size in MiB if buffer is valid, nil otherwise
-function module.get_buf_size(bufnr)
+function M.get_buf_size(bufnr)
   local ok, stats = pcall(function()
     return vim.loop.fs_stat(vim.api.nvim_buf_get_name(bufnr))
   end)
@@ -47,14 +53,14 @@ function module.get_buf_size(bufnr)
   return stats.size
 end
 
-function module.get_root()
+function M.get_root()
   return require("lazyvim.util").root.get()
 end
 
 -- Check if a file or directory exists in this path
 --- @param file string
 --- @return boolean, string?: true if it exists, false if not, and an optional error message
-function module.exists(file)
+function M.exists(file)
   local ok, err, code = os.rename(file, file)
   if not ok then
     if code == 13 then
@@ -68,24 +74,24 @@ end
 --- Check if a directory exists in this path
 --- @param path string
 --- @return boolean, string?: true if it exists, false if not, and an optional error message
-function module.is_dir(path)
+function M.is_dir(path)
   -- "/" works on both Unix and Windows
-  return module.exists(path .. "/")
+  return M.exists(path .. "/")
 end
 
 -- lua equivalents of POSIX functions
 
 --- @param path string
 --- @return string: filename path
-module.basename = function(path)
-  local _, filename = module._splitpath(path)
+M.basename = function(path)
+  local _, filename = M._splitpath(path)
   return filename
 end
 
 --- @param path string
 --- @return string: directory part
-module.dirname = function(path)
-  local dir, _ = module._splitpath(path)
+M.dirname = function(path)
+  local dir, _ = M._splitpath(path)
   return dir
 end
 
@@ -93,8 +99,8 @@ end
 --- @private
 --- @param path string
 --- @return string, string: directory part, filename part
-function module._splitpath(path)
+function M._splitpath(path)
   return path:match("^(.-)[\\/]?([^\\/]*)$")
 end
 
-return module
+return M

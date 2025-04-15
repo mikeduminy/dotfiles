@@ -1,5 +1,6 @@
 local M = {}
 
+-- Toggle quickfix window
 M.toggle_qf = function()
   local qf_exists = false
   for _, win in pairs(vim.fn.getwininfo()) do

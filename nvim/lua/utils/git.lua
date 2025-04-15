@@ -1,5 +1,6 @@
 local M = {}
 
+---@return string|nil
 function M.get_branch()
   -- get the current branch
   local handle = io.popen("git branch --show-current")
@@ -11,6 +12,7 @@ function M.get_branch()
   return result
 end
 
+---@return string|nil
 function M.get_file()
   -- get git root directory
   local handle = io.popen("git rev-parse --show-toplevel")
@@ -36,6 +38,7 @@ function M.get_file()
   return relative_file_path
 end
 
+---@return string|nil
 function M.get_remote()
   local handle = io.popen("git config --get remote.origin.url")
   if handle == nil then
@@ -55,6 +58,8 @@ end
 
 -- TODO: add support for http/https
 -- TODO: add support for branch and commit
+
+---@return string|nil
 function M.get_line_on_remote()
   local remote = M.get_remote()
   if not remote then
