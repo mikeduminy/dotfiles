@@ -1,5 +1,5 @@
 return {
-  require("plugins.search.fzf"),
+  require("plugins.search.snacks-picker"),
   {
     "folke/flash.nvim",
     opts = {

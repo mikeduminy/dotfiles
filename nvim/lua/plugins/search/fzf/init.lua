@@ -1,7 +1,5 @@
 local file = require("utils.file")
 
-vim.g.lazyvim_picker = "fzf"
-
 local get_pickers = function()
   local builtins = require("fzf-lua")
   return {
