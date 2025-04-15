@@ -32,27 +32,27 @@ logStep "Setting up LaunchAgents"
 ln -s ~/.xdg/config/LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgents/xdg-env-launch-agent.plist
 
 # Homebrew
-logStep "Installing homebrew"
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew update
+if ! command -v brew &>/dev/null; then
+  logStep "Homebrew not found, installing..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew update
+fi
 
 # Run Brewfile to setup environment and install apps
 logStep "Installing applications (password may be required)"
 brew bundle install
 
-# Terminal
-logStep "Installing wezterm"
-brew install --cask "wezterm@nightly"
+expected_shell=zsh
+expected_shell_bin="$(brew --prefix)/bin/$expected_shell"
 
-# Shell
-brew install "zsh"
-
-logStep "Changing default shell to installed zsh"
-chsh -s /opt/homebrew/bin/zsh
-
-if $IS_MAC; then
-  # Mac needs additional setup to change the shell
-  sudo dscl . -create /Users/"$USER" UserShell /opt/homebrew/bin/zsh
+defaultShell=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
+if [ "$defaultShell" != "$expected_shell_bin" ]; then
+  logStep "Changing default shell to installed $expected_shell"
+  chsh -s "$expected_shell_bin"
+  if $IS_MAC; then
+    # Mac needs additional setup to change the shell
+    sudo dscl . -create /Users/"$USER" UserShell "$expected_shell_bin"
+  fi
 fi
 
 # close and re-open terminal

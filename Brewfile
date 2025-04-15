@@ -9,9 +9,9 @@ cask "wezterm@nightly", greedy: true, args: { no_quarantine: true }
 # Shell and prompt
 brew "zsh"
 brew "zsh-vi-mode" # vi mode for zsh
-brew "starship" # shell prompt
-brew "eza"      # better ls
-brew "zoxide"   # better cd
+brew "starship"    # shell prompt
+brew "eza"         # better ls
+brew "zoxide"      # better cd
 
 # Neovim
 brew "neovim"
@@ -42,14 +42,13 @@ brew "gum"       # glamorous shell scripts
 # GUI Apps
 if isMac 
   cask "bluesnooze" # bluetooth autosleep
-  cask "raycast"    # command palette
+  cask "raycast"    # command palette replacement
   cask "cleanshot"  # screen capture
+  cask "colemak-dh" # colemak dh keyboard layout
 end
 cask "1password"      # password manager
-cask "insomnia"       # REST client
-cask "microsoft-edge" # browser
+cask "firefox"        # browser
 cask "beyond-compare" # file comparison tool
-cask "displaylink"    # dell dock driver (needs admin privileges)
 
 # VSCode
 cask "visual-studio-code"
