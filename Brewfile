@@ -1,10 +1,31 @@
+DEBUG_MODE = false # Set to true to enable/disable debug messages
+
+def debug(msg)
+  if DEBUG_MODE
+    puts "DEBUG: #{msg}"
+  end
+end
+
+# Check if the application is installed outside of the cask app directory
+# This is useful for applications that are installed manually or through other means
+# It checks if the application is installed in the /Applications directory
+# and returns true if it is, false otherwise
+#
+# @param application [String] The name of the application to check
+# @return [Boolean] true if the application is installed, false otherwise
+def isAppInstalled(application)
+  debug("Checking if #{application} is installed...")
+  root_application_installed = system "test -d /Applications/#{application}.app"
+  debug("#{application} is #{root_application_installed ? 'installed' : 'not installed'} in /Applications")
+  root_application_installed
+end
+
 # Setup MAC OS GUI apps
 cask_args appdir: "~/Applications", require_sha: true
-
 isMac = OS.mac? # Check if the OS is macOS
 
 # Terminal 
-cask "wezterm@nightly", greedy: true, args: { no_quarantine: true }
+cask "wezterm@nightly", greedy: true, args: { no_quarantine: true, force: true }
 
 # Shell and prompt
 brew "zsh"
@@ -47,8 +68,12 @@ if isMac
   cask "colemak-dh" # colemak dh keyboard layout
 end
 cask "1password"      # password manager
-cask "firefox"        # browser
 cask "beyond-compare" # file comparison tool
+
+if !isAppInstalled("firefox")
+  # firefox might be installed manually, if so we want to skip this
+  cask "firefox" # browser
+end
 
 # VSCode
 cask "visual-studio-code"
