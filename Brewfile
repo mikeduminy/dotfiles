@@ -62,10 +62,11 @@ brew "gum"       # glamorous shell scripts
 
 # GUI Apps
 if isMac 
-  cask "bluesnooze" # bluetooth autosleep
-  cask "raycast"    # command palette replacement
-  cask "cleanshot"  # screen capture
-  cask "colemak-dh" # colemak dh keyboard layout
+  cask "bluesnooze"         # bluetooth autosleep
+  cask "raycast"            # command palette replacement
+  cask "cleanshot"          # screen capture
+  cask "colemak-dh"         # colemak dh keyboard layout
+  cask "karabiner-elements" # keyboard remapping
 end
 cask "1password"      # password manager
 cask "beyond-compare" # file comparison tool
@@ -83,3 +84,5 @@ vscode "esbenp.prettier-vscode"     # prettier integration
 vscode "github.copilot"             # github copilot
 vscode "github.copilot-chat"        # github copilot chat
 vscode "ms-vsliveshare.vsliveshare" # MS live share
+
+# vi: ft=ruby
