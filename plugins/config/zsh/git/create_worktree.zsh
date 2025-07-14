@@ -54,8 +54,12 @@ if [[ $main_branch -ne $current_branch ]] then
 fi
 
 # Get the repo root and parent folder to create a sibling worktree in
-repo_root=$(git rev-parse --show-toplevel)
+repo_root=$(dirname $(git rev-parse --git-common-dir))
+repo_root_name=$(basename $repo_root)
 repo_parent=$(dirname $repo_root)
+echo "Repo root: $repo_root"
+echo "Repo root name: $repo_root_name"
+echo "Repo parent: $repo_parent"
 repo_parent_name=$(basename $repo_parent)
 worktree_path=$repo_parent
 
@@ -103,7 +107,7 @@ local function create_worktree() {
   if [[ $DRY_RUN == 1 ]] then
     debug "Dry run, skipping worktree creation, would have run:"
     if [[ $is_new_branch == 1 ]] then
-      debug "git worktree add -b $branch $dir"
+      debug "git worktree add -b $worktree_name $dir"
     else
       debug "git worktree add $dir"
     fi
@@ -132,7 +136,7 @@ local function switch_workspace() {
 }
 
 # Construct the worktree path and workspace name
-worktree_path="$worktree_path/$branch"
+worktree_path="$worktree_path/$repo_root_name-$branch"
 workspace_name="$repo_parent_name/$branch"
 
 # Check if the branch already exists and offer to switch to it

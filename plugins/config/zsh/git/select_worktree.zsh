@@ -23,7 +23,7 @@ worktrees_count_str=$(simple_worktree_list | wc -l | awk '{print $1}')
 worktrees_count_int=$((worktrees_count_str + 0))
 
 # No worktrees found
-[[ $worktrees_count_int -lt 2 ]] && echo "No worktrees found." && return;
+[[ $worktrees_count_int -lt 2 ]] && echo "No other worktrees found." && return;
 
 selected_worktree=$(simple_worktree_list | (fzf --reverse --prompt "Select worktree: " --keep-right))
 
