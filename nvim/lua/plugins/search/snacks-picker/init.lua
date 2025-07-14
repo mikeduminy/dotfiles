@@ -20,7 +20,30 @@ local grep_relative = function()
 end
 
 local buffers = function()
-  Snacks.picker.buffers()
+  Snacks.picker.buffers({
+    current = false, -- hide the current buffer in the list
+    nofile = false, -- hide `buftype=nofile` buffers
+    filter = {
+      cwd = true,
+      filter = function(item, filter)
+        -- skip oil buffers
+        if item.file:sub(1, 6) == "oil://" then
+          return false
+        end
+
+        -- Temporarily unset self.opts.filter to prevent recursion
+        local original_filter = filter.opts.filter
+        filter.opts.filter = nil
+
+        local result = filter:match(item)
+
+        -- Restore self.opts.filter after the call
+        filter.opts.filter = original_filter
+
+        return result
+      end,
+    },
+  })
 end
 
 -- find files in the directory of the buffer
@@ -85,6 +108,18 @@ local pickers = function()
   })
 end
 
+local function_symbols = function()
+  Snacks.picker.lsp_symbols({
+    title = "Symbols (functions)",
+    filter = {
+      default = {
+        "Function",
+        "Method",
+      },
+    },
+  })
+end
+
 return {
   {
     "folke/snacks.nvim",
@@ -94,7 +129,18 @@ return {
         preview = function()
           return false
         end,
-        layout = "vscode",
+        layout = "select",
+        layouts = {
+          select = {
+            layout = {
+              width = 0.8, -- width of the select layout
+              height = 0.8, -- height of the select layout
+            },
+          },
+        },
+        jump = {
+          reuse_win = true, -- reuse the current window for the result
+        },
         formatters = {
           file = {
             filename_first = true, -- display filename before the file path
@@ -109,11 +155,16 @@ return {
         --
         --   Snacks.picker.actions.jump(picker, item, action)
         -- end,
+        actions = {},
         win = {
-          input = {
+          -- result list window
+          list = {
             keys = {
-              ["<c-_>"] = { "edit_split", mode = { "i", "n" } },
-              ["<c-|>"] = { "edit_vsplit", mode = { "i", "n" } },
+              -- splits
+              ["<c-s>"] = { "edit_split", mode = { "i", "n" } },
+              ["<c-v>"] = { "edit_vsplit", mode = { "i", "n" } },
+              -- open in current buffer
+              -- ["<CR>"] = { "confirm", cmd = "edit", mode = { "i", "n" } },
             },
           },
         },
@@ -131,6 +182,7 @@ return {
       { "<leader>fs", smart, desc = "Smart search" },
       { "<leader>fp", pickers, desc = "Pickers" },
       { "<leader>fP", projects, desc = "Projects" },
+      { "<leader>sf", function_symbols, desc = "Symbols (functions)" },
     },
   },
 }
