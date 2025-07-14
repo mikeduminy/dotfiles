@@ -26,3 +26,5 @@ htop/htoprc
 # ignore work stuff
 homebrew/
 pilot/
+swiftpm
+rest-client
