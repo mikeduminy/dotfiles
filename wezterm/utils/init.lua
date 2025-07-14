@@ -1,5 +1,8 @@
 local tableUtils = require 'utils.table'
 local log = require 'utils.log'
+local frecency = require 'utils.frecency'
+
+frecency.setup()
 
 local module = {}
 

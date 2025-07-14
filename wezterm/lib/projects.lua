@@ -2,8 +2,15 @@ local wezterm = require 'wezterm'
 local file = require 'utils.file'
 local utils = require 'utils'
 local stringUtil = require 'utils.string'
+local frecency = require 'utils.frecency'
+
+frecency.setup()
 
 local module = {}
+
+---@class lib.projects.Option
+---@field label string name of project | current git branch
+---@field id string location of the project
 
 --- @return table<string>
 local function _getProjectRoots()
@@ -136,6 +143,7 @@ end
 
 -- Provides a table of choices for the workspace picker
 function module.getWorkspaceChoices()
+  ---@type table<string, lib.projects.Option>
   local choices = {}
 
   table.insert(choices, { label = 'config', id = os.getenv 'XDG_CONFIG_HOME' })
@@ -146,10 +154,21 @@ function module.getWorkspaceChoices()
     if project.branch ~= '' then
       label = label .. ' | ' .. project.branch
     end
-    table.insert(choices, { label = label, id = project.location })
+
+    ---@type lib.projects.Option
+    local option = { label = label, id = project.location }
+    table.insert(choices, option)
   end
 
+  -- table.sort(choices, function(a, b)
+  --   return frecency:get(a.id) < frecency:get(b.id)
+  -- end)
+
   return choices
+end
+
+function module.openedProject(option)
+  frecency.increment(option.id)
 end
 
 return module

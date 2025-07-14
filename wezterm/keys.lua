@@ -63,6 +63,8 @@ module.key_table = {
               local splitLabel = stringUtils.split(workspaceLabel, '|')
               workspaceLabel = splitLabel[1]
 
+              projects.openedProject(id)
+
               w:perform_action(
                 wezterm.action.SwitchToWorkspace {
                   name = workspaceLabel,

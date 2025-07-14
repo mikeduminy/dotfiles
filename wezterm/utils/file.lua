@@ -46,4 +46,17 @@ function module._splitpath(path)
   return path:match '^(.-)[\\/]?([^\\/]*)$'
 end
 
+--- Get the last modified time of a file
+--- @param path string
+--- @return number?: last modified time in seconds since epoch
+function module.fs_stat(path)
+  local handle = io.popen('stat -f "%m" ' .. path .. ' 2>/dev/null')
+  if handle then
+    local result = handle:read '*a'
+    handle:close()
+    return tonumber(result)
+  end
+  return nil
+end
+
 return module
