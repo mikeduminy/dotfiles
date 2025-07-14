@@ -6,6 +6,9 @@ source $current_folder/oh-my-git.zsh
 # Rebase current branch onto the latest main
 alias grbm='gfa; git rebase origin/$(git_main_branch)'
 
+# Checkout the main branch
+alias gcom='git checkout $(git_main_branch)'
+
 # Open merge tool
 alias gmt='git mergetool --no-prompt'
 
@@ -118,3 +121,8 @@ ghist() {
   fi
 }
 
+# Checkout a recent branch from the git reflog using fzf
+gcr() {
+  git reflog | grep checkout | awk '{print $NF}' | awk '!x[$0]++' | head -n 10 | \
+    fzf --height=20 --border --header='Select branch to checkout' | xargs git checkout
+}
