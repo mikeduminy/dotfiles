@@ -54,7 +54,7 @@ if [[ $main_branch -ne $current_branch ]] then
 fi
 
 # Get the repo root and parent folder to create a sibling worktree in
-repo_root=$(dirname $(git rev-parse --git-common-dir))
+repo_root=$(dirname $(git rev-parse --absolute-git-dir))
 repo_root_name=$(basename $repo_root)
 repo_parent=$(dirname $repo_root)
 echo "Repo root: $repo_root"
