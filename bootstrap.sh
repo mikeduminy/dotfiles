@@ -24,18 +24,18 @@ mkdir -p ~/.xdg/runtime
 logStep "Cloning dotfiles"
 git clone git@github.com:mikeduminy/dotfiles.git ~/.xdg/config
 
-cd ~/.xdg/config || exit
+pushd ~/.xdg/config
 
 # Setup symlinks
 logStep "Setting up symlinks"
-ln -s zsh/.zshrc ~/.zshrc
-ln -s zsh/.zshenv ~/.zshenv
-ln -s zsh/.zprofile ~/.zprofile
+ln -s ./zsh/.zshrc ~/.zshrc
+ln -s ./zsh/.zshenv ~/.zshenv
+ln -s ./zsh/.zprofile ~/.zprofile
 
 # Setup env variables for mac GUI programs (specifically terminal)
 if $IS_MAC; then
   logStep "Setting up LaunchAgents"
-  ln -s LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgents/xdg-env-launch-agent.plist
+  ln -s ./LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgents/xdg-env-launch-agent.plist
 fi
 
 # Homebrew
@@ -68,6 +68,8 @@ else
     chsh -s "$expected_shell_bin"
   fi
 fi
+
+popd
 
 # close and re-open terminal
 reset
