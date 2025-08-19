@@ -81,3 +81,5 @@ if [ -n "$PROFILE_SHELL" ]; then
   # stop profiling
   zprof
 fi
+
+export PATH=$HOME/.local/bin:$PATH

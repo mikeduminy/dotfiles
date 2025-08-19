@@ -34,6 +34,7 @@ return {
         -- },
         vtsls = {
           settings = {
+            autoUseWorkspaceTsdk = true,
             typescript = {
               tsserver = {
                 maxTsServerMemory = 12 * 1024,

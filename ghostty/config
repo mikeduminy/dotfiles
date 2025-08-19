@@ -1,0 +1,8 @@
+# map CMD+S to Ctrl+S (for saving files in nvim)
+keybind=super+s=text:\x13
+
+# macos option should be treated as Alt
+macos-option-as-alt=true
+
+
+# vim: set ft=conf :
