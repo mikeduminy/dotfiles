@@ -33,6 +33,7 @@ brew "zsh-vi-mode" # vi mode for zsh
 brew "starship"    # shell prompt
 brew "eza"         # better ls
 brew "zoxide"      # better cd
+brew "tmux"        # terminal multiplexer
 
 # Neovim
 brew "neovim"
@@ -63,10 +64,10 @@ brew "gum"       # glamorous shell scripts
 # GUI Apps
 if isMac 
   cask "bluesnooze"         # bluetooth autosleep
-  cask "raycast"            # command palette replacement
   cask "cleanshot"          # screen capture
   cask "colemak-dh"         # colemak dh keyboard layout
   cask "karabiner-elements" # keyboard remapping
+  cask "bartender"
 end
 cask "1password"      # password manager
 cask "beyond-compare" # file comparison tool

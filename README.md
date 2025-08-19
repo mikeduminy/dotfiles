@@ -24,6 +24,7 @@ NOTE: Only intended to be used on a Mac.
 
 - [WezTerm](https://wezfurlong.org/wezterm/) - terminal emulator
 - [Neovim](https://neovim.io/) - new vim
+- [tmux](https://github.com/tmux/tmux/wiki) - terminal multiplexer
 - [ripgrep](https://github.com/BurntSushi/ripgrep) - fast file search
 - [stylua](https://github.com/JohnnyMorganz/StyLua) - lua formatter
 - [gnu-sed](https://formulae.brew.sh/formula/gnu-sed) - text manipulation
@@ -42,9 +43,10 @@ NOTE: Only intended to be used on a Mac.
 
 ## Quality-of-life software
 
-- [Bluesnooze](https://github.com/odlp/bluesnooze) - sleeping Mac = bluetooth off
+- [Bluesnooze](https://github.com/odlp/bluesnooze) - sleeping mac = bluetooth off
 - [1Password](https://1password.com/) - password manager
-- [Raycast](https://www.raycast.com/) - replacement for Mac Spotlight
+- [Bartender](https://www.macbartender.com/) - menu bar management for mac
+- [Karabiner-Elements](https://karabiner-elements.pqrs.org/) - keyboard customisation
 - [CleanShot X](https://cleanshot.com/) - better screenshots
 - [Firefox](https://www.mozilla.org/en-US/firefox/new/) - personal Browser
 - [Beyond Compare](https://www.scootersoftware.com/download.php) - 3-way merge
