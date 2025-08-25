@@ -15,17 +15,25 @@ end
 # @return [Boolean] true if the application is installed, false otherwise
 def isAppInstalled(application)
   debug("Checking if #{application} is installed...")
-  root_application_installed = system "test -d /Applications/#{application}.app"
-  debug("#{application} is #{root_application_installed ? 'installed' : 'not installed'} in /Applications")
+  if IS_MAC
+    root_application_installed = system "test -d /Applications/#{application}.app"
+    debug("#{application} is #{root_application_installed ? 'installed' : 'not installed'} in /Applications")
+  else
+    root_application_installed = system "which #{application} > /dev/null 2>&1"
+    debug("#{application} is #{root_application_installed ? 'installed' : 'not installed'} in PATH")
+  end
   root_application_installed
 end
 
 # Setup MAC OS GUI apps
 cask_args appdir: "~/Applications", require_sha: true
-isMac = OS.mac? # Check if the OS is macOS
+IS_MAC = OS.mac? # Check if the OS is macOS
 
 # Terminal 
-cask "wezterm@nightly", greedy: true, args: { no_quarantine: true, force: true }
+if IS_MAC
+  # todo: find a way to install on linux via this file
+  cask "wezterm@nightly", greedy: true, args: { no_quarantine: true, force: true }
+end
 
 # Shell and prompt
 brew "zsh"
@@ -62,15 +70,17 @@ brew "xdg-ninja" # XDG compliance checker
 brew "gum"       # glamorous shell scripts 
 
 # GUI Apps
-if isMac 
+if IS_MAC 
   cask "bluesnooze"         # bluetooth autosleep
   cask "cleanshot"          # screen capture
   cask "colemak-dh"         # colemak dh keyboard layout
   cask "karabiner-elements" # keyboard remapping
   cask "bartender"
+  # todo: find a way to install on linux via this file
+  cask "1password"      # password manager
+  # todo: find a way to install on linux via this file
+  cask "beyond-compare" # file comparison tool
 end
-cask "1password"      # password manager
-cask "beyond-compare" # file comparison tool
 
 if !isAppInstalled("firefox")
   # firefox might be installed manually, if so we want to skip this
@@ -78,12 +88,14 @@ if !isAppInstalled("firefox")
 end
 
 # VSCode
-cask "visual-studio-code"
-vscode "asvetliakov.vscode-neovim"  # neovim integration
-vscode "dbaeumer.vscode-eslint"     # eslint integration
-vscode "esbenp.prettier-vscode"     # prettier integration
-vscode "github.copilot"             # github copilot
-vscode "github.copilot-chat"        # github copilot chat
-vscode "ms-vsliveshare.vsliveshare" # MS live share
+if IS_MAC 
+  cask "visual-studio-code"
+  vscode "asvetliakov.vscode-neovim"  # neovim integration
+  vscode "dbaeumer.vscode-eslint"     # eslint integration
+  vscode "esbenp.prettier-vscode"     # prettier integration
+  vscode "github.copilot"             # github copilot
+  vscode "github.copilot-chat"        # github copilot chat
+  vscode "ms-vsliveshare.vsliveshare" # MS live share
+end
 
 # vi: ft=ruby
