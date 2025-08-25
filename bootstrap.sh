@@ -1,10 +1,5 @@
 #!/bin/bash
 
-IS_MAC=false
-if [[ $(uname -s) == "Darwin"* ]]; then
-  IS_MAC=true
-fi
-
 function logStep() {
   # log steps in the terminal in blue with a nice header
   echo -e "\e[1;34m--------------------\e[0m"
@@ -12,19 +7,32 @@ function logStep() {
   echo -e "\e[1;34m--------------------\e[0m"
 }
 
+# load shared env vars for XDG dirs and OS detection
+source "$(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/main/zsh/shared-env-vars.zsh)"
+
+if [ -z "$OS_TYPE" ]; then
+  echo "Could not detect OS type, exiting"
+  exit 1
+fi
+
+if [ -z "$XDG_CONFIG_HOME" ]; then
+  echo "XDG_CONFIG_HOME is not set, exiting"
+  exit 1
+fi
+
 # Ensure xdg folders exist
 logStep "Ensuring xdg folders exist"
-mkdir -p ~/.xdg/data
-mkdir -p ~/.xdg/config
-mkdir -p ~/.xdg/state
-mkdir -p ~/.xdg/cache
-mkdir -p ~/.xdg/runtime
+mkdir -p "$XDG_DATA_HOME"
+mkdir -p "$XDG_CONFIG_HOME"
+mkdir -p "$XDG_STATE_HOME"
+mkdir -p "$XDG_CACHE_HOME"
+mkdir -p "$XDG_RUNTIME_DIR"
 
 # Clone repo
 logStep "Cloning dotfiles"
-git clone git@github.com:mikeduminy/dotfiles.git ~/.xdg/config
+git clone git@github.com:mikeduminy/dotfiles.git "$XDG_CONFIG_HOME"
 
-pushd ~/.xdg/config
+pushd "$XDG_CONFIG_HOME" || exit
 
 # Setup symlinks
 logStep "Setting up symlinks"
@@ -33,7 +41,7 @@ ln -s ./zsh/.zshenv ~/.zshenv
 ln -s ./zsh/.zprofile ~/.zprofile
 
 # Setup env variables for mac GUI programs (specifically terminal)
-if $IS_MAC; then
+if [ "$OS_TYPE" = "mac" ]; then
   logStep "Setting up LaunchAgents"
   ln -s ./LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgents/xdg-env-launch-agent.plist
 fi
@@ -52,15 +60,13 @@ brew bundle install
 expected_shell=zsh
 expected_shell_bin="$(brew --prefix)/bin/$expected_shell"
 
-if $IS_MAC; then
+if [ "$OS_TYPE" = "mac" ]; then
   defaultShell=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
   if [ "$defaultShell" != "$expected_shell_bin" ]; then
     logStep "Changing default shell to installed $expected_shell"
     chsh -s "$expected_shell_bin"
-    if $IS_MAC; then
-      # Mac needs additional setup to change the shell
-      sudo dscl . -create /Users/"$USER" UserShell "$expected_shell_bin"
-    fi
+    # Mac needs additional setup to change the shell
+    sudo dscl . -create /Users/"$USER" UserShell "$expected_shell_bin"
   fi
 else
   if [ "$SHELL" != "$expected_shell_bin" ]; then
@@ -69,7 +75,7 @@ else
   fi
 fi
 
-popd
+popd || exit
 
 # close and re-open terminal
 reset

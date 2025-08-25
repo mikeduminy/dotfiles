@@ -1,24 +1,13 @@
 #################################################################
 # Base shell entrypoint                                         #
-#   Loaded first in non-inerative and interactive shells        #
+#   Loaded first in non-interactive and interactive shells      #
 #################################################################
 
-# What OS are we on?
-export IS_MACOS=false
-if [[ "$OSTYPE" = darwin* ]]; then
-  export IS_MACOS=true
-fi
 
 # uncomment the following line to output when this file is loaded
 # echo "loading: $0"
 
-# Set up base directories for custom config using XDG (Cross Desktop Group)
-# standard: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-export XDG_DATA_HOME="$HOME/.xdg/data"
-export XDG_CONFIG_HOME="$HOME/.xdg/config"
-export XDG_STATE_HOME="$HOME/.xdg/state"
-export XDG_CACHE_HOME="$HOME/.xdg/cache"
-export XDG_RUNTIME_DIR="$HOME/.xdg/runtime"
+source ~/.xdg/config/zsh/shared-env-vars.zsh
 
 # Sometimes $PATH isn't initialised by the time this file runs, so to be able to
 # use builtin functions like dirname we ensure that `/usr/bin` is in $PATH
@@ -26,7 +15,7 @@ export PATH="$PATH:/usr/bin"
 
 # We use brew for package management on both linux and macOS so we need an
 # abstraction layer to handle differences in install locations
-if [[ "$IS_MACOS" = true ]]; then
+if [[ "$OS_TYPE" = "mac" ]]; then
   export BREW_LOCATION="/opt/homebrew"
 else
   export BREW_LOCATION="/home/linuxbrew/.linuxbrew"
