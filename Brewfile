@@ -26,8 +26,10 @@ def isAppInstalled(application)
 end
 
 # Setup MAC OS GUI apps
-cask_args appdir: "~/Applications", require_sha: true
 IS_MAC = OS.mac? # Check if the OS is macOS
+if IS_MAC
+  cask_args appdir: "/Applications", require_sha: true
+end
 
 # Terminal 
 if IS_MAC
@@ -73,9 +75,9 @@ brew "gum"       # glamorous shell scripts
 if IS_MAC 
   cask "bluesnooze"         # bluetooth autosleep
   cask "cleanshot"          # screen capture
-  cask "colemak-dh"         # colemak dh keyboard layout
   cask "karabiner-elements" # keyboard remapping
   cask "bartender"
+  cask "colemak-dh", args: { require_sha: false } # colemak dh keyboard layout
   # todo: find a way to install on linux via this file
   cask "1password"      # password manager
   # todo: find a way to install on linux via this file
