@@ -72,10 +72,12 @@ eval "$(starship init zsh)"
 
 if [ -z "$HOME_BREW_PREFIX" ]; then
   # avoid loading homebrew multiple times
-  eval "$('/opt/homebrew/bin/brew' shellenv)"
+  eval "$("$BREW_LOCATION/bin/brew" shellenv)"
 fi
 
-source ~/.keprc
+
+# only source if the file exists
+[ -f ~/.keprc ] && source ~/.keprc
 
 if [ -n "$PROFILE_SHELL" ]; then
   # stop profiling

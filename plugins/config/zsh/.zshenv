@@ -3,5 +3,5 @@
 
 if [ -z "$HOME_BREW_PREFIX" ]; then
   # avoid loading homebrew multiple times
-  eval "$('/opt/homebrew/bin/brew' shellenv)"
+  eval "$("$BREW_LOCATION/bin/brew" shellenv)"
 fi

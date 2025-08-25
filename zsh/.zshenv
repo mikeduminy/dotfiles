@@ -1,7 +1,13 @@
 #################################################################
-# Base shell entrypoint						# 
+# Base shell entrypoint                                         #
 #   Loaded first in non-inerative and interactive shells        #
 #################################################################
+
+# What OS are we on?
+export IS_MACOS=false
+if [[ "$OSTYPE" = darwin* ]]; then
+  export IS_MACOS=true
+fi
 
 # uncomment the following line to output when this file is loaded
 # echo "loading: $0"
@@ -18,9 +24,18 @@ export XDG_RUNTIME_DIR="$HOME/.xdg/runtime"
 # use builtin functions like dirname we ensure that `/usr/bin` is in $PATH
 export PATH="$PATH:/usr/bin"
 
-# Uncomment to get debug logs
+# We use brew for package management on both linux and macOS so we need an
+# abstraction layer to handle differences in install locations
+if [[ "$IS_MACOS" = true ]]; then
+  export BREW_LOCATION="/opt/homebrew"
+else
+  export BREW_LOCATION="/home/linuxbrew/.linuxbrew"
+fi
+
 # export MIKE_DEBUG=true
 
 # zsh needs some additional set up in the system files
 # so for now keep loading this here
 for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshenv; do source $file; done
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
