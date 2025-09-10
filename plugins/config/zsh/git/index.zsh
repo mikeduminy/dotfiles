@@ -89,6 +89,9 @@ alias gdlf="$current_folder/remove_locked_index.zsh"
 # Pull
 alias gpl='git pull'
 
+# Update and pull
+alias gup='gfa && gpl'
+
 # Checkout a branch using fzf, excluding the current branch
 gcoi() {
   _commands=(
