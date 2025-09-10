@@ -130,6 +130,12 @@ return {
           return false
         end,
         layout = "select",
+        sources = {
+          files = {
+            hidden = true, -- show hidden files
+            exclude = { ".git", "node_modules", "vendor" }, -- exclude these folders
+          },
+        },
         layouts = {
           select = {
             layout = {
@@ -137,6 +143,9 @@ return {
               height = 0.8, -- height of the select layout
             },
           },
+        },
+        matcher = {
+          frecency = true, -- enable frecency sorting
         },
         jump = {
           reuse_win = true, -- reuse the current window for the result
