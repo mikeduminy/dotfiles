@@ -1,5 +1,5 @@
 return {
-  "echasnovski/mini.surround",
+  "nvim-mini/mini.surround",
   opts = {
     -- use gz mappings instead of s to prevent conflict with leap
     mappings = {
