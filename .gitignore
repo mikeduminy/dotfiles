@@ -33,3 +33,4 @@ xed/accels
 enchant
 1Password/logs/BrowserSupport
 cursor/cli-config.json
+**/klarna-*.lua
