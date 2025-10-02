@@ -34,3 +34,5 @@ enchant
 1Password/logs/BrowserSupport
 cursor/cli-config.json
 **/klarna-*.lua
+.copilot
+cursor/**

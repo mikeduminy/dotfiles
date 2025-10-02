@@ -1,6 +1,80 @@
-; Use personal settings in all other folders
-[include]
-  path = ~/.xdg/config/plugins/config/git/config
+[user]
+  email = mjduminy@gmail.com
+  name = Mike Duminy
+[core]
+  pager = delta
+  autocrlf = input
+  fsmonitor = true
+  untrackedCache = true
+[init]
+  defaultBranch = main
+[branch]
+  defaultBranch = main
+  autosetuprebase = always
+  sort = committerdate
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  # delta detects terminal colors automatically; set one of these to disable auto-detection
+  # dark = true
+  # light = true
+[push]
+  autoSetupRemote = true
+  default = current
+[rebase]
+  autoSquash = true
+  autoStash = true
+  updateRefs = true
+[fetch]
+  pruneTags = true
+  prune = true
+[rerere]
+  enabled = true
+[feature]
+  manyFiles = false
+[help]
+  autocorrect = prompt
+[log]
+  date = iso
+[tag]
+  sort = refname
+[checkout]
+  workers = 0
+[pack]
+  useSparse = true
+[commit]
+  verbose = true
+[pull]
+  rebase = true
+
+[diff]
+  tool = bc
+  colorMoved = default
+  algorithm = histogram
+  renames = copies
+[difftool "bc"]
+  cmd = "bcomp -expandall $LOCAL $REMOTE"
+
+[merge]
+  tool = bc
+  conflictstyle = zdiff3
+[mergetool "bc"]
+  trustExitCode = true
+  keepBackup = false
+
+[lfs]
+  locksverify = false
+  setlockablereadonly = false
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[oh-my-zsh]
+  hide-status = 1
+  hide-dirty = 1
 
 ; Use work settings in work folder
 ; This overrides the personal settings
