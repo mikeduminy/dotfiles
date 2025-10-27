@@ -15,12 +15,14 @@ return {
       { "<leader>tsl", execLspCommand("typescript.openTsServerLog") },
     },
     opts = {
-      capabilities = {
-        general = {
-          positionEncodings = { "utf-8" },
-        },
-      },
       servers = {
+        ["*"] = {
+          capabilities = {
+            general = {
+              positionEncodings = { "utf-8" },
+            },
+          },
+        },
         -- tsserver = {
         --   init_options = {
         --     -- support large TS projects
@@ -45,7 +47,7 @@ return {
       },
       setup = {
         eslint = function()
-          require("lazyvim.util").lsp.on_attach(function(client)
+          require("snacks.util.lsp").on(function(buf, client)
             if client.name == "eslint" then
               client.server_capabilities.documentFormattingProvider = true
             elseif client.name == "tsserver" or client.name == "vtsls" then
