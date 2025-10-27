@@ -139,8 +139,9 @@ return {
         layouts = {
           select = {
             layout = {
-              width = 0.8, -- width of the select layout
-              height = 0.8, -- height of the select layout
+              width = 0.99, -- width of the select layout
+              height = 0.99, -- height of the select layout
+              max_width = 200, -- maximum width of the select layout
             },
           },
         },
