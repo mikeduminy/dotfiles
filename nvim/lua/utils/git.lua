@@ -1,5 +1,47 @@
 local M = {}
 
+--- @alias RemoteUrlPattern string
+
+--- Patterns for different git remotes
+--- @type table<RemoteUrlPattern, fun(remote: string, file_path: string, line_number: integer, use_current_branch: boolean ): string>
+local remotes_patterns = {
+  --- Bitbucket server (stash)
+  ["stash"] = function(remote, file_path, line_number, use_current_branch)
+    -- extract parts from ssh://git@stash.something:9999/~username/dashboard.git
+    -- output url: https://stash.something/projects/USERNAME/repos/DASHBOARD/browse/path/to/file#L10
+    local ssh, user, domain, port, group, repo = remote:match("(ssh://)([^@]+)@([^:]+):(%d+)/([^/]+)/([^/]+).git")
+
+    local branch = use_current_branch and M.get_branch() or M.get_main_branch_name()
+
+    local git_remote_url = ("https://%s/projects/%s/repos/%s/browse/"):format(domain, group:upper(), repo)
+    local remote_url_with_file = git_remote_url .. file_path .. "#" .. line_number
+    local remote_url_with_branch = remote_url_with_file .. "?at=" .. branch
+    return remote_url_with_branch
+  end,
+
+  --- GitHub
+  ["github.com"] = function(remote, file_path, line_number, use_current_branch)
+    -- extract parts from git@github.com:mikeduminy/dotfiles.git
+    -- output url: https://github.com/mikeduminy/dotfiles/blob/main/install.sh#L7
+    local user, repo = remote:match("github.com:(.+)/(.+).git")
+    local github_url = "https://github.com/" .. user .. "/" .. repo
+    local branch = use_current_branch and M.get_branch() or "main"
+    local git_remote_url = github_url .. "/blob/" .. branch .. "/"
+    return git_remote_url .. file_path .. "#L" .. line_number
+  end,
+
+  --- GitHub Enterprise
+  ["ghe.com"] = function(remote, file_path, line_number, use_current_branch)
+    -- extract parts from user@company.ghe.com:company/repo.git
+    -- output url https://company.ghe.com/username/repo/blob/main/file/path#L10
+    local user, domain, repo = remote:match("([^@]+)@([^:]+):(.+).git")
+    local ghe_url = "https://" .. domain .. "/" .. repo
+    local branch = use_current_branch and M.get_branch() or "main"
+    local git_remote_url = ghe_url .. "/blob/" .. branch .. "/"
+    return git_remote_url .. file_path .. "#L" .. line_number
+  end,
+}
+
 ---@return string|nil
 function M.get_branch()
   -- get the current branch
@@ -9,6 +51,21 @@ function M.get_branch()
   end
   local result = handle:read("*a")
   handle:close()
+  return result
+end
+
+function M.get_main_branch_name()
+  -- get the main branch name
+  local handle = io.popen("git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'")
+  if handle == nil then
+    return nil
+  end
+  local result = handle:read("*a")
+  handle:close()
+
+  if result == "" then
+    result = "main"
+  end
   return result
 end
 
@@ -56,39 +113,30 @@ function M.get_remote()
   return result
 end
 
--- TODO: add support for http/https
--- TODO: add support for branch and commit
-
+-- Get url to current line and path on remote repository
+---@param for_current_branch boolean whether to use the current branch or main branch
 ---@return string|nil
-function M.get_line_on_remote()
+function M.get_line_on_remote(for_current_branch)
+  -- TODO: add support for http/https
+  -- IDEA: add support for specific commit
+
   local remote = M.get_remote()
   if not remote then
     return ""
   end
 
   local file_path = M.get_file()
-  local line_number = vim.api.nvim__buf_stats(0).current_lnum
-
-  -- extract parts from
-  -- ssh://git@stash.something:9999/~username/dashboard.git
-  if string.find(remote, "stash") then
-    local ssh, user, domain, port, group, repo = remote:match("(ssh://)([^@]+)@([^:]+):(%d+)/([^/]+)/([^/]+).git")
-
-    local git_remote_url = ("https://%s/projects/%s/repos/%s/browse/"):format(domain, group:upper(), repo)
-    return git_remote_url .. file_path .. "#" .. line_number
+  if not file_path then
+    return ""
   end
 
-  -- git@github.com:mikeduminy/dotfiles.git
-  -- - https://github.com/mikeduminy/dotfiles/blob/main/install.sh#L7
-  if string.find(remote, "github") then
-    local user, repo = remote:match("github.com:(.+)/(.+).git")
-    local github_url = "https://github.com/" .. user .. "/" .. repo
-    local branch = "main" -- TODO: get the current branch
-    if branch == nil then
-      branch = "main"
+  local line_number = vim.api.nvim__buf_stats(0).current_lnum
+
+  -- loop through remote names and match patterns if possible
+  for name, value in pairs(remotes_patterns) do
+    if string.find(remote, name) then
+      return value(remote, file_path, line_number, for_current_branch)
     end
-    local git_remote_url_with_line = github_url .. "/blob/" .. branch .. "/" .. file_path .. "#L" .. line_number
-    return git_remote_url_with_line
   end
 end
 
