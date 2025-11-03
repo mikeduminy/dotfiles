@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function logStep() {
   # log steps in the terminal in blue with a nice header
@@ -8,7 +8,7 @@ function logStep() {
 }
 
 # load shared env vars for XDG dirs and OS detection
-source "$(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/main/zsh/shared-env-vars.zsh)"
+source <(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/main/zsh/shared-env-vars.zsh)
 
 if [ -z "$OS_TYPE" ]; then
   echo "Could not detect OS type, exiting"
