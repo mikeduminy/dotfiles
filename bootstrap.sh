@@ -78,5 +78,4 @@ fi
 popd || exit
 
 # close and re-open terminal
-reset
 logStep "Done! It is time to close this terminal and open wezterm :D"
