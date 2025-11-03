@@ -36,14 +36,14 @@ pushd "$XDG_CONFIG_HOME" || exit
 
 # Setup symlinks
 logStep "Setting up symlinks"
-ln -s ./zsh/.zshrc ~/.zshrc
-ln -s ./zsh/.zshenv ~/.zshenv
-ln -s ./zsh/.zprofile ~/.zprofile
+ln -s "$XDG_CONFIG_HOME"/zsh/.zshrc ~/.zshrc
+ln -s "$XDG_CONFIG_HOME"/zsh/.zshenv ~/.zshenv
+ln -s "$XDG_CONFIG_HOME"/zsh/.zprofile ~/.zprofile
 
 # Setup env variables for mac GUI programs (specifically terminal)
 if [ "$OS_TYPE" = "mac" ]; then
   logStep "Setting up LaunchAgents"
-  ln -s ./LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgents/xdg-env-launch-agent.plist
+  ln -s "$XDG_CONFIG_HOME"/LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgents/xdg-env-launch-agent.plist
 fi
 
 # Homebrew
@@ -74,8 +74,6 @@ else
     chsh -s "$expected_shell_bin"
   fi
 fi
-
-popd || exit
 
 # close and re-open terminal
 logStep "Done! It is time to close this terminal and open wezterm :D"
