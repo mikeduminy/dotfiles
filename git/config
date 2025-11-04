@@ -59,10 +59,10 @@
 [merge]
   tool = bc
   conflictstyle = zdiff3
+[mergetool]
+  keepBackup = false
 [mergetool "bc"]
   trustExitCode = true
-  keepBackup = false
-
 [lfs]
   locksverify = false
   setlockablereadonly = false

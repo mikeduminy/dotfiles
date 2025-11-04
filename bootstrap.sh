@@ -71,7 +71,11 @@ if [ "$OS_TYPE" = "mac" ]; then
 else
   if [ "$SHELL" != "$expected_shell_bin" ]; then
     logStep "Changing default shell to installed $expected_shell"
-    chsh -s "$expected_shell_bin"
+    # ensure the shell is listed in /etc/shells
+    if ! grep -q "$expected_shell_bin" /etc/shells; then
+      echo "$expected_shell_bin" | sudo tee -a /etc/shells
+    fi
+    sudo chsh -s "$expected_shell_bin" "$USER"
   fi
 fi
 
