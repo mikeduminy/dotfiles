@@ -1,8 +1,20 @@
+#################################################################
+# Shell file loaded in interactive shells                       #
+# .zshenv -> .zprofile -> .zshrc -> .zlogin -> .zlogout         #
+#                         ^^^^^^                                #
+#################################################################
+
 export LANG=en_US.UTF-8
 
 if [ -n "$PROFILE_SHELL" ]; then
   # start profiling
   zmodload zsh/zprof
+fi
+
+
+if [ -z "$HOME_BREW_PREFIX" ]; then
+  # avoid loading homebrew multiple times
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 #################################################################
@@ -70,10 +82,6 @@ source $XDG_CONFIG_HOME/wezterm/init.zsh
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 eval "$(starship init zsh)"
 
-if [ -z "$HOME_BREW_PREFIX" ]; then
-  # avoid loading homebrew multiple times
-  eval "$("$BREW_LOCATION/bin/brew" shellenv)"
-fi
 
 
 # only source if the file exists

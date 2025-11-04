@@ -8,7 +8,7 @@ function logStep() {
 }
 
 # load shared env vars for XDG dirs and OS detection
-source <(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/main/zsh/shared-env-vars.zsh)
+source <(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/main/setup/shared-env-vars.sh)
 
 if [ -z "$OS_TYPE" ]; then
   echo "Could not detect OS type, exiting"
@@ -79,5 +79,4 @@ else
   fi
 fi
 
-# close and re-open terminal
 logStep "Done! It is time to close this terminal and open wezterm :D"
