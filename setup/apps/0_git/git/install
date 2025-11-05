@@ -2,8 +2,6 @@
 
 # we install git upfront as it is required for even installing homebrew
 
-echo "$OS"
-
 if [[ "$OS" == "mac" ]]; then
   xcode-select --install 2>/dev/null
 elif [[ "$OS" == "linux" ]]; then

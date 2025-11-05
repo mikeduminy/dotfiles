@@ -1,20 +1,20 @@
 # See options here = https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
 gui:
-    screenMode: "half" # requires lazygit 0.37.0
-    showRandomTip: false
-    mainPanelSplitMode: "horizontal"
-    expandFocusedSidePanel: true
-    showFileTree: true
-    border: "rounded"
+  screenMode: "half" # requires lazygit 0.37.0
+  showRandomTip: false
+  mainPanelSplitMode: "horizontal"
+  expandFocusedSidePanel: true
+  showFileTree: true
+  border: "rounded"
 git:
-    autoFetch: false
-    fetchAll: false # only fetch current branch
-    paging:
-        colorArg: always
-        pager: delta --dark --paging=never --syntax-theme base16-256
-    commit:
-        autoWrapCommitMessage: false
+  autoFetch: false
+  fetchAll: false # only fetch current branch
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never --syntax-theme base16-256
+  commit:
+    autoWrapCommitMessage: false
 os:
-    editPreset: "nvim"
+  editPreset: "nvim"
 notARepository: "quit"
 quitOnTopLevelReturn: true
