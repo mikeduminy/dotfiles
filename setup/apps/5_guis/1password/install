@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ "$OS" == "mac" ]]; then
+  brew install --cask 1password
+else
+  echo "1Password installation not supported on this OS: $OS, $OS_BASE"
+fi

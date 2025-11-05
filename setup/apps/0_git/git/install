@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# we install git upfront as it is required for even installing homebrew
+
+echo "$OS"
+
+if [[ "$OS" == "mac" ]]; then
+  xcode-select --install 2>/dev/null
+elif [[ "$OS" == "linux" ]]; then
+  apt-get update && apt-get install -y git
+else
+  echo "Git installation not supported on this OS: $OS"
+fi

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+case "$OS" in
+"mac")
+  brew install zsh
+
+  expected_shell_bin="$(brew --prefix)/bin/zsh"
+
+  if [ "$SHELL" != "$expected_shell_bin" ]; then
+    defaultShell=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
+    if [ "$defaultShell" != "$expected_shell_bin" ]; then
+      logStep "Changing default shell to installed zsh"
+      chsh -s "$expected_shell_bin"
+      # Mac needs additional setup to change the shell
+      sudo dscl . -create /Users/"$USER" UserShell "$expected_shell_bin"
+    fi
+  fi
+  ;;
+"linux")
+  case "$OS_BASE" in
+  "debian")
+    sudo apt-get update
+    sudo apt-get install -y zsh
+
+    expected_shell_bin="/usr/bin/zsh"
+
+    if [ "$SHELL" != "$expected_shell_bin" ]; then
+      logStep "Changing default shell to installed zsh"
+      # ensure the shell is listed in /etc/shells
+      if ! grep -q "$expected_shell_bin" /etc/shells; then
+        echo "$expected_shell_bin" | sudo tee -a /etc/shells
+      fi
+      sudo chsh -s "$expected_shell_bin" "$USER"
+    fi
+
+    ;;
+  *)
+    echo "Unsupported package manager for OS: $OS, $OS_BASE, please install zsh manually."
+    ;;
+  esac
+  ;;
+esac

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ "$OS" == "mac" ]]; then
+  brew install --cask bluesnooze
+else
+  echo "Bluesnooze installation not supported on this OS: $OS, $OS_BASE"
+fi

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ "$OS" == "mac" ]]; then
+  brew install --cask font-jetbrains-mono-nerd-font
+else
+  echo "font-jetbrains-mono-nerd-font installation not supported on this OS: $OS, $OS_BASE"
+fi

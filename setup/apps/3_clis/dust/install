@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ "$OS" == "mac" ]]; then
+  brew install dust
+else
+  echo "Dust installation not supported on this OS: $OS, $OS_BASE"
+fi

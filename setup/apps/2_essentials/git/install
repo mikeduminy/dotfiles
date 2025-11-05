@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if [ "$OS" = "mac" ]; then
+  # we previously installed xcode command line tools which includes git
+  # this updates git to the latest version via homebrew
+  brew install git
+elif [ "$OS" = "linux" ]; then
+  case "$OS_BASE" in
+  "debian")
+    sudo apt-get update
+    sudo apt-get install -y git
+    ;;
+  *)
+    echo "Unsupported package manager for OS: $OS, $OS_BASE, please install git manually."
+    ;;
+  esac
+else
+  echo "Unsupported OS: $OS, $OS_BASE, please install git manually."
+fi

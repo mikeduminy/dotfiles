@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ "$OS" == "mac" ]]; then
+  brew install --cask beyond-compare
+else
+  echo "Beyond Compare installation not supported on this OS: $OS, $OS_BASE"
+fi
