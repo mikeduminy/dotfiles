@@ -61,6 +61,13 @@ expected_shell=zsh
 expected_shell_bin="$(brew --prefix)/bin/$expected_shell"
 
 if [ "$OS_TYPE" = "mac" ]; then
+  # setup faster key repeats on mac
+  defaults write -g InitialKeyRepeat -int 9
+  defaults write -g KeyRepeat -int 3
+fi
+
+# shell setup
+if [ "$OS_TYPE" = "mac" ]; then
   defaultShell=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
   if [ "$defaultShell" != "$expected_shell_bin" ]; then
     logStep "Changing default shell to installed $expected_shell"
