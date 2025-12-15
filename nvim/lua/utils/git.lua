@@ -14,9 +14,9 @@ local remotes_patterns = {
     local branch = use_current_branch and M.get_branch() or M.get_main_branch_name()
 
     local git_remote_url = ("https://%s/projects/%s/repos/%s/browse/"):format(domain, group:upper(), repo)
-    local remote_url_with_file = git_remote_url .. file_path .. "#" .. line_number
-    local remote_url_with_branch = remote_url_with_file .. "?at=" .. branch
-    return remote_url_with_branch
+    local remote_url_with_branch = git_remote_url .. "?at=" .. branch
+    local remote_url_with_file = remote_url_with_branch .. file_path .. "#" .. line_number
+    return remote_url_with_file
   end,
 
   --- GitHub
