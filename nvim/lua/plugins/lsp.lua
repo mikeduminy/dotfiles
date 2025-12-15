@@ -23,6 +23,22 @@ return {
             },
           },
         },
+
+        -- tsgo = {
+        --   settings = {
+        --     typescript = {
+        --       inlayHints = {
+        --         parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
+        --         parameterTypes = { enabled = true },
+        --         variableTypes = { enabled = false, suppressWhenTypeMatchesName = true },
+        --         propertyDeclarationTypes = { enabled = false },
+        --         functionLikeReturnTypes = { enabled = true },
+        --         enumMemberValues = { enabled = true },
+        --       },
+        --     },
+        --   },
+        -- },
+        --
         -- tsserver = {
         --   init_options = {
         --     -- support large TS projects
@@ -34,6 +50,7 @@ return {
         --     includeInlayVariableTypeHintsWhenTypeMatchesName = true,
         --   },
         -- },
+
         vtsls = {
           settings = {
             autoUseWorkspaceTsdk = true,
@@ -50,7 +67,7 @@ return {
           require("snacks.util.lsp").on(function(buf, client)
             if client.name == "eslint" then
               client.server_capabilities.documentFormattingProvider = true
-            elseif client.name == "tsserver" or client.name == "vtsls" then
+            elseif client.name == "tsserver" or client.name == "vtsls" or client.name == "tsgo" then
               client.server_capabilities.documentFormattingProvider = false
             end
           end)
