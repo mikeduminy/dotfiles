@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ "$OS" == "mac" ]]; then
-  brew install fzf
-else
-  echo "Fzf installation not supported on this OS: $OS, $OS_BASE"
-fi

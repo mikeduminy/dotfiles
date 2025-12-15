@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ "$OS" == "mac" ]]; then
-  brew install git-delta
-else
-  echo "Git-delta installation not supported on this OS: $OS, $OS_BASE"
-fi
