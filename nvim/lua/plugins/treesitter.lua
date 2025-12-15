@@ -26,7 +26,39 @@ return {
         end
       end
 
-      opts.ensure_installed = vim.tbl_extend("force", opts.ensure_installed, { "groovy" })
+      opts.ensure_installed = vim.tbl_extend("force", opts.ensure_installed, {
+        -- shell
+        "bash",
+        "zsh",
+
+        -- javascript
+        "javascript",
+        "typescript",
+        "jsx",
+        "jsdoc",
+
+        -- misc
+        "lua",
+        "luadoc",
+        "editorconfig",
+        "dockerfile",
+
+        -- native apps
+        "groovy",
+        "kotlin",
+        "swift",
+
+        -- git
+        "diff",
+        "git_config",
+        "git_rebase",
+        "gitattributes",
+        "gitcommit",
+        "gitignore",
+
+        -- tools
+        "jq",
+      })
       return opts
     end,
   },
