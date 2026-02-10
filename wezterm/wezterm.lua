@@ -90,7 +90,7 @@ config.font = wezterm.font_with_fallback {
 config.font_size = 14.5
 config.adjust_window_size_when_changing_font_size = false
 config.line_height = 1.1
-config.window_decorations = 'RESIZE'
+config.window_decorations = 'MACOS_FORCE_DISABLE_SHADOW | RESIZE' -- Previously just RESIZE
 config.color_scheme = 'Catppuccin Mocha'
 config.window_padding = {
   left = '1cell',
@@ -116,9 +116,10 @@ config.inactive_pane_hsb = {
 config.keys = keys.key_table
 config.scrollback_lines = 6000 -- default is 3500
 config.switch_to_last_active_tab_when_closing_tab = true -- default is false
-config.front_end = 'WebGpu'
+config.front_end = 'OpenGL' -- Previously WebGpu
 config.audible_bell = 'Disabled'
 config.max_fps = 120
+-- config.default_prog = { '/opt/homebrew/bin/tmux', 'attach-session' }
 
 return config
 
