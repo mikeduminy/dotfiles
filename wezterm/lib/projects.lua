@@ -54,8 +54,6 @@ end
 --- Returns a table of project names and their locations
 --- @param project_dirs table<string>
 local function buildProjects(project_dirs)
-  utils.log.debug 'run_child_process started'
-
   -- get the user's home directory
   --- @type string
   ---@diagnostic disable-next-line: assign-type-mismatch
@@ -68,6 +66,8 @@ local function buildProjects(project_dirs)
 
   -- build a single glob pattern for fd
   local glob = '{' .. table.concat(project_dirs, ',') .. '}/**/.git'
+
+  utils.log.debug('Searching for projects with glob: ' .. glob)
 
   local success, stdout, stderr = wezterm.run_child_process {
     '/opt/homebrew/bin/fd',

@@ -38,7 +38,9 @@ function M.setup()
   --     end
   --   end)
   -- then
-  M.store = require('utils.kv').new(store_file) --[[@as utils.frecency.Store]]
+  if M.store == nil then
+    M.store = require('utils.kv').new(store_file) --[[@as utils.frecency.Store]]
+  end
   -- end
 
   -- local group = vim.api.nvim_create_augroup('snacks_picker_frecency', {})
