@@ -4,18 +4,17 @@ keybind= super+s=text:\x13
 # macos option should be treated as Alt
 macos-option-as-alt=true
 
-# TMUX settings
-# \x1b\x20 = ALT+Space (leader key in tmux)
+# TMUX settings (\x1b\x20 = ALT+Space)
 
 # Pane navigation
-# left
-keybind = unconsumed:super+h=text:\x1b\x20h
-# right
-keybind = unconsumed:super+l=text:\x1b\x20l
-# down
-keybind = unconsumed:super+j=text:\x1b\x20j
-# up
-keybind = unconsumed:super+k=text:\x1b\x20k
+# left (sends ctrl+h)
+keybind = super+h=text:\x08
+# down (sends ctrl+j)
+keybind = super+j=text:\x0a
+# up (sends ctrl+k)
+keybind = super+k=text:\x0b
+# right (sends ctrl+l)
+keybind = super+l=text:\x0c
 
 # close
 keybind = unconsumed:super+w=text:\x1b\x20x
@@ -26,7 +25,7 @@ keybind = unconsumed:super+z=text:\x1b\x20a
 # select
 keybind = unconsumed:super+shift+w=text:\x1b\x20w
  # prev
-keybind = unconsumed:super+shift+h=text:\x1b\x20
+keybind = unconsumed:super+shift+h=text:\x1b\x20p
 # next
 keybind = unconsumed:super+shift+l=text:\x1b\x20n
 
