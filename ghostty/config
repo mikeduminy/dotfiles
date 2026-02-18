@@ -21,13 +21,12 @@ keybind = unconsumed:super+w=text:\x1b\x20x
 # zoom
 keybind = unconsumed:super+z=text:\x1b\x20a
 
-# Window navigation
-# select
+# select window
 keybind = unconsumed:super+shift+w=text:\x1b\x20w
- # prev
-keybind = unconsumed:super+shift+h=text:\x1b\x20p
-# next
-keybind = unconsumed:super+shift+l=text:\x1b\x20n
+# prev session
+keybind = unconsumed:super+shift+h=text:\x1b\x20(
+# next session
+keybind = unconsumed:super+shift+l=text:\x1b\x20)
 
 # open lazygit in popup
 keybind = unconsumed:super+g=text:\x1b\x20g
