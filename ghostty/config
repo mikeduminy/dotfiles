@@ -1,8 +1,37 @@
 # map CMD+S to Ctrl+S (for saving files in nvim)
-keybind=super+s=text:\x13
+keybind= super+s=text:\x13
 
 # macos option should be treated as Alt
 macos-option-as-alt=true
+
+# TMUX settings
+# \x1b\x20 = ALT+Space (leader key in tmux)
+
+# Pane navigation
+# left
+keybind = unconsumed:super+h=text:\x1b\x20h
+# right
+keybind = unconsumed:super+l=text:\x1b\x20l
+# down
+keybind = unconsumed:super+j=text:\x1b\x20j
+# up
+keybind = unconsumed:super+k=text:\x1b\x20k
+
+# close
+keybind = unconsumed:super+w=text:\x1b\x20x
+# zoom
+keybind = unconsumed:super+z=text:\x1b\x20a
+
+# Window navigation
+# select
+keybind = unconsumed:super+shift+w=text:\x1b\x20w
+ # prev
+keybind = unconsumed:super+shift+h=text:\x1b\x20
+# next
+keybind = unconsumed:super+shift+l=text:\x1b\x20n
+
+# open lazygit in popup
+keybind = unconsumed:super+g=text:\x1b\x20g
 
 
 # vim: set ft=conf :
