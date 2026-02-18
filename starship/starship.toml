@@ -12,10 +12,15 @@ $git_branch\
 $git_status\
 $git_state\
 $cmd_duration\
-$fill \
-$nodejs $ruby $direnv\
 \n\
 $character\
+"""
+
+right_format = """
+$nodejs\
+$ruby\
+$direnv\
+$time
 """
 
 # increase slow git status calls
@@ -76,3 +81,8 @@ style = 'bold green'
 version_format = '${major}.${minor}'
 format = '[$symbol ($version)]($style) '
 detect_extensions = ['js', 'ts', 'jsx', 'tsx', 'mjs', 'cjs']
+
+[time]
+disabled = false
+format = 'at [$time]($style) '
+time_format = '%R'
