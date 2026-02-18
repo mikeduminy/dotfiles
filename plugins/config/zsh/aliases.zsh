@@ -38,7 +38,9 @@ source $(dirname $0)/utils.zsh
 alias select-project=$(dirname $0)/select_project.zsh
 alias sp=select-project
 
-alias cd="z" # z is a better cd (zoxide)
+if [[ "$CLAUDECODE" != "1" ]]; then
+  alias cd="z" # z is a better cd (zoxide)
+fi
 alias cat="bat" # bat is a better cat (sharkdp/bat)
 alias ls="eza --all --group-directories-first --icons" # eza is a better ls (eza-community/eza)
 alias procs="procs --load-config $XDG_CONFIG_HOME/procs/config.toml"
