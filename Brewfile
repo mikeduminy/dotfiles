@@ -32,10 +32,7 @@ if IS_MAC
 end
 
 # Terminal 
-if IS_MAC
-  # todo: find a way to install on linux via this file
-  cask "wezterm@nightly", greedy: true, args: { no_quarantine: true, force: true }
-end
+cask "ghostty"
 
 # Shell and prompt
 brew "zsh"
@@ -97,7 +94,6 @@ if IS_MAC
   vscode "esbenp.prettier-vscode"     # prettier integration
   vscode "github.copilot"             # github copilot
   vscode "github.copilot-chat"        # github copilot chat
-  vscode "ms-vsliveshare.vsliveshare" # MS live share
 end
 
 # vi: ft=ruby

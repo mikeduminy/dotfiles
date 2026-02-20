@@ -19,7 +19,7 @@ keybind = super+l=text:\x0c
 # close
 keybind = unconsumed:super+w=text:\x1b\x20x
 # zoom
-keybind = unconsumed:super+z=text:\x1b\x20a
+keybind = unconsumed:super+z=text:\x1b\x20z
 
 # select window
 keybind = unconsumed:super+shift+w=text:\x1b\x20w
