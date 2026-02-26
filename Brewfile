@@ -68,6 +68,9 @@ brew "htop"      # system monitor
 brew "xdg-ninja" # XDG compliance checker
 brew "gum"       # glamorous shell scripts 
 
+# LLM tooling
+cask "claude-code" # claude code cli
+
 # GUI Apps
 if IS_MAC 
   cask "bluesnooze"         # bluetooth autosleep
