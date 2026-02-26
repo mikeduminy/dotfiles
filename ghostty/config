@@ -1,8 +1,25 @@
-# map CMD+S to Ctrl+S (for saving files in nvim)
-keybind= super+s=text:\x13
+## these don't work for some reason
+# command = zsh
+# initial-command = /opt/homebrew/bin/tmux new-session -A -s config -c "$XDG_CONFIG_HOME"
 
 # macos option should be treated as Alt
 macos-option-as-alt=true
+
+# aesthetics
+theme = TokyoNight Storm
+font-family = JetBrains Mono Nerd Font Mono
+background-opacity = 0.85
+background-blur=16
+background=#000000
+
+# typography
+font-size=16
+font-thicken=true
+font-thicken-strength=1
+adjust-cell-height=1
+
+# map CMD+S to Ctrl+S (for saving files in nvim)
+keybind= super+s=text:\x13
 
 # TMUX settings (\x1b\x20 = ALT+Space)
 
@@ -31,5 +48,21 @@ keybind = unconsumed:super+shift+l=text:\x1b\x20)
 # open lazygit in popup
 keybind = unconsumed:super+g=text:\x1b\x20g
 
+# switch to window
+keybind = unconsumed:super+1=text:\x1b\x20\1
+keybind = unconsumed:super+2=text:\x1b\x20\2
+keybind = unconsumed:super+3=text:\x1b\x20\3
+keybind = unconsumed:super+4=text:\x1b\x20\4
+keybind = unconsumed:super+5=text:\x1b\x20\5
+keybind = unconsumed:super+6=text:\x1b\x20\6
+keybind = unconsumed:super+7=text:\x1b\x20\7
+keybind = unconsumed:super+8=text:\x1b\x20\8
+keybind = unconsumed:super+9=text:\x1b\x20\9
+keybind = unconsumed:super+0=text:\x1b\x20\0
+
+# CMD+p to open project finder
+keybind = unconsumed:super+p=text:\x1b\x20p
+# CMD+o to open session switcher
+keybind = unconsumed:super+o=text:\x1b\x20o
 
 # vim: set ft=conf :
