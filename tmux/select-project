@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+tmux display-message -d 2000 "#[align=centre]Loading projects..."
+
 # List of project roots, all are assumed to be below $HOME
 project_roots=(${(s/:/)PROJECT_ROOTS})
 

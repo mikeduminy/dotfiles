@@ -3,6 +3,9 @@ alias zrc="source ~/.zshrc"
 alias config="$EDITOR $XDG_CONFIG_HOME" 
 alias configdir="cd $XDG_CONFIG_HOME"
 
+# create or attach to tmux session named "config" in the config directory
+alias cmux="tmux new-session -A -c $XDG_CONFIG_HOME -s config"
+
 # install brew packages from Brewfile
 alias brewup="brew bundle --file $XDG_CONFIG_HOME/Brewfile"
 brew() {

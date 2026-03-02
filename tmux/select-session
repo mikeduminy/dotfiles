@@ -2,6 +2,12 @@
 
 raw_tmux_sessions=$(tmux list-sessions -F "#{session_name} - #{session_path}" 2>/dev/null)
 
+# if list has only 1 then send message to tmux
+if [[ $(echo "$raw_tmux_sessions" | wc -l) -eq 1 ]]; then
+  tmux display-message -d 2000 "#[align=centre]This is the only tmux session."
+  exit 0
+fi
+
 declare -A tmux_sessions
 for session in $raw_tmux_sessions; do
   session_name=$(echo $session | awk -F' - ' '{print $1}')

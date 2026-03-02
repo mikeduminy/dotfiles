@@ -65,4 +65,7 @@ keybind = unconsumed:super+p=text:\x1b\x20p
 # CMD+o to open session switcher
 keybind = unconsumed:super+o=text:\x1b\x20o
 
+# CMD+t to open new tmux window
+keybind = unconsumed:super+t=text:\x1b\x20c
+
 # vim: set ft=conf :
