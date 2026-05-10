@@ -60,10 +60,14 @@ keybind = unconsumed:super+8=text:\x1b\x20\8
 keybind = unconsumed:super+9=text:\x1b\x20\9
 keybind = unconsumed:super+0=text:\x1b\x20\0
 
-# CMD+p to open project finder
-keybind = unconsumed:super+p=text:\x1b\x20p
-# CMD+o to open session switcher
-keybind = unconsumed:super+o=text:\x1b\x20o
+# switch tmux window prev / next
+keybind = unconsumed:super+shift+p=text:\x1b\x20p
+keybind = unconsumed:super+shift+n=text:\x1b\x20n
+
+# CMD+SHIFT+s to open project finder
+keybind = unconsumed:super+shift+s=text:\x1b\x20s
+# CMD+SHIFT+o to open session switcher
+keybind = unconsumed:super+shift+o=text:\x1b\x20o
 
 # CMD+t to open new tmux window
 keybind = unconsumed:super+t=text:\x1b\x20c

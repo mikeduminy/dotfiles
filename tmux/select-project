@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-tmux display-message -d 2000 "#[align=centre]Loading projects..."
+# tmux display-message -d 2000 "#[align=centre]Loading projects..."
 
 # List of project roots, all are assumed to be below $HOME
 project_roots=(${(s/:/)PROJECT_ROOTS})
@@ -21,12 +21,12 @@ for folder in "${project_folders[@]}"; do
   local short_folder=$(echo $folder | sed "s|$HOME/||")
 
   # get git branch
-  branch=$(git symbolic-ref --short HEAD 2>/dev/null)
-  if [ $? -eq 0 ]; then
-    selection_list+=("$short_folder [$branch]")
-  else
+  # branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  # if [ $? -eq 0 ]; then
+  #   selection_list+=("$short_folder [$branch]")
+  # else
     selection_list+=("$short_folder")
-  fi
+  # fi
 
   # return to previous folder
   cd - > /dev/null
