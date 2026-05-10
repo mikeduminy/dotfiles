@@ -41,12 +41,11 @@ export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
 export ZSH_CUSTOM="$XDG_DATA_HOME"
 
 # oh-my-zsh plugins
-plugins=(
-  yarn
-)
+plugins=( yarn )
 
 ## Plugin configuration - start
 zstyle ':omz:plugins:yarn' global-path no
+zstyle ':omz:plugins:yarn' berry yes
 
 zstyle ':omz:update' mode disabled
 
