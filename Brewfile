@@ -89,14 +89,4 @@ if !isAppInstalled("firefox")
   cask "firefox" # browser
 end
 
-# VSCode
-if IS_MAC 
-  cask "visual-studio-code"
-  vscode "asvetliakov.vscode-neovim"  # neovim integration
-  vscode "dbaeumer.vscode-eslint"     # eslint integration
-  vscode "esbenp.prettier-vscode"     # prettier integration
-  vscode "github.copilot"             # github copilot
-  vscode "github.copilot-chat"        # github copilot chat
-end
-
 # vi: ft=ruby
