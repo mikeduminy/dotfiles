@@ -16,6 +16,7 @@ return {
   {
     -- configured in lazyvim
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     opts = function(_, opts)
       local modules =
         { "context_commentstring", "highlight", "indent", "incremental_selection", "autotag", "textobjects" }
