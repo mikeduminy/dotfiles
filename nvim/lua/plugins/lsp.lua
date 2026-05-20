@@ -24,21 +24,21 @@ return {
           },
         },
 
-        -- tsgo = {
-        --   settings = {
-        --     typescript = {
-        --       inlayHints = {
-        --         parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
-        --         parameterTypes = { enabled = true },
-        --         variableTypes = { enabled = false, suppressWhenTypeMatchesName = true },
-        --         propertyDeclarationTypes = { enabled = false },
-        --         functionLikeReturnTypes = { enabled = true },
-        --         enumMemberValues = { enabled = true },
-        --       },
-        --     },
-        --   },
-        -- },
-        --
+        tsgo = {
+          settings = {
+            typescript = {
+              inlayHints = {
+                parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = false, suppressWhenTypeMatchesName = true },
+                propertyDeclarationTypes = { enabled = false },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+            },
+          },
+        },
+
         -- tsserver = {
         --   init_options = {
         --     -- support large TS projects
