@@ -36,3 +36,6 @@ cursor/cli-config.json
 **/klarna-*.lua
 .copilot
 cursor/**
+/glab-cli/config.yml
+/glab-cli/aliases.yml
+/mise/config.toml
