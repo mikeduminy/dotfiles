@@ -35,7 +35,8 @@ end
 # cask "ghostty"
 
 # Shell and prompt
-brew "zsh"
+brew "zsh"         # primary shell
+brew "bash"        # ensure updated base shell
 brew "zsh-vi-mode" # vi mode for zsh
 brew "starship"    # shell prompt
 brew "eza"         # better ls
@@ -71,6 +72,9 @@ brew "gum"       # glamorous shell scripts
 # LLM tooling
 cask "claude-code" # claude code cli
 
+# Languages
+brew "go"
+
 # GUI Apps
 if IS_MAC 
   cask "bluesnooze"         # bluetooth autosleep
@@ -79,9 +83,7 @@ if IS_MAC
   # cask "karabiner-elements" # keyboard remapping
   cask "bartender"
   cask "colemak-dh", args: { require_sha: false } # colemak dh keyboard layout
-  # todo: find a way to install on linux via this file
   # cask "1password"      # password manager
-  # todo: find a way to install on linux via this file
   cask "beyond-compare" # file comparison tool
 end
 

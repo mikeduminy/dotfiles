@@ -86,4 +86,14 @@ else
   fi
 fi
 
+# setup tmux
+if [ ! -d "$XDG_CONFIG_HOME/tmux/plugins"]; then
+  # clone tpm
+  git clone https://github.com/tmux-plugins/tpm
+  # install plugins
+  pushd "$XDG_CONFIG_HOME"
+  ./tmux/plugins/tpm/bin/install_plugins
+  popd
+fi
+
 logStep "Done! It is time to close this terminal and open wezterm :D"
