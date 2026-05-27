@@ -31,8 +31,8 @@ if IS_MAC
   cask_args appdir: "/Applications", require_sha: true
 end
 
-# Terminal 
-cask "ghostty"
+# Terminal (installed via self-service)
+# cask "ghostty"
 
 # Shell and prompt
 brew "zsh"
@@ -75,18 +75,19 @@ cask "claude-code" # claude code cli
 if IS_MAC 
   cask "bluesnooze"         # bluetooth autosleep
   cask "cleanshot"          # screen capture
-  cask "karabiner-elements" # keyboard remapping
+  # disable karabiner by default
+  # cask "karabiner-elements" # keyboard remapping
   cask "bartender"
   cask "colemak-dh", args: { require_sha: false } # colemak dh keyboard layout
   # todo: find a way to install on linux via this file
-  cask "1password"      # password manager
+  # cask "1password"      # password manager
   # todo: find a way to install on linux via this file
   cask "beyond-compare" # file comparison tool
 end
 
 if !isAppInstalled("firefox")
   # firefox might be installed manually, if so we want to skip this
-  cask "firefox" # browser
+  # cask "firefox" # browser
 end
 
 # vi: ft=ruby
