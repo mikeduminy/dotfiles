@@ -10,7 +10,7 @@ function logStep() {
 # load shared env vars for XDG dirs and OS detection
 source <(curl -fsSL https://raw.githubusercontent.com/mikeduminy/dotfiles/main/setup/shared-env-vars.sh)
 
-if [ -z "$OS_TYPE" ]; then
+if [ -z "$OS" ]; then
   echo "Could not detect OS type, exiting"
   exit 1
 fi
@@ -41,7 +41,7 @@ ln -s "$XDG_CONFIG_HOME"/zsh/.zshenv ~/.zshenv
 ln -s "$XDG_CONFIG_HOME"/zsh/.zprofile ~/.zprofile
 
 # Setup env variables for mac GUI programs (specifically terminal)
-if [ "$OS_TYPE" = "mac" ]; then
+if [ "$OS" = "mac" ]; then
   logStep "Setting up LaunchAgents"
   ln -s "$XDG_CONFIG_HOME"/LaunchAgents/xdg-env-launch-agent.plist ~/Library/LaunchAgents/xdg-env-launch-agent.plist
 fi
@@ -60,14 +60,14 @@ brew bundle install
 expected_shell=zsh
 expected_shell_bin="$(brew --prefix)/bin/$expected_shell"
 
-if [ "$OS_TYPE" = "mac" ]; then
+if [ "$OS" = "mac" ]; then
   # setup faster key repeats on mac
   defaults write -g InitialKeyRepeat -int 9
   defaults write -g KeyRepeat -int 3
 fi
 
 # shell setup
-if [ "$OS_TYPE" = "mac" ]; then
+if [ "$OS" = "mac" ]; then
   defaultShell=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
   if [ "$defaultShell" != "$expected_shell_bin" ]; then
     logStep "Changing default shell to installed $expected_shell"
