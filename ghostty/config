@@ -19,7 +19,7 @@ font-thicken-strength=1
 adjust-cell-height=1
 
 # map CMD+S to Ctrl+S (for saving files in nvim)
-keybind= super+s=text:\x13
+keybind = super+s=text:\x13
 
 # TMUX settings (\x1b\x20 = ALT+Space)
 
@@ -64,12 +64,12 @@ keybind = unconsumed:super+0=text:\x1b\x20\0
 keybind = unconsumed:super+shift+p=text:\x1b\x20p
 keybind = unconsumed:super+shift+n=text:\x1b\x20n
 
-# CMD+SHIFT+s to open project finder
+# CMD+SHIFT+s to open session switcher
 keybind = unconsumed:super+shift+s=text:\x1b\x20s
 # CMD+SHIFT+o to open session switcher
 keybind = unconsumed:super+shift+o=text:\x1b\x20o
 
-# CMD+t to open new tmux window
-keybind = unconsumed:super+t=text:\x1b\x20c
+# CMD+t to open new tmux window (uses custom bind t to preserve current path)
+keybind = unconsumed:super+t=text:\x1b\x20t
 
 # vim: set ft=conf :
