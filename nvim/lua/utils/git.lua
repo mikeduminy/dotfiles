@@ -40,6 +40,19 @@ local remotes_patterns = {
     local git_remote_url = ghe_url .. "/blob/" .. branch .. "/"
     return git_remote_url .. file_path .. "#L" .. line_number
   end,
+
+  -- Gitlab Enterprise
+  ["gitlab"] = function(remote, file_path, line_number, use_current_branch)
+    -- extract parts from https://gitlab.company.io/parent-group/group/repo-name.git
+    -- or git@gitlab.company.io:parent-group/group/repo-name.git
+    -- output url https://gitlab.company.io/parent-group/group/repo-name/-/blob/master/file/path.js#L9
+    local domain, path = remote:match("[^@]+@([^:]+):(.+)%.git")
+    if not domain then
+      domain, path = remote:match("https?://([^/]+)/(.+)%.git")
+    end
+    local branch = use_current_branch and M.get_branch() or M.get_main_branch_name()
+    return "https://" .. domain .. "/" .. path .. "/-/blob/" .. branch .. "/" .. file_path .. "#L" .. line_number
+  end,
 }
 
 ---@return string|nil
@@ -49,9 +62,9 @@ function M.get_branch()
   if handle == nil then
     return nil
   end
-  local result = handle:read("*a")
+  local result = handle:read("*a"):gsub("%s+$", "")
   handle:close()
-  return result
+  return result ~= "" and result or nil
 end
 
 function M.get_main_branch_name()
