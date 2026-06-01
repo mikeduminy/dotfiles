@@ -64,7 +64,8 @@ brew "procs"     # modern ps
 brew "dust"      # newer, faster du
 brew "tokei"     # code line counter
 brew "hyperfine" # benchmarking tool
-brew "jq"        # json parser
+brew "jq"        # json processor
+brew "yq"        # yaml processor
 brew "htop"      # system monitor
 brew "xdg-ninja" # XDG compliance checker
 brew "gum"       # glamorous shell scripts 
