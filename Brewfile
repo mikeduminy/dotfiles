@@ -80,8 +80,7 @@ brew "go"
 if IS_MAC 
   cask "bluesnooze"         # bluetooth autosleep
   cask "cleanshot"          # screen capture
-  # disable karabiner by default
-  # cask "karabiner-elements" # keyboard remapping
+  cask "karabiner-elements" # keyboard remapping
   cask "bartender"
   cask "colemak-dh", args: { require_sha: false } # colemak dh keyboard layout
   # cask "1password"      # password manager
