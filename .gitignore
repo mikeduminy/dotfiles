@@ -39,3 +39,4 @@ cursor/**
 /glab-cli/config.yml
 /glab-cli/aliases.yml
 /mise/config.toml
+/zsh/priv/zshenv.zsh

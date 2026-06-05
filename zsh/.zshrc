@@ -73,7 +73,7 @@ source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 #################################################################
 
 # Load additional custom zsh stuff
-for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshrc; do source $file; done
+source "$XDG_CONFIG_HOME/zsh/lib/zshrc.zsh"
 
 # Setup wezterm (must be after loading nested zshrcs)
 source $XDG_CONFIG_HOME/wezterm/init.zsh

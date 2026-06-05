@@ -28,9 +28,10 @@ script_dir=$(dirname "$(realpath "$script_source")")
 shared_env="$(realpath "$script_dir/../setup/shared-env-vars.sh")"
 source "$shared_env"
 
-# zsh needs some additional set up in the system files
-# so for now keep loading this here
-for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshenv; do source $file; done
+source "$XDG_CONFIG_HOME/zsh/lib/zshenv.zsh"
+if [ -f "$XDG_CONFIG_HOME/zsh/priv/zshenv.zsh" ]; then
+  source "$XDG_CONFIG_HOME/zsh/priv/zshenv.zsh"
+fi
 
 unset script_source script_dir shared_env file
 
