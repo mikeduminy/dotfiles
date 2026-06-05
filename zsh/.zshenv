@@ -34,6 +34,5 @@ for file in $XDG_CONFIG_HOME/plugins/*/zsh/.zshenv; do source $file; done
 
 unset script_source script_dir shared_env file
 
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
 eval "$('/opt/homebrew/bin/brew' shellenv)"
+
