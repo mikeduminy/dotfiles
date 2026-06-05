@@ -76,6 +76,8 @@ function M.get_main_branch_name()
   local result = handle:read("*a")
   handle:close()
 
+  -- trim result
+  result = result:match("^%s*(.-)%s*$")
   if result == "" then
     result = "main"
   end
