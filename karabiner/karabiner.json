@@ -168,6 +168,7 @@
                     },
                     {
                         "description": "Home row mods for right hand",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": { "key_code": "j" },
@@ -267,7 +268,7 @@
                                     "key_code": "c",
                                     "modifiers": { "mandatory": ["left_command", "left_control", "left_option", "left_shift"] }
                                 },
-                                "to": [{ "shell_command": "open -a 'Chatbot.app'" }],
+                                "to": [{ "shell_command": "open -a 'MolGPT.app'" }],
                                 "type": "basic"
                             },
                             {
@@ -284,14 +285,6 @@
                                     "modifiers": { "mandatory": ["left_command", "left_control", "left_option", "left_shift"] }
                                 },
                                 "to": [{ "shell_command": "open -a 'Ghostty.app'" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "f",
-                                    "modifiers": { "mandatory": ["left_command", "left_control", "left_option", "left_shift"] }
-                                },
-                                "to": [{ "shell_command": "open -a 'Firefox.app'" }],
                                 "type": "basic"
                             },
                             {
