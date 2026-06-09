@@ -4,7 +4,7 @@ alias config="$EDITOR $XDG_CONFIG_HOME"
 alias configdir="cd $XDG_CONFIG_HOME"
 
 # create or attach to tmux session named "config" in the config directory
-alias cmux="tmux new-session -A -c $XDG_CONFIG_HOME -s config"
+alias cmux="tmux new-session -A -c $XDG_CONFIG_HOME -s xdg/config"
 
 # install brew packages from Brewfile
 alias brewup="brew bundle --file $XDG_CONFIG_HOME/Brewfile"
@@ -38,8 +38,8 @@ alias lgf="lazygit --filter" # open lazygit focusing on a specific path
 source $(dirname $0)/utils.zsh
 
 # project switching
-alias select-project=$(dirname $0)/select_project.zsh
-alias sp=select-project
+# alias select-project=$(dirname $0)/select_project.zsh
+# alias sp=select-project
 
 if [[ "$CLAUDECODE" != "1" ]]; then
   alias cd="z" # z is a better cd (zoxide)
