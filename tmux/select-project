@@ -7,6 +7,7 @@ project_roots=(${(s/:/)PROJECT_ROOTS})
 
 # 1. Get all project folders without trailing slash
 project_folders=($(fd --min-depth 1 --max-depth 1 -t directory . ${project_roots[@]} | xargs realpath))
+project_folders+=($(fd --min-depth 1 --max-depth 1 -t symlink . ${project_roots[@]}))
 
 # 1.1. Add any additional project folders we don't want to expand
 project_folders+=(${(s/:/)PROJECT_FOLDERS})
