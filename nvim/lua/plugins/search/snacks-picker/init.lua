@@ -133,7 +133,11 @@ return {
         sources = {
           files = {
             hidden = true, -- show hidden files
-            exclude = { ".git", "node_modules", "vendor" }, -- exclude these folders
+            exclude = { ".git", "node_modules", "vendor", ".yarn/releases" }, -- exclude these folders
+          },
+          grep = {
+            hidden = true, -- show hidden files
+            exclude = { ".git", "node_modules", "vendor", ".yarn/releases" }, -- exclude these folders
           },
         },
         layouts = {
