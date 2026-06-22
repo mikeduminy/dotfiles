@@ -1,3 +1,4 @@
+--- @type LazySpec
 return {
   require("plugins.search.snacks-picker"),
   {

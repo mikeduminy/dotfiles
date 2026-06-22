@@ -1,6 +1,6 @@
 ---@diagnostic disable: unused-local
 
---- @type LazyPluginSpec
+--- @type LazySpec
 return {
   "folke/trouble.nvim",
   -- keys = {

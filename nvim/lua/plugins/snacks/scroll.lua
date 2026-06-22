@@ -1,3 +1,4 @@
+--- @type LazySpec
 return {
   "snacks.nvim",
   ---@type snacks.Config

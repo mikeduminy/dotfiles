@@ -101,6 +101,7 @@ local function custom_mime_hook(filepath, bufnr, opts)
   end
 end
 
+--- @type LazySpec
 return {
   {
     "nvim-telescope/telescope.nvim",

@@ -120,6 +120,7 @@ local function_symbols = function()
   })
 end
 
+--- @type LazySpec
 return {
   {
     "folke/snacks.nvim",

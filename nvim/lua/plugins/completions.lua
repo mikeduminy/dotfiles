@@ -19,6 +19,7 @@ local ollamaLocalConfig = {
   },
 }
 
+--- @type LazySpec
 return {
   {
     "saghen/blink.cmp",

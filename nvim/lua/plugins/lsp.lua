@@ -7,6 +7,7 @@ local function execLspCommand(command, args)
   end
 end
 
+--- @type LazySpec
 return {
   {
     "neovim/nvim-lspconfig",
@@ -66,9 +67,7 @@ return {
       setup = {
         eslint = function()
           require("snacks.util.lsp").on(function(buf, client)
-            if client.name == "eslint" then
-              client.server_capabilities.documentFormattingProvider = true
-            elseif client.name == "tsserver" or client.name == "vtsls" or client.name == "tsgo" then
+            if client.name == "tsserver" or client.name == "vtsls" or client.name == "tsgo" then
               client.server_capabilities.documentFormattingProvider = false
             end
           end)

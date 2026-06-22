@@ -63,6 +63,7 @@ local pickers = function()
   require("fzf-lua").builtin()
 end
 
+--- @type LazySpec
 return {
   {
     "ibhagwan/fzf-lua",

@@ -1,3 +1,4 @@
+--- @type LazySpec
 return {
   "ahmedkhalf/project.nvim",
   opts = function(plugin, _opts)
