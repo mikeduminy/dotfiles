@@ -35,18 +35,18 @@ map({ "i" }, "jk", "<esc>") -- quick 'jk' in insert mode fires escape
 
 -- modifications of default clipboard operations
 -- d should skip clipboard
-map({ "n", "v" }, "d", '"_d', { desc = "Delete to void register" })
-map({ "n", "v" }, "dd", '"_dd', { desc = "Delete line to void register" })
+-- map({ "n", "v" }, "d", '"_d', { desc = "Delete to void register" })
+-- map({ "n", "v" }, "dd", '"_dd', { desc = "Delete line to void register" })
 
 -- <leader>d should use clipboard
-map({ "n", "v" }, "<leader>d", "d", { desc = "Delete to clipboard" })
-map({ "n", "v" }, "<leader>dd", "dd", { desc = "Delete line to clipboard" })
+-- map({ "n", "v" }, "<leader>d", "d", { desc = "Delete to clipboard" })
+-- map({ "n", "v" }, "<leader>dd", "dd", { desc = "Delete line to clipboard" })
 
 -- p should skip clipboard
-map({ "n", "v" }, "p", '"_dP', { desc = "Paste from void register" })
+-- map({ "n", "v" }, "p", '"_dP', { desc = "Paste from void register" })
 
--- <leader>p should use clipboard
-map({ "n", "v" }, "<leader>p", "d", { desc = "Paste from clipboard" })
+-- safe paste
+map({ "n", "v" }, "<leader>p", '"_d', { desc = "Paste over" })
 
 -- better up/down
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
