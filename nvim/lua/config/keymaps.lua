@@ -24,13 +24,29 @@ end
 -- Keymaps
 ----------------------------------------------------------------------
 
-map("n", "<Leader>n", vim.diagnostic.goto_next, { desc = "Next Diagnostic" })
-map("n", "<Leader>N", vim.diagnostic.goto_prev, { desc = "Previous Diagnostic" })
+map("n", "<Leader>n", function()
+  vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_next() })
+end, { desc = "Next Diagnostic" })
+map("n", "<Leader>N", function()
+  vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_prev() })
+end, { desc = "Previous Diagnostic" })
 
 map({ "i" }, "jk", "<esc>") -- quick 'jk' in insert mode fires escape
 
--- safe paste
-map({ "n", "v" }, "<leader>p", '"_dP', { desc = "Paste over" })
+-- modifications of default clipboard operations
+-- d should skip clipboard
+map({ "n", "v" }, "d", '"_d', { desc = "Delete to void register" })
+map({ "n", "v" }, "dd", '"_dd', { desc = "Delete line to void register" })
+
+-- <leader>d should use clipboard
+map({ "n", "v" }, "<leader>d", "d", { desc = "Delete to clipboard" })
+map({ "n", "v" }, "<leader>dd", "dd", { desc = "Delete line to clipboard" })
+
+-- p should skip clipboard
+map({ "n", "v" }, "p", '"_dP', { desc = "Paste from void register" })
+
+-- <leader>p should use clipboard
+map({ "n", "v" }, "<leader>p", "d", { desc = "Paste from clipboard" })
 
 -- better up/down
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
