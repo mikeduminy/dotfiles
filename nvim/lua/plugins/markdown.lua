@@ -7,11 +7,12 @@ return {
     init = function()
       vim.g.mkdp_filetypes = { "markdown" }
 
-      -- disable diagnostics on markdown files by default
+      -- disable diagnostics and autoformat on markdown files by default
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "markdown",
         callback = function()
           vim.diagnostic.enable(false, { bufnr = 0 })
+          vim.b.disable_autoformat = true
         end,
       })
     end,
