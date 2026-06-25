@@ -48,7 +48,8 @@ alias cat="bat" # bat is a better cat (sharkdp/bat)
 alias ls="eza --all --group-directories-first --icons" # eza is a better ls (eza-community/eza)
 alias procs="procs --load-config $XDG_CONFIG_HOME/procs/config.toml"
 
-# Move a file or folder to the trash
+# Move a file or folder to the trash, replies on autodelete:
+# > defaults write com.apple.finder FXRemoveOldTrashItems -bool true && killall Finder
 quick_rm () {
   BASENAME=${1##*/}
   if [ -d $1 ]; then

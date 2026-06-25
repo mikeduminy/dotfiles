@@ -25,10 +25,10 @@ end
 ----------------------------------------------------------------------
 
 map("n", "<Leader>n", function()
-  vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_next() })
+  vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = "Next Diagnostic" })
 map("n", "<Leader>N", function()
-  vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_prev() })
+  vim.diagnostic.jump({ count = -1, float = true })
 end, { desc = "Previous Diagnostic" })
 
 map({ "i" }, "jk", "<esc>") -- quick 'jk' in insert mode fires escape
@@ -108,7 +108,7 @@ end, { desc = "Copy Relative File Path" })
 
 -- copy file path (git)
 map("n", "<leader>sp", function()
-  local url = git_utils.get_line_on_remote()
+  local url = git_utils.get_line_on_remote(true)
   vim.fn.setreg("+", url)
 
   vim.notify("Copied to clipboard\n" .. url, vim.log.levels.INFO, { title = "Git URL" })
