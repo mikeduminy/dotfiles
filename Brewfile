@@ -69,6 +69,7 @@ brew "yq"        # yaml processor
 brew "htop"      # system monitor
 brew "xdg-ninja" # XDG compliance checker
 brew "gum"       # glamorous shell scripts 
+brew "gifski"    # GIF encoder
 
 # LLM tooling
 cask "claude-code" # claude code cli
