@@ -48,17 +48,22 @@ keybind = unconsumed:super+shift+l=text:\x1b\x20)
 # open lazygit in popup
 keybind = unconsumed:super+g=text:\x1b\x20g
 
+# split window (vertical)
+keybind = unconsumed:super+shift+\=text:\x1b\x20|
+# split window (horizontal)
+keybind = unconsumed:super+shift+-_=text:\x1b\x20_
+
 # switch to window
-keybind = unconsumed:super+1=text:\x1b\x20\1
-keybind = unconsumed:super+2=text:\x1b\x20\2
-keybind = unconsumed:super+3=text:\x1b\x20\3
-keybind = unconsumed:super+4=text:\x1b\x20\4
-keybind = unconsumed:super+5=text:\x1b\x20\5
-keybind = unconsumed:super+6=text:\x1b\x20\6
-keybind = unconsumed:super+7=text:\x1b\x20\7
-keybind = unconsumed:super+8=text:\x1b\x20\8
-keybind = unconsumed:super+9=text:\x1b\x20\9
-keybind = unconsumed:super+0=text:\x1b\x20\0
+keybind = unconsumed:super+shift+1=text:\x1b\x20\x31
+keybind = unconsumed:super+shift+2=text:\x1b\x20\x32
+keybind = unconsumed:super+shift+3=text:\x1b\x20\x33
+keybind = unconsumed:super+shift+4=text:\x1b\x20\x34
+keybind = unconsumed:super+shift+5=text:\x1b\x20\x35
+keybind = unconsumed:super+shift+6=text:\x1b\x20\x36
+keybind = unconsumed:super+shift+7=text:\x1b\x20\x37
+keybind = unconsumed:super+shift+8=text:\x1b\x20\x38
+keybind = unconsumed:super+shift+9=text:\x1b\x20\x39
+keybind = unconsumed:super+shift+0=text:\x1b\x20\x30
 
 # switch tmux window prev / next
 keybind = unconsumed:super+shift+p=text:\x1b\x20p
