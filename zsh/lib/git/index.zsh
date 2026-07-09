@@ -6,12 +6,49 @@ source $current_folder/oh-my-git.zsh
 # Rebase current branch onto the latest main
 alias grbm='gfa; git rebase origin/$(git_main_branch)'
 
-# Find the local branch current diverged from most recently (main included as
-# a normal candidate). Works even if that branch has moved forward since the
-# fork point. e.g. branch B created off A created off main -> returns A when
-# on B, or main when on A.
+# Record which branch a new branch was created from, so grbp can find it
+# later even after the parent gets rebased and the commit graph no longer
+# shows the relationship. Overrides oh-my-git.zsh's plain alias, which would
+# otherwise shadow this function since zsh expands aliases before functions.
+unalias gswc 2>/dev/null
+gswc() {
+  local parent=$(git_current_branch)
+  git switch --create "$@" || return
+  git config "branch.$(git_current_branch).parentbranch" "$parent"
+}
+
+# Manually set/update the recorded parent of a branch, used by grbp.
+# Usage: gsetp <parent-branch> [branch (default: current)]
+gsetp() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: gsetp <parent-branch> [branch (default: current)]"
+    return 1
+  fi
+
+  local parent="$1"
+  local branch="${2:-$(git_current_branch)}"
+
+  if ! git show-ref --verify --quiet "refs/heads/$parent"; then
+    echo "No local branch named '$parent'"
+    return 1
+  fi
+
+  git config "branch.$branch.parentbranch" "$parent"
+  echo "$branch's parent set to $parent"
+}
+
+# Find the parent of the current branch. Prefers the parent recorded by gswc
+# (survives the parent being rebased). Falls back to guessing the local
+# branch current diverged from most recently (main included as a normal
+# candidate) for branches created before that tracking existed.
 git_parent_branch() {
   local current=$(git_current_branch)
+  local recorded=$(git config --get "branch.$current.parentbranch" 2>/dev/null)
+  if [[ -n "$recorded" ]] && git show-ref --verify --quiet "refs/heads/$recorded"; then
+    echo "$recorded"
+    return
+  fi
+
   local best_branch="" best_count="" branch count
 
   for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
