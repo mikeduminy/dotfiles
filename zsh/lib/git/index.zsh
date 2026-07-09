@@ -6,6 +6,31 @@ source $current_folder/oh-my-git.zsh
 # Rebase current branch onto the latest main
 alias grbm='gfa; git rebase origin/$(git_main_branch)'
 
+# Find the local branch current diverged from most recently (main included as
+# a normal candidate). Works even if that branch has moved forward since the
+# fork point. e.g. branch B created off A created off main -> returns A when
+# on B, or main when on A.
+git_parent_branch() {
+  local current=$(git_current_branch)
+  local best_branch="" best_count="" branch count
+
+  for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
+    [[ "$branch" == "$current" ]] && continue
+    # skip descendants of current (branches created off current, not parents of it)
+    git merge-base --is-ancestor "$current" "$branch" 2>/dev/null && continue
+    count=$(git rev-list --count "$branch..$current")
+    if [[ -z "$best_count" || "$count" -lt "$best_count" ]]; then
+      best_count=$count
+      best_branch=$branch
+    fi
+  done
+
+  echo "${best_branch:-$(git_main_branch)}"
+}
+
+# Rebase current branch onto its closest parent branch (could be main or another branch)
+alias grbp='gfa; git rebase -i $(git_parent_branch)'
+
 # Checkout the main branch
 alias gcom='git checkout $(git_main_branch)'
 
