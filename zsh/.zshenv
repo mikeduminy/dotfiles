@@ -6,6 +6,13 @@
 
 # uncomment the following line to output when this file is loaded
 # echo "loading: $0"
+# Drop any inherited FPATH (e.g. stale tmux server env pointing at a removed
+# Homebrew zsh Cellar version). Homebrew zsh's compiled-in default fpath omits
+# the dir with compinit/add-zsh-hook/colors/etc, so re-add it explicitly
+# instead of relying on it coming back on its own.
+unset FPATH
+typeset -U fpath
+fpath=(/opt/homebrew/share/zsh/functions $fpath)
 
 # Sometimes $PATH isn't initialised by the time this file runs, so to be able to
 # use builtin functions like dirname we ensure that `/usr/bin` is in $PATH
