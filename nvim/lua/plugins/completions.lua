@@ -74,6 +74,9 @@ return {
           name = "LiteLLM - Claude Haiku",
           model = "claude-haiku-4-5",
           stream = true,
+          request_timeout = 3000,
+          throttle = 1500,
+          debounce = 600,
 
           -- Local proxy for liteLLM
           end_point = "http://localhost:1337/v1/completions",
@@ -113,7 +116,13 @@ return {
       },
 
       lsp = {
-        enable = true,
+        enabled_ft = { "lua", "javascript", "rust", "go", "python", "bash", "zsh", "typescript" },
+        -- we will manually enable completions
+        -- completion = { enable = false },
+        -- inline_completion = {
+        --   enable = true,
+        --   enabled_auto_trigger_ft = { "cpp", "lua" },
+        -- },
       },
 
       -- 2. Configure how completions are triggered and accepted
@@ -121,6 +130,7 @@ return {
         -- Set to empty {} if you only want manual trigger,
         -- or add filetypes like { "lua", "python", "javascript" } for auto-trigger
         auto_trigger_ft = { "lua", "javascript", "rust", "go", "python", "bash", "zsh", "typescript" },
+        -- auto_trigger_ft = {},
         keymap = {
           accept = "<Tab>", -- Accept whole suggestion (Option + Shift + A on Mac)
           accept_line = "<A-a>", -- Accept only the current line (Option + A on Mac)
