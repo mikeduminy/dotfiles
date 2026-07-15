@@ -7,6 +7,8 @@ local function execLspCommand(command, args)
   end
 end
 
+vim.g.lazyvim_ts_lsp = "tsgo"
+
 --- @type LazySpec
 return {
   {
@@ -29,8 +31,8 @@ return {
           settings = {
             typescript = {
               inlayHints = {
-                parameterNames = { enabled = "literals", suppressWhenArgumentMatchesName = true },
-                parameterTypes = { enabled = true },
+                parameterNames = { enabled = "none", suppressWhenArgumentMatchesName = true },
+                parameterTypes = { enabled = false },
                 variableTypes = { enabled = false, suppressWhenTypeMatchesName = true },
                 propertyDeclarationTypes = { enabled = false },
                 functionLikeReturnTypes = { enabled = true },
