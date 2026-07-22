@@ -12,37 +12,69 @@ project_folders+=($(fd --min-depth 1 --max-depth 1 -t symlink . ${project_roots[
 # 1.1. Add any additional project folders we don't want to expand
 project_folders+=(${(s/:/)PROJECT_FOLDERS})
 
-# 2. Construct a list of project folders and their git branch
-selection_list=()
+# Frecency state: one line per project "<abs_path>\t<count>\t<last_access_epoch>"
+frecency_file="${XDG_DATA_HOME:-$HOME/.local/share}/tmux/project-frecency"
+typeset -A frecency_count frecency_last
+if [[ -f $frecency_file ]]; then
+  while IFS=$'\t' read -r f_path f_count f_last; do
+    frecency_count[$f_path]=$f_count
+    frecency_last[$f_path]=$f_last
+  done < $frecency_file
+fi
+now=$(date +%s)
+
+# 2. Construct a list of project folders ranked by frecency (score is integer,
+# scaled by 4x so the <1w half-life multiplier stays a whole number)
+entries=()
 for folder in "${project_folders[@]}"; do
-  # change to project folder
+  # change to project folder (also filters out inaccessible folders)
   cd $folder || continue
 
   # shorten folder path
   local short_folder=$(echo $folder | sed "s|$HOME/||")
 
-  # get git branch
-  # branch=$(git symbolic-ref --short HEAD 2>/dev/null)
-  # if [ $? -eq 0 ]; then
-  #   selection_list+=("$short_folder [$branch]")
-  # else
-    selection_list+=("$short_folder")
-  # fi
+  local count=${frecency_count[$folder]:-0}
+  local score=0
+  if ((count > 0)); then
+    local age=$((now - ${frecency_last[$folder]:-0}))
+    local mult=1 # default: older than a week
+    if ((age < 3600)); then
+      mult=16 # < 1 hour
+    elif ((age < 86400)); then
+      mult=8 # < 1 day
+    elif ((age < 604800)); then
+      mult=2 # < 1 week
+    fi
+    score=$((count * mult))
+  fi
+  entries+=("$score"$'\t'"$short_folder")
 
   # return to previous folder
   cd - > /dev/null
 done
 
-# 2. Select a project using fzf (all paths are relative to $HOME)
-selected_item=$(printf '%s\n' "${selection_list[@]}" | fzf-tmux --reverse -w 50% -h 50%)
+# 3. Select a project using fzf, highest frecency first (all paths relative to $HOME)
+selected_item=$(printf '%s\n' "${entries[@]}" | sort -t$'\t' -k1,1rn -k2,2 | cut -f2 | fzf-tmux --reverse -w 50% -h 50% --tiebreak=index)
 local retval=$?
 if (($retval == 0)); then
-  # 2.1. Get the selected folder from the selected item
+  # 3.1. Get the selected folder from the selected item
   selected_folder=$(echo $selected_item | awk '{print $1}')
   selected_path="$HOME/$selected_folder"
   # strip leading dot
   session_name=$(echo $selected_folder | sed 's|^\.*||')
-	# 3. Switch to the workspace by communicating with wezterm
+
+  # 3.2. Record this pick for future frecency ranking
+  mkdir -p ${frecency_file:h}
+  local new_count=$(( ${frecency_count[$selected_path]:-0} + 1 ))
+  {
+    for f_path in "${(k)frecency_count[@]}"; do
+      [[ $f_path == $selected_path ]] && continue
+      echo "$f_path"$'\t'"${frecency_count[$f_path]}"$'\t'"${frecency_last[$f_path]}"
+    done
+    echo "$selected_path"$'\t'"$new_count"$'\t'"$now"
+  } > "${frecency_file}.tmp" && mv "${frecency_file}.tmp" $frecency_file
+
+	# 4. Switch to the workspace by communicating with wezterm
   tmux_running=$(pgrep tmux)
 
   if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
@@ -60,10 +92,3 @@ else
 	# user cancelled fzf, but we don't want to show anything in tmux
   exit 0
 fi
-
-if [[ -z $selected_item ]]; then
-	exit 0
-fi
-
-
-
