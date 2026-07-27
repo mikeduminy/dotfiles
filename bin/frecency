@@ -1,0 +1,145 @@
+#!/bin/zsh
+
+# frecency — track and rank keys by frequency + recency, one store per dataset.
+#
+# Usage:
+#   frecency <dataset> add <key>     Record a use of <key> (increment + touch).
+#   frecency <dataset> rank          Reorder stdin keys (one/line) by frecency.
+#   frecency <dataset> list          Print "score<TAB>key" for all keys, desc.
+#   frecency <dataset> delete <key>  Remove <key> from the store.
+#
+# Store: ${XDG_DATA_HOME:-$HOME/.local/share}/frecency/<dataset>.tsv
+#        lines are "key<TAB>count<TAB>last_access_epoch". Keys must not contain tabs.
+#
+# Score = count * recency multiplier of age (now - last_access):
+#   <1h ->16, <1d ->8, <1w ->2, older ->1. Unknown/absent keys score 0.
+
+# -L = scoped to this script only, doesn't leak zsh option changes to the caller's
+# shell. Resets to plain zsh semantics (in case the caller has weird options set,
+# e.g. from an interactive session sourcing custom .zshrc options).
+emulate -L zsh
+# make a pipeline (like `read < store` isn't one, but `foo | sort` below is) fail
+# if ANY stage errors, not just the last one.
+set -o pipefail
+
+usage() {
+  print -r -- "usage: frecency <dataset> <add|rank|list|delete> [key]" >&2
+  exit 2
+}
+
+dataset=$1
+cmd=$2
+[[ -n $dataset && -n $cmd ]] || usage
+# =~ is zsh's regex match operator (needs the pattern quoted so zsh doesn't try to
+# glob-expand it first). Keeps dataset names filesystem- and shell-safe, since it
+# becomes part of a file path below.
+[[ $dataset =~ '^[A-Za-z0-9._-]+$' ]] || { print -r -- "frecency: invalid dataset '$dataset'" >&2; exit 2; }
+
+# ${VAR:-default} = use $VAR if set, else "default" — standard XDG fallback.
+store="${XDG_DATA_HOME:-$HOME/.local/share}/frecency/${dataset}.tsv"
+
+# Two associative (key -> value) arrays: counts[key] and last[key], loaded from
+# the store's TSV lines below. `typeset -A` declares them as associative rather
+# than plain indexed arrays.
+typeset -A counts last
+if [[ -f $store ]]; then
+  # `local` here just scopes these loop variables to this script; they're
+  # prefixed with an underscore purely to avoid ever colliding with a
+  # "real" variable name used elsewhere below (zsh warns/misbehaves if you
+  # re-`local` a name that's already holding a value in the same scope).
+  local _key _count _last
+  # IFS=$'\t' makes `read` split each line on tabs (default is whitespace),
+  # matching the TSV format we write in __write() below.
+  while IFS=$'\t' read -r _key _count _last; do
+    [[ -n $_key ]] || continue
+    counts[$_key]=$_count
+    last[$_key]=$_last
+  done < $store
+fi
+
+# Compute an integer frecency score from a stored (count, last_access) pair.
+# Not a "real" subcommand — leading __ marks it as a private helper.
+__score() {
+  # __score <count> <last_access_epoch> <now_epoch> -> prints integer score
+  local entry_count=$1 last_access=$2 now=$3
+  # A key we've never seen scores 0, regardless of age.
+  (( entry_count > 0 )) || { print -r -- 0; return }
+  local age=$(( now - last_access )) mult=1
+  if   (( age < 3600 ));   then mult=16  # seen in the last hour
+  elif (( age < 86400 ));  then mult=8   # seen in the last day
+  elif (( age < 604800 )); then mult=2   # seen in the last week
+  fi
+  # older than a week keeps the default mult=1 from above
+  print -r -- $(( entry_count * mult ))
+}
+
+# Persist the in-memory counts/last assoc arrays back to the store file.
+__write() {
+  mkdir -p ${store:h} # ${VAR:h} = "head" of the path, i.e. dirname
+  # Write to a temp file first and `mv` into place at the end, so a picker
+  # script reading the store mid-write never sees a half-written file.
+  # $$ (this process's PID) keeps the temp name unique.
+  local tmp="${store}.$$.tmp" stored_key
+  : > $tmp # truncate/create the temp file
+  # ${(k)counts} expands to the *keys* of the counts assoc array (values would
+  # just be ${counts}).
+  for stored_key in ${(k)counts}; do
+    print -r -- "$stored_key"$'\t'"${counts[$stored_key]}"$'\t'"${last[$stored_key]}" >> $tmp
+  done
+  mv $tmp $store
+}
+
+case $cmd in
+  add)
+    local key=$3
+    [[ -n $key ]] || usage
+    local now=$(date +%s)
+    # ${counts[$key]:-0} = current count, or 0 if $key isn't in the array yet.
+    counts[$key]=$(( ${counts[$key]:-0} + 1 ))
+    last[$key]=$now
+    __write
+    ;;
+
+  rank)
+    # Read candidate keys from stdin (one per line, e.g. a list of project
+    # paths piped in by a picker script), tag each with its score, sort by
+    # score (highest first), then strip the score column back off before
+    # printing — callers only want their original lines back, reordered.
+    local now=$(date +%s) candidate
+    # -t$'\t' = fields are tab-separated. -k1,1rn = sort by field 1 (the score),
+    # numerically, reverse (highest first). -k2,2 = break ties alphabetically by
+    # field 2 (the original line), so ordering is deterministic instead of
+    # whatever order stdin happened to arrive in. `cut -f2-` then drops field 1
+    # (the score) again, keeping everything from field 2 on.
+    while IFS= read -r candidate; do
+      [[ -n $candidate ]] || continue
+      print -r -- "$(__score ${counts[$candidate]:-0} ${last[$candidate]:-0} $now)"$'\t'"$candidate"
+    done | sort -t$'\t' -k1,1rn -k2,2 | cut -f2-
+    ;;
+
+  list)
+    # Same scoring as `rank`, but over every key we have on file instead of
+    # a candidate list from stdin — useful for inspecting/debugging a store.
+    local now=$(date +%s) stored_key
+    for stored_key in ${(k)counts}; do
+      print -r -- "$(__score ${counts[$stored_key]} ${last[$stored_key]} $now)"$'\t'"$stored_key"
+    done | sort -t$'\t' -k1,1rn -k2,2
+    ;;
+
+  delete)
+    local key=$3
+    [[ -n $key ]] || usage
+    # ${counts[$key]+x} expands to "x" if $key is set in the array (even if
+    # its value is empty/0), or "" if it's entirely absent — this is the
+    # standard zsh/bash idiom for "does this key exist", distinct from
+    # checking whether its value is non-empty.
+    if [[ -n ${counts[$key]+x} ]]; then
+      unset "counts[$key]" "last[$key]"
+      __write
+    fi
+    ;;
+
+  *)
+    usage
+    ;;
+esac
