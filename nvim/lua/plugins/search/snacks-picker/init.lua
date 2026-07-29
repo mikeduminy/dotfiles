@@ -70,6 +70,10 @@ local find_files_relative = function()
   end)
 end
 
+local git_changed_files = function()
+  Snacks.picker.git_status()
+end
+
 local resume = function()
   Snacks.picker.resume()
 end
@@ -198,6 +202,7 @@ return {
       { "<leader>fp", pickers, desc = "Pickers" },
       { "<leader>fP", projects, desc = "Projects" },
       { "<leader>sf", function_symbols, desc = "Symbols (functions)" },
+      { "<leader>fg", git_changed_files, desc = "Find files (git changed)" },
     },
   },
 }
