@@ -18,6 +18,9 @@ return {
     end,
     ft = { "markdown" },
     keys = {
+      -- lazy extra for markdown adds leader+cp which overrides our own mapping
+      -- ft must match so the id (lhs + ft) matches the extra's entry, see lazy/core/handler/keys.lua
+      { "<leader>cp", ft = "markdown", false },
       {
         "<leader>md",
         "<cmd>MarkdownPreview<cr>",
