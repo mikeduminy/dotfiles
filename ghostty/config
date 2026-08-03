@@ -49,21 +49,21 @@ keybind = unconsumed:super+shift+l=text:\x1b\x20)
 keybind = unconsumed:super+g=text:\x1b\x20g
 
 # split window (vertical)
-keybind = unconsumed:super+shift+\=text:\x1b\x20|
+keybind = unconsumed:super+shift+backslash=text:\x1b\x20|
 # split window (horizontal)
-keybind = unconsumed:super+shift+-_=text:\x1b\x20_
+keybind = unconsumed:super+shift+minus=text:\x1b\x20_
 
 # switch to window
-keybind = unconsumed:super+shift+1=text:\x1b\x20\x31
-keybind = unconsumed:super+shift+2=text:\x1b\x20\x32
-keybind = unconsumed:super+shift+3=text:\x1b\x20\x33
-keybind = unconsumed:super+shift+4=text:\x1b\x20\x34
-keybind = unconsumed:super+shift+5=text:\x1b\x20\x35
-keybind = unconsumed:super+shift+6=text:\x1b\x20\x36
-keybind = unconsumed:super+shift+7=text:\x1b\x20\x37
-keybind = unconsumed:super+shift+8=text:\x1b\x20\x38
-keybind = unconsumed:super+shift+9=text:\x1b\x20\x39
-keybind = unconsumed:super+shift+0=text:\x1b\x20\x30
+keybind = unconsumed:super+shift+digit_1=text:\x1b\x201
+keybind = unconsumed:super+shift+digit_2=text:\x1b\x202
+keybind = unconsumed:super+shift+digit_3=text:\x1b\x203
+keybind = unconsumed:super+shift+digit_4=text:\x1b\x204
+keybind = unconsumed:super+shift+digit_5=text:\x1b\x205
+keybind = unconsumed:super+shift+digit_6=text:\x1b\x206
+keybind = unconsumed:super+shift+digit_7=text:\x1b\x207
+keybind = unconsumed:super+shift+digit_8=text:\x1b\x208
+keybind = unconsumed:super+shift+digit_9=text:\x1b\x209
+keybind = unconsumed:super+shift+digit_0=text:\x1b\x200
 
 # switch tmux window prev / next
 keybind = unconsumed:super+shift+p=text:\x1b\x20p
