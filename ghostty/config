@@ -8,7 +8,7 @@ macos-option-as-alt=true
 # aesthetics
 theme = TokyoNight Storm
 font-family = JetBrains Mono Nerd Font Mono
-background-opacity = 0.85
+background-opacity = 1.0
 background-blur=16
 background=#000000
 
