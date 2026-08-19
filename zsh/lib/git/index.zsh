@@ -90,7 +90,7 @@ alias gtop='git log -1 --format="%H" | cat | xargs echo -n | pbcopy'
 gdlb() {
   # Fetch all remotes and prune deleted branches
   echo "Fetching all remotes and pruning deleted branches..."
-  gfa
+  gfa >/dev/null 2>&1
 
   _commands=(
     "git branch -v" # show all branches
@@ -104,7 +104,9 @@ gdlb() {
 
   if [ -n "$branches" ]; then
     echo "The following branches will be deleted:"
-    echo "$branches"
+    for branch in ${(f)branches}; do
+      echo "  - $branch"
+    done
     if gum confirm "Do you want to proceed?"; then
       echo "$branches" | xargs git branch -D
     else
@@ -112,6 +114,64 @@ gdlb() {
     fi
   else
     echo "No branches to delete."
+  fi
+}
+
+## Find local (or, with -r, origin) branches with no commits in the given age
+## e.g. gstale 3m, gstale 1y, gstale 2w, gstale 10d, gstale 6m -r
+gstale() {
+  local age="${1:-3m}"
+  local remote=false
+  [ "$2" = "-r" ] && remote=true
+
+  if [[ ! "$age" =~ ^[0-9]+[dwmy]$ ]]; then
+    echo "Usage: gstale <age> [-r] (e.g. 3m, 1y, 2w, 10d)"
+    return 1
+  fi
+
+  local num="${age%[a-z]}"
+  local unit="${age##*[0-9]}"
+  local cutoff=$(date -v-${num}${unit} +%s)
+
+  local ref_pattern="refs/heads/"
+  $remote && ref_pattern="refs/remotes/origin/"
+
+  local branches=()
+  local ts branch
+  while IFS=' ' read -r ts branch; do
+    # skip origin/HEAD (shown as bare "origin"), it has no commits of its own
+    [ "$branch" = "origin/HEAD" ] && continue
+    [ "$branch" = "origin" ] && continue
+    if [ "$ts" -lt "$cutoff" ]; then
+      branches+=("$branch")
+    fi
+  done < <(git for-each-ref --sort=committerdate "$ref_pattern" --format='%(committerdate:unix) %(refname:short)')
+
+  if [ ${#branches[@]} -eq 0 ]; then
+    echo "No branches older than $age."
+    return 0
+  fi
+
+  echo "${#branches[@]} branch(es) with no commits in the last $age:"
+  for branch in "${branches[@]}"; do
+    local last_commit=$(git log -1 --format='%cd' --date=short "$branch")
+    echo "  - $branch (last commit: $last_commit)"
+  done
+
+  if $remote; then
+    if gum confirm "Delete these branches ON ORIGIN? This affects everyone."; then
+      for branch in "${branches[@]}"; do
+        git push origin --delete "${branch#origin/}"
+      done
+    else
+      echo "Operation cancelled."
+    fi
+  else
+    if gum confirm "Delete these branches?"; then
+      printf '%s\n' "${branches[@]}" | xargs git branch -D
+    else
+      echo "Operation cancelled."
+    fi
   fi
 }
 
