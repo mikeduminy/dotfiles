@@ -42,29 +42,21 @@ return {
           },
         },
 
-        -- tsserver = {
-        --   init_options = {
-        --     -- support large TS projects
-        --     maxTsServerMemory = 8192,
-        --     -- disableAutomaticTypingAcquisition = true,
-        --   },
-        --   preferences = {
-        --     includeCompletionsForModuleExports = false,
-        --     includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-        --   },
-        -- },
-
-        -- vtsls = {
-        --   enable = false,
-        --   settings = {
-        --     autoUseWorkspaceTsdk = true,
-        --     typescript = {
-        --       tsserver = {
-        --         maxTsServerMemory = 12 * 1024,
-        --       },
-        --     },
-        --   },
-        -- },
+        yamlls = {
+          settings = {
+            yaml = {
+              customTags = {
+                "!reference sequence",
+              },
+              schemas = {
+                ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {
+                  ".gitlab-ci.yml",
+                  ".gitlab/**/*.yml",
+                },
+              },
+            },
+          },
+        },
       },
       setup = {
         eslint = function()
