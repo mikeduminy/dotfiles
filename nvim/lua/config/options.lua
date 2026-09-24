@@ -59,3 +59,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = { "*.podspec", "Podfile" },
   command = "set filetype=ruby",
 })
+
+-- enable fs watcher
+vim.o.autoread = true

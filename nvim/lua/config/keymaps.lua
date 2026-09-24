@@ -80,6 +80,13 @@ map("n", withModifier("j"), "<C-w>j", { desc = "Go to lower window", remap = tru
 map("n", withModifier("k"), "<C-w>k", { desc = "Go to upper window", remap = true })
 map("n", withModifier("l"), "<C-w>l", { desc = "Go to right window", remap = true })
 
+-- multicursor
+local mc_ns = vim.api.nvim_create_namespace("nvim.multicursor")
+
+map({ "n", "v" }, "<C-q>", function()
+  vim.api.nvim_buf_clear_namespace(0, mc_ns, 0, -1)
+end, { desc = "Clear multi-cursors" })
+
 -- tabs
 map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
 map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
