@@ -69,7 +69,7 @@ git_parent_branch() {
 alias grbp='gfa; git rebase -i $(git_parent_branch)'
 
 # Rebase current child branch onto a parent branch that has been merged
-alias grbpm = 'gfa; git rebase --onto origin/$(git_main_branch) $(git_parent_branch) --empty=drop'
+alias grbpm='gfa; git rebase --onto origin/$(git_main_branch) $(git_parent_branch) --empty=drop'
 
 # Checkout the main branch
 alias gcom='git checkout $(git_main_branch)'
