@@ -48,7 +48,7 @@ local function simple_worktree_list() {
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 main_branch=$(git_main_branch)
 
-if [[ $main_branch -ne $current_branch ]] then
+if [[ $main_branch != $current_branch ]] then
   gum log --level warn "Current branch ($current_branch) is not the main branch: $main_branch"
   gum confirm "Continue" || return
 fi
