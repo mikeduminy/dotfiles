@@ -1,0 +1,77 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "litellm/gpt-6-luna",
+  "permission": {
+    "websearch": "allow"
+  },
+  "agent": {
+    "explore": {
+      "model": "litellm/gpt-6-luna"
+    },
+    "plan": {
+      "model": "litellm/gpt-6-luna"
+    }
+  },
+  "disabled_providers": ["opencode", "anthropic"],
+  "provider": {
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LiteLLM",
+      "options": {
+        "baseURL": "http://localhost:1337/v1",
+        "apiKey": "{env:LITELLM_API_KEY}"
+      },
+      "models": {
+        "claude-opus-5-5": {
+          "id": "claude-opus-5-5",
+          "name": "Claude Opus 5.5"
+        },
+        "claude-sonnet-5": {
+          "id": "claude-sonnet-5",
+          "name": "Claude Sonnet 5"
+        },
+        "claude-haiku-4-5": {
+          "id": "claude-haiku-4-5",
+          "name": "Claude Haiku 4.5"
+        },
+        "gemini-3.8-flash": {
+          "id": "gemini-3.8-flash",
+          "name": "Gemini 3.8 Flash"
+        },
+        "gpt-6-luna": {
+          "id": "gpt-6-luna",
+          "name": "GPT 6 Luna",
+          "provider": {
+            "npm": "@ai-sdk/openai"
+          }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "atlassian": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp",
+      "enabled": false
+    },
+    "gke-mcp": {
+      "type": "local",
+      "command": ["gke-mcp"],
+      "enabled": false
+    },
+    "datadog": {
+      "type": "remote",
+      "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp",
+      "enabled": false
+    },
+    "slack": {
+      "type": "remote",
+      "url": "https://mcp.slack.com/mcp",
+      "oauth": {
+        "clientId": "{env:SLACK_MCP_CLIENT_ID}",
+        "redirectUri": "http://localhost:3118/callback"
+      },
+      "enabled": false
+    }
+  }
+}

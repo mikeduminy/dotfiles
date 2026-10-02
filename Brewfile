@@ -72,7 +72,7 @@ brew "gum"       # glamorous shell scripts
 brew "gifski"    # GIF encoder
 
 # LLM tooling
-cask "claude-code" # claude code cli
+# cask "claude-code" # claude code cli
 
 # Languages
 brew "go"
