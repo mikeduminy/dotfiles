@@ -40,3 +40,4 @@ cursor/**
 /glab-cli/aliases.yml
 /mise/config.toml
 /zsh/priv/zshenv.zsh
+/opencode/service.json
