@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "litellm/gpt-6-luna",
+  "model": "litellm/gemini-3.8-flash",
   "permission": {
     "websearch": "allow"
   },
@@ -9,7 +9,7 @@
       "model": "litellm/gpt-6-luna"
     },
     "plan": {
-      "model": "litellm/gpt-6-luna"
+      "model": "litellm/gemini-3.8-flash"
     }
   },
   "disabled_providers": ["opencode", "anthropic"],
