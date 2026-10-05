@@ -19,6 +19,8 @@ local ollamaLocalConfig = {
   },
 }
 
+local lspToggled = true
+
 --- @type LazySpec
 return {
   {
@@ -56,7 +58,22 @@ return {
     "milanglacier/minuet-ai.nvim",
     events = { "InsertEnter", "CmdlineEnter", "VeryLazy" },
     commands = { "Minuet" },
-    keys = { { "<leader>avt", "<cmd>Minuet virtualtext toggle<cr>", desc = "Toggle virtualtext autocomplete" } },
+    keys = {
+      {
+        "<leader>avt",
+        function()
+          vim.cmd("Minuet virtualtext toggle")
+          vim.cmd("Minuet blink toggle")
+          if lspToggled then
+            vim.cmd("Minuet lsp detach")
+          else
+            vim.cmd("Minuet lsp attached")
+          end
+          lspToggled = not lspToggled
+        end,
+        desc = "Toggle virtualtext autocomplete",
+      },
+    },
     -- note: requires ollama running the specified model below
     opts = {
       -- avoid race-condition inside plugin which curls Ollama too many times and causes errors
