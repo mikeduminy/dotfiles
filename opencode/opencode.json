@@ -73,5 +73,9 @@
       },
       "enabled": false
     }
-  }
+  },
+  "plugin": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "ponytail@git+https://github.com/dietrichgebert/ponytail.git"
+  ]
 }
