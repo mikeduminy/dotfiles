@@ -41,3 +41,4 @@ cursor/**
 /mise/config.toml
 /zsh/priv/zshenv.zsh
 /opencode/service.json
+/glab-cli/config.lock
